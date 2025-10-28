@@ -1,5 +1,9 @@
 package com.example.demo.dto;
 
+
+//clase que se usa para listar los servicios de cada peluqueria.
+//Mezcla servicioPeluDto con servicioDto
+
 public class ServicioResponseDto {
     private String nombre;
     private String descripcion;
