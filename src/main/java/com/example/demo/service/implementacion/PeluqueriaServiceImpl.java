@@ -1,16 +1,16 @@
-package com.example.demo.service;
+package com.example.demo.service.implementacion;
 
 
 import com.example.demo.dto.PeluqueriaDto;
 import com.example.demo.dto.ServicioPeluDto;
 import com.example.demo.dto.ServicioResponseDto;
 import com.example.demo.entity.Peluqueria;
-import com.example.demo.entity.Servicio;
 import com.example.demo.entity.ServicioPelu;
 import com.example.demo.mapper.PeluqueriaMapper;
 import com.example.demo.repository.projection.ServicioJoinProjection;
 import com.example.demo.repository.servicioPeluRepository;
 import com.example.demo.repository.servicioRepository;
+import com.example.demo.service.PeluqueriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,6 @@ import com.example.demo.repository.peluqueriaRepository;
 
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
