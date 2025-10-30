@@ -50,6 +50,11 @@ public class ServicioServiceImpl implements ServicioService {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Override //poner arriba de metodos private
+    public void deleteServicio(Integer id) {
+        servicioRepository1.deleteById(id);
+    }
+
     private ServicioDto toDto(Servicio servicio) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicio y servicioDto
         if (servicio == null) return null;
         ServicioDto dto = new ServicioDto();
@@ -69,8 +74,5 @@ public class ServicioServiceImpl implements ServicioService {
 
 }
 
-//@Override
-//public void deleteServicio(String id) {
-//    servicioRepository.deleteById(id);
-//}
+
 

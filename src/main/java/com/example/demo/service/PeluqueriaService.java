@@ -20,7 +20,7 @@ public interface PeluqueriaService {
 
     ResponseEntity<List<ServicioResponseDto>> listarServiciosPorPeluqueria(Integer peluqueriaId);
 
-   // void deletePeluqueria(Integer id);
+    void deletePeluqueria(Integer id);
 
 
 }

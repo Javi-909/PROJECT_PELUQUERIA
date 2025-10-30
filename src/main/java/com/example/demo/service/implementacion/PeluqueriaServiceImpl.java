@@ -42,6 +42,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     }
 
 
+
     @Override
     public PeluqueriaDto createPeluqueria(PeluqueriaDto peluqueriaDto) {
         Peluqueria peluqueria = this.toEntity(peluqueriaDto);
@@ -54,6 +55,25 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
                 .map(this::toDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+
+    @Override
+    public ResponseEntity<List<ServicioResponseDto>> listarServiciosPorPeluqueria(Integer peluqueriaId) {
+        List<ServicioJoinProjection> rows = servicioPeluRepository1.findServiciosByPeluqueriaId(peluqueriaId);
+
+        List<ServicioResponseDto> dtos = rows.stream()
+                .map(sp -> new ServicioResponseDto(
+                        sp.getNombre(),
+                        sp.getDescripcion(),
+                        sp.getPrecio(),
+                        sp.getDuracion()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtos);
+    }
+    public void deletePeluqueria(Integer id){
+        peluqueriaRepository1.deleteById(id);
     }
     private PeluqueriaDto toDto(Peluqueria peluqueria) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (peluqueria == null) return null;
@@ -81,25 +101,8 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         dto.setDuracion(servicioPelu.getDuracion());
         return dto;
     }
-    @Override
-    public ResponseEntity<List<ServicioResponseDto>> listarServiciosPorPeluqueria(Integer peluqueriaId) {
-        List<ServicioJoinProjection> rows = servicioPeluRepository1.findServiciosByPeluqueriaId(peluqueriaId);
 
-        List<ServicioResponseDto> dtos = rows.stream()
-                .map(sp -> new ServicioResponseDto(
-                        sp.getNombre(),
-                        sp.getDescripcion(),
-                        sp.getPrecio(),
-                        sp.getDuracion()))
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(dtos);
-    }
 }
 
 
-//@Override
-//public void deletePeluqueria(String id) {
-  //  peluqueriaRepository.deleteById(id);
-//}
 
