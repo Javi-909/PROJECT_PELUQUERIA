@@ -32,7 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
             return dto;
         }).collect(Collectors.toList());
     }
-    
+
 
    @Override
    public ClienteDto createCliente(ClienteDto clienteDto) {

@@ -40,7 +40,7 @@ public class PeluqueriaController {
         return peluqueriaService.mostrarPeluqueriaPorId(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create") //hay que añadir metodo crearServiciosPelu, porque cuando se crea una pelu no tiene servicios
     public PeluqueriaDto createPeluqueria(@RequestBody PeluqueriaDto peluqueriaDto) {
         return peluqueriaService.createPeluqueria(peluqueriaDto);
     }

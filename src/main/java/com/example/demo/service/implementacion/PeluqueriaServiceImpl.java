@@ -44,9 +44,9 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
 
     @Override
     public PeluqueriaDto createPeluqueria(PeluqueriaDto peluqueriaDto) {
-        Peluqueria peluqueria = peluqueriaMapper.toEntity(peluqueriaDto);
+        Peluqueria peluqueria = this.toEntity(peluqueriaDto);
         Peluqueria saved = peluqueriaRepository1.save(peluqueria); //con el metodo save, solo puedo guardar entitys (pq es base de datos)
-        return peluqueriaMapper.toDto(saved);
+        return this.toDto(saved);
     }
     @Override
     public ResponseEntity<PeluqueriaDto> mostrarPeluqueriaPorId(Integer id) {
@@ -63,6 +63,15 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         dto.setDireccion(peluqueria.getDireccion());
         dto.setTelefono(peluqueria.getTelefono());
         return dto;
+    }
+    private Peluqueria toEntity(PeluqueriaDto peluqueriaDto) {  //sirve para hacer el mappeo natural (sin MapStruct)
+        if (peluqueriaDto == null) return null;
+        Peluqueria peluqueria = new Peluqueria();
+        peluqueria.setNombre(peluqueriaDto.getNombre());
+        peluqueria.setEmail(peluqueriaDto.getEmail());
+        peluqueria.setDireccion(peluqueriaDto.getDireccion());
+        peluqueria.setTelefono(peluqueriaDto.getTelefono());
+        return peluqueria;
     }
 
     private ServicioPeluDto toDto(ServicioPelu servicioPelu) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicioPelu y servicioPeluDto
