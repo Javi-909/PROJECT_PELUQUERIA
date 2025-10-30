@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Servicio;
+
 import com.example.demo.entity.ServicioPelu;
 import com.example.demo.repository.projection.ServicioJoinProjection;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -2,7 +2,7 @@ package com.example.demo.service.implementacion;
 
 import com.example.demo.dto.ClienteDto;
 import com.example.demo.entity.Cliente;
-import com.example.demo.mapper.ClienteMapper; //hacer
+import com.example.demo.mapper.ClienteMapper;
 import com.example.demo.repository.clienteRepository;
 import com.example.demo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +32,14 @@ public class ClienteServiceImpl implements ClienteService {
             return dto;
         }).collect(Collectors.toList());
     }
+    
 
-
-    @Override
-    public ClienteDto createCliente(ClienteDto clienteDto) {
-        Cliente cliente = clienteMapper.toEntity(clienteDto);
-        Cliente saved = clienteRepository1.save(cliente);
-        return clienteMapper.toDto(saved);
-    }
+   @Override
+   public ClienteDto createCliente(ClienteDto clienteDto) {
+       Cliente cliente = this.toEntity(clienteDto);
+       Cliente saved = clienteRepository1.save(cliente);
+       return this.toDto(saved);
+   }
     @Override
     public ResponseEntity<ClienteDto> mostrarClientePorId(Integer id) {
         return clienteRepository1.findById(id)
@@ -54,6 +54,14 @@ public class ClienteServiceImpl implements ClienteService {
         dto.setEmail(cliente.getEmail());
         dto.setGenero(cliente.getGenero());
         return dto;
+    }
+    private Cliente toEntity(ClienteDto clienteDto){   //mappeo de dto a entity
+        if (clienteDto == null) return null;
+        Cliente cliente = new Cliente();
+        cliente.setNombre(clienteDto.getNombre());
+        cliente.setEmail(clienteDto.getEmail());
+        cliente.setGenero(clienteDto.getGenero());
+        return cliente;
     }
 }
 
