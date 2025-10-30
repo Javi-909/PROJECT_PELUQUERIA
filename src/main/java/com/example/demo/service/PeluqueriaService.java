@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.PeluqueriaDto;
 
+import com.example.demo.dto.ServicioDto;
 import com.example.demo.dto.ServicioPeluDto;
 import com.example.demo.dto.ServicioResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,5 @@ public interface PeluqueriaService {
 
     void deletePeluqueria(Integer id);
 
-
+   // ServicioDto añadirServicioToPeluqueria(Integer servicioId, Integer peluqueriaId);
 }

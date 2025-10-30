@@ -36,10 +36,10 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    public ServicioDto createServicio(ServicioDto servicioDto) {
-        Servicio servicio = servicioMapper.toEntity(servicioDto);
+    public ServicioDto createServicio(ServicioDto servicioDto) { //crear servicio genérico (corte barba, teñir..)
+        Servicio servicio = this.toEntity(servicioDto);
         Servicio saved = servicioRepository1.save(servicio);
-        return servicioMapper.toDto(saved);
+        return this.toDto(saved);
     }
 
     @Override
@@ -71,6 +71,13 @@ public class ServicioServiceImpl implements ServicioService {
         return dto;
     }
 
+    private Servicio toEntity(ServicioDto servicioDto) {
+        if (servicioDto == null) return null;
+        Servicio servicio = new Servicio();
+        servicio.setNombre(servicioDto.getNombre());
+        servicio.setDescripcion(servicioDto.getDescripcion());
+        return servicio;
+    }
 
 }
 

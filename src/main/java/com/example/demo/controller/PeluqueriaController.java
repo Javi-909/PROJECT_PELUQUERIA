@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.PeluqueriaDto;
+import com.example.demo.dto.ServicioDto;
 import com.example.demo.dto.ServicioResponseDto;
 import com.example.demo.service.ServicioService;
 import com.example.demo.service.PeluqueriaService;
@@ -50,10 +51,15 @@ public class PeluqueriaController {
         peluqueriaService.deletePeluqueria(id);
     }
 
+    //@PostMapping("/{id}/añadirServicio")
+    //public ServicioDto añadirServicioToPeluqueria(Integer servicioId, Integer peluqueriaId){
+      //  return peluqueriService.
+    //}
+
 
     }
 
 
 
-    // ...otros métodos (mostrarClienteId,actualizarClienteId...)
+    // ...otros métodos (actualizarClienteId...)
 

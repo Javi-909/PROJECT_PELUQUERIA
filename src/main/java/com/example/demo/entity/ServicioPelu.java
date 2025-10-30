@@ -12,9 +12,7 @@ public class ServicioPelu {
     private Integer id;
 
     private Integer peluqueria_id;
-
     private Integer servicio_id;
-
     private Integer precio;
     private Integer duracion;
 

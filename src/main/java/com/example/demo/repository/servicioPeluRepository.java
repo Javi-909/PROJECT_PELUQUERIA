@@ -18,4 +18,5 @@ public interface servicioPeluRepository extends JpaRepository<ServicioPelu, Inte
             "WHERE sp.peluqueria_id = :peluqueriaId", nativeQuery = true)
     List<ServicioJoinProjection> findServiciosByPeluqueriaId(@Param("peluqueriaId") Integer peluqueriaId);
 
+
 }

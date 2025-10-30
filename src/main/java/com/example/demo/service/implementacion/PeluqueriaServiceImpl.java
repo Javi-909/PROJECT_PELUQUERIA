@@ -2,9 +2,11 @@ package com.example.demo.service.implementacion;
 
 
 import com.example.demo.dto.PeluqueriaDto;
+import com.example.demo.dto.ServicioDto;
 import com.example.demo.dto.ServicioPeluDto;
 import com.example.demo.dto.ServicioResponseDto;
 import com.example.demo.entity.Peluqueria;
+import com.example.demo.entity.Servicio;
 import com.example.demo.entity.ServicioPelu;
 import com.example.demo.mapper.PeluqueriaMapper;
 import com.example.demo.repository.projection.ServicioJoinProjection;
@@ -18,6 +20,7 @@ import com.example.demo.repository.peluqueriaRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,6 +78,16 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     public void deletePeluqueria(Integer id){
         peluqueriaRepository1.deleteById(id);
     }
+
+   // public ServicioDto añadirServicioToPeluqueria(Integer servicioId, Integer peluqueriaId, Integer Precio, Integer Duracion){
+
+     //       Optional<Servicio> servicio = servicioRepository1.findById(servicioId);
+       //     Optional<Peluqueria> peluqueria = peluqueriaRepository1.findById(peluqueriaId);
+
+        //Optional<Servicio> saved =  servicioPeluRepository1.save(peluqueria);
+
+//    }
+
     private PeluqueriaDto toDto(Peluqueria peluqueria) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (peluqueria == null) return null;
         PeluqueriaDto dto = new PeluqueriaDto();
