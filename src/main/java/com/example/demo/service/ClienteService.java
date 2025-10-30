@@ -16,6 +16,6 @@ public interface ClienteService {
 
     ClienteDto createCliente(ClienteDto clienteDto);
 
-    //void deleteCliente(Integer id);
+    void deleteCliente(Integer id);
 
 }

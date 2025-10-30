@@ -38,6 +38,8 @@ public class ClienteServiceImpl implements ClienteService {
    public ClienteDto createCliente(ClienteDto clienteDto) {
        Cliente cliente = this.toEntity(clienteDto);
        Cliente saved = clienteRepository1.save(cliente);
+       //como el metodo save ya contiene el insert into, no hace falta hacer query en repository
+
        return this.toDto(saved);
    }
     @Override
@@ -47,6 +49,14 @@ public class ClienteServiceImpl implements ClienteService {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    @Override
+    public void deleteCliente(Integer id) {
+        if (!clienteRepository1.existsById(id)) {
+            throw new RuntimeException("Cliente con id " + id + " no existe");
+        }
+        clienteRepository1.deleteById(id);
+    }
+
     private ClienteDto toDto(Cliente cliente) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (cliente == null) return null;
         ClienteDto dto = new ClienteDto();
@@ -65,8 +75,4 @@ public class ClienteServiceImpl implements ClienteService {
     }
 }
 
-
-//public void deleteCliente(Integer id) {
-    //clienteRepository.deleteById(id);
-//}
 
