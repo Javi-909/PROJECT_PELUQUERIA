@@ -20,7 +20,7 @@ public class ServicioPeluController {
     private ServicioPeluService servicioPeluService;
 
     @PostMapping("/create")
-    public ServicioDto añadirServicioApeluqueria( Integer ServicioId, Integer PeluqueriaId, Integer precio, Integer duracion) {
-        return servicioPeluService.createCliente(servicioDto);
+    public ServicioDto añadirServicioApeluqueria( Integer servicioId, Integer peluqueriaId, Integer precio, Integer duracion) {
+        return servicioPeluService.añadirServicioApeluqueria(servicioId,peluqueriaId,precio,duracion);
     }
 }
