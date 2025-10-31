@@ -18,8 +18,6 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private clienteRepository clienteRepository1;
 
-    @Autowired
-    ClienteMapper clienteMapper;
 
     @Override
     public List<ClienteDto> findAll() {  //mapeo natural sin MapStruct pq daba error en postman
