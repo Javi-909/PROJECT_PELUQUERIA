@@ -51,10 +51,12 @@ public class PeluqueriaController {
         peluqueriaService.deletePeluqueria(id);
     }
 
-    //@PostMapping("/{id}/añadirServicio")
-    //public ServicioDto añadirServicioToPeluqueria(Integer servicioId, Integer peluqueriaId){
-      //  return peluqueriService.
-    //}
+    /*
+
+    public Horario createHorario (....)
+    public Horario updateHorario (...)
+
+     */
 
 
     }
