@@ -25,7 +25,7 @@ public class ServicioPeluServiceImpl implements ServicioPeluService {
     @Autowired
     private peluqueriaRepository peluqueriaRepository1;
 
-
+    //AÑADIR UN SERVICIO A UNA PELUQUERIA
     @Override
     @Transactional
     public ServicioPeluDto añadirServicioApeluqueria(ServicioPeluCreacionDto request) {
@@ -53,6 +53,8 @@ public class ServicioPeluServiceImpl implements ServicioPeluService {
         return dto;
     }
 
+
+    //METODOS PRIVADOS
 
     private ServicioPeluDto toDto(ServicioPelu servicioPelu) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicioPelu y servicioPeluDto
         if (servicioPelu == null) return null;

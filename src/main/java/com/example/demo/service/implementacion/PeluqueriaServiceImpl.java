@@ -1,14 +1,13 @@
 package com.example.demo.service.implementacion;
 
 
-import com.example.demo.dto.PeluqueriaDto;
-import com.example.demo.dto.ServicioDto;
-import com.example.demo.dto.ServicioPeluDto;
-import com.example.demo.dto.ServicioResponseDto;
+import com.example.demo.dto.*;
+import com.example.demo.entity.Horario;
 import com.example.demo.entity.Peluqueria;
 import com.example.demo.entity.Servicio;
 import com.example.demo.entity.ServicioPelu;
 import com.example.demo.mapper.PeluqueriaMapper;
+import com.example.demo.repository.horarioRepository;
 import com.example.demo.repository.projection.ServicioJoinProjection;
 import com.example.demo.repository.servicioPeluRepository;
 import com.example.demo.repository.servicioRepository;
@@ -19,6 +18,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.repository.peluqueriaRepository;
 
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,9 +33,8 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     private servicioRepository servicioRepository1;
     @Autowired
     private servicioPeluRepository servicioPeluRepository1;
-
     @Autowired
-    PeluqueriaMapper peluqueriaMapper;
+    private horarioRepository horarioRepository1;
 
     @Override
     public List<PeluqueriaDto> findAll() {
@@ -45,13 +45,15 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     }
 
 
-
+    //CREAR PELUQUERIA
     @Override
     public PeluqueriaDto createPeluqueria(PeluqueriaDto peluqueriaDto) {
         Peluqueria peluqueria = this.toEntity(peluqueriaDto);
         Peluqueria saved = peluqueriaRepository1.save(peluqueria); //con el metodo save, solo puedo guardar entitys (pq es base de datos)
         return this.toDto(saved);
     }
+
+    //MOSTRAR PELUQUERIA
     @Override
     public ResponseEntity<PeluqueriaDto> mostrarPeluqueriaPorId(Integer id) {
         return peluqueriaRepository1.findById(id)
@@ -60,7 +62,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
+    //VER SERVICIOS DE UNA PELUQUERIA
     @Override
     public ResponseEntity<List<ServicioResponseDto>> listarServiciosPorPeluqueria(Integer peluqueriaId) {
         List<ServicioJoinProjection> rows = servicioPeluRepository1.findServiciosByPeluqueriaId(peluqueriaId);
@@ -75,18 +77,29 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
 
         return ResponseEntity.ok(dtos);
     }
+
+    //ELIMINAR PELUQUERIA
     public void deletePeluqueria(Integer id){
         peluqueriaRepository1.deleteById(id);
     }
 
-   // public ServicioDto añadirServicioToPeluqueria(Integer servicioId, Integer peluqueriaId, Integer Precio, Integer Duracion){
+    //CREAR HORARIO
+    public ResponseEntity<HorarioDto> createHorario(Integer peluqueriaId, HorarioDto horarioDto){
+        if(!peluqueriaRepository1.existsById(peluqueriaId)){
+            throw new RuntimeException("No existe la peluqueria con id:" + peluqueriaId);
+        }
+        Horario horario = toEntity(horarioDto,peluqueriaId);
+        Horario saved = horarioRepository1.save(horario);
+        return ResponseEntity.ok(toDto(saved));
+    }
 
-     //       Optional<Servicio> servicio = servicioRepository1.findById(servicioId);
-       //     Optional<Peluqueria> peluqueria = peluqueriaRepository1.findById(peluqueriaId);
+    //CONSULTAR HORARIO??
 
-        //Optional<Servicio> saved =  servicioPeluRepository1.save(peluqueria);
+    //ACTUALIZAR HORARIO
 
-//    }
+
+
+    //METODOS PRIVADOS
 
     private PeluqueriaDto toDto(Peluqueria peluqueria) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (peluqueria == null) return null;
@@ -113,6 +126,24 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         dto.setPrecio(servicioPelu.getPrecio());
         dto.setDuracion(servicioPelu.getDuracion());
         return dto;
+    }
+    private Horario toEntity(HorarioDto horarioDto,Integer peluqueriaId) {  //sirve para hacer el mappeo natural (sin MapStruct)
+        if (horarioDto == null) return null;
+        Horario horario = new Horario();
+        horario.setPeluqueriaId(peluqueriaId);
+        horario.setHoraApertura(horarioDto.getHoraApertura());
+        horario.setHoraCierre(horarioDto.getHoraCierre());
+        horario.setDiaSemana(horarioDto.getDia_semana());
+        return horario;
+    }
+
+    private HorarioDto toDto(Horario horario) {  //sirve para hacer el mappeo natural (sin MapStruct)
+        if (horario == null) return null;
+        HorarioDto horarioDto = new HorarioDto();
+        horarioDto.setHoraApertura(horario.getHoraApertura());
+        horarioDto.setHoraCierre(horarioDto.getHora_cierre());
+        horario.setDiaSemana(horarioDto.getDia_semana());
+        return horarioDto;
     }
 
 }

@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dto.HorarioDto;
 import com.example.demo.dto.PeluqueriaDto;
 import com.example.demo.dto.ServicioDto;
 import com.example.demo.dto.ServicioResponseDto;
+import com.example.demo.entity.Horario;
 import com.example.demo.service.ServicioService;
 import com.example.demo.service.PeluqueriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +53,13 @@ public class PeluqueriaController {
         peluqueriaService.deletePeluqueria(id);
     }
 
-    /*
 
-    public Horario createHorario (....)
+    @PostMapping("/createhorario/{id}")
+    public ResponseEntity<HorarioDto> createHorario(@PathVariable Integer peluqueriaId, HorarioDto horarioDto){
+        return peluqueriaService.createHorario(peluqueriaId,horarioDto);
+    }
+
+    /*
     public Horario updateHorario (...)
 
      */
