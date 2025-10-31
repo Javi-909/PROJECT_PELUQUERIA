@@ -54,8 +54,8 @@ public class PeluqueriaController {
     }
 
 
-    @PostMapping("/createhorario/{id}")
-    public ResponseEntity<HorarioDto> createHorario(@PathVariable Integer peluqueriaId, HorarioDto horarioDto){
+    @PostMapping("/createhorario/{peluqueriaId}")
+    public ResponseEntity<HorarioDto> createHorario(@PathVariable Integer peluqueriaId, @RequestBody HorarioDto horarioDto){
         return peluqueriaService.createHorario(peluqueriaId,horarioDto);
     }
 
