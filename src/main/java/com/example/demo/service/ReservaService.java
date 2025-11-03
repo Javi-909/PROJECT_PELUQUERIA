@@ -1,4 +1,5 @@
 package com.example.demo.service;
+
 import com.example.demo.dto.ClienteDto;
 import com.example.demo.dto.ReservaDto;
 import com.example.demo.entity.Cliente;
@@ -7,17 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+public interface ReservaService {
 
-@Service
-public interface ClienteService {
+    ReservaDto createReserva(Integer clienteId, CreateReservaDto dto);
 
-    List<ClienteDto> findAll();
+    List<ReservaDto> findByClienteId(Integer clienteId);
 
-    ResponseEntity<ClienteDto> mostrarClientePorId(Integer id);
-
-    ClienteDto createCliente(ClienteDto clienteDto);
-
-    void deleteCliente(Integer id);
-
+    void cancelReserva(Integer clienteId, Integer reservaId);
 
 }
