@@ -24,4 +24,6 @@ public interface PeluqueriaService {
 
     public void deleteHorario(Integer id);
 
+    public ResponseEntity<HorarioDto> actualizarHorario(Integer id, HorarioDto horarioDto);
+
 }

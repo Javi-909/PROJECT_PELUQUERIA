@@ -12,6 +12,7 @@ import com.example.demo.repository.projection.ServicioJoinProjection;
 import com.example.demo.repository.servicioPeluRepository;
 import com.example.demo.repository.servicioRepository;
 import com.example.demo.service.PeluqueriaService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -93,14 +94,38 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         return ResponseEntity.ok(toDto(saved));
     }
 
-    //ELIMINAR HORARIO (hay que añadir en el body id y su value)
+    //ELIMINAR HORARIO (hay que añadir en el body id y su value, en Postman)
     public void deleteHorario(Integer id){
         horarioRepository1.deleteById(id);
     }
 
-    //CONSULTAR HORARIO??
 
     //ACTUALIZAR HORARIO
+    @Transactional
+    public ResponseEntity<HorarioDto> actualizarHorario(Integer id, HorarioDto horarioDto) {
+
+     if (horarioDto == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return horarioRepository1.findById(id)
+            .map(horario -> {
+                // Se actualiza los campos que son no-NULL
+
+                if (horarioDto.getHoraApertura() != null) {
+                    horario.setHoraApertura(horarioDto.getHoraApertura());
+                }
+                if (horarioDto.getHoraCierre() != null) {
+                    horario.setHoraCierre(horarioDto.getHoraCierre());
+                }
+                if (horarioDto.getDiaSemana() != null) {
+                    horario.setDiaSemana(horarioDto.getDiaSemana());
+                }
+
+                Horario saved = horarioRepository1.save(horario);
+                return ResponseEntity.ok(toDto(saved));
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
 
 
 
