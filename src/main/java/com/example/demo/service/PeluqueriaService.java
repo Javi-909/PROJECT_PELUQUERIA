@@ -22,4 +22,6 @@ public interface PeluqueriaService {
 
     ResponseEntity<HorarioDto> createHorario(Integer peluqueriaId, HorarioDto horarioDto);
 
+    public void deleteHorario(Integer id);
+
 }

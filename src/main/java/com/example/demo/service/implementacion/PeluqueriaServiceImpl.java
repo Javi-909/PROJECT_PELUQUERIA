@@ -83,7 +83,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         peluqueriaRepository1.deleteById(id);
     }
 
-    //CREAR HORARIO
+    //CREAR HORARIO PARA UNA PELUQUERIA
     public ResponseEntity<HorarioDto> createHorario(Integer peluqueriaId, HorarioDto horarioDto){
         if(!peluqueriaRepository1.existsById(peluqueriaId)){
             throw new RuntimeException("No existe la peluqueria con id:" + peluqueriaId);
@@ -91,6 +91,11 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         Horario horario = toEntity(horarioDto,peluqueriaId);
         Horario saved = horarioRepository1.save(horario);
         return ResponseEntity.ok(toDto(saved));
+    }
+
+    //ELIMINAR HORARIO (hay que añadir en el body id y su value)
+    public void deleteHorario(Integer id){
+        horarioRepository1.deleteById(id);
     }
 
     //CONSULTAR HORARIO??
@@ -133,7 +138,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         horario.setPeluqueriaId(peluqueriaId);
         horario.setHoraApertura(horarioDto.getHoraApertura());
         horario.setHoraCierre(horarioDto.getHoraCierre());
-        horario.setDiaSemana(horarioDto.getDia_semana());
+        horario.setDiaSemana(horarioDto.getDiaSemana());
         return horario;
     }
 

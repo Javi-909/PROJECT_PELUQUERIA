@@ -18,7 +18,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private clienteRepository clienteRepository1;
 
-
+    //LISTAR TODOS LOS CLIENTES
     @Override
     public List<ClienteDto> findAll() {  //mapeo natural sin MapStruct pq daba error en postman
         List<Cliente> clientes = clienteRepository1.findAll();
@@ -32,6 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
 
+    //CREAR CLIENTE
    @Override
    public ClienteDto createCliente(ClienteDto clienteDto) {
        Cliente cliente = this.toEntity(clienteDto);
@@ -40,6 +41,8 @@ public class ClienteServiceImpl implements ClienteService {
 
        return this.toDto(saved);
    }
+
+   //MOSTRAR CLIENTE POR ID
     @Override
     public ResponseEntity<ClienteDto> mostrarClientePorId(Integer id) {
         return clienteRepository1.findById(id)
@@ -47,6 +50,8 @@ public class ClienteServiceImpl implements ClienteService {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    //ELIMINAR CLIENTE
     @Override
     public void deleteCliente(Integer id) {
         if (!clienteRepository1.existsById(id)) {
@@ -54,6 +59,9 @@ public class ClienteServiceImpl implements ClienteService {
         }
         clienteRepository1.deleteById(id);
     }
+
+
+    //METODOS PRIVADOS
 
     private ClienteDto toDto(Cliente cliente) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (cliente == null) return null;

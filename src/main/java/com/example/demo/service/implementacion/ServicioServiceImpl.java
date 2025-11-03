@@ -27,6 +27,8 @@ public class ServicioServiceImpl implements ServicioService {
     @Autowired
     ServicioMapper servicioMapper;
 
+
+    //LISTAR TODOS LOS SERVICIOS
     @Override
     public List<ServicioDto> findAll() {
         List<Servicio> servicio = servicioRepository1.findAll();
@@ -35,6 +37,7 @@ public class ServicioServiceImpl implements ServicioService {
                 .collect(Collectors.toList());
     }
 
+    //CREAR SERVICIO (GENÉRICO)
     @Override
     public ServicioDto createServicio(ServicioDto servicioDto) { //crear servicio genérico (corte barba, teñir..)
         Servicio servicio = this.toEntity(servicioDto);
@@ -42,6 +45,8 @@ public class ServicioServiceImpl implements ServicioService {
         return this.toDto(saved);
     }
 
+
+    //MOSTRAR SERVICIO POR ID
     @Override
     public ResponseEntity<ServicioDto> mostrarServicioPorId(Integer id) {
         return servicioRepository1.findById(id)
@@ -50,10 +55,15 @@ public class ServicioServiceImpl implements ServicioService {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Override //poner arriba de metodos private
+
+    //ELIMINAR SERVICIO
+    @Override
     public void deleteServicio(Integer id) {
         servicioRepository1.deleteById(id);
     }
+
+
+    //METODOS PRIVADOS
 
     private ServicioDto toDto(Servicio servicio) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicio y servicioDto
         if (servicio == null) return null;

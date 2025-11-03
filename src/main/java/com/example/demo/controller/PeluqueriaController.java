@@ -59,6 +59,11 @@ public class PeluqueriaController {
         return peluqueriaService.createHorario(peluqueriaId,horarioDto);
     }
 
+    @DeleteMapping("/deletehorario/{id}")
+    public void deleteHorario(Integer id){
+        peluqueriaService.deleteHorario(id);
+    }
+
     /*
     public Horario updateHorario (...)
 
