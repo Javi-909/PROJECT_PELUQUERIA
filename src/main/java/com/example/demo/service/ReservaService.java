@@ -15,6 +15,6 @@ public interface ReservaService {
 
     List<ReservaDto> findByClienteId(Integer clienteId);
 
-   // void cancelReserva(Integer clienteId, Integer reservaId);
+   // void cancelaReserva(Integer clienteId, Integer reservaId);
 
 }

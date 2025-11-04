@@ -72,13 +72,15 @@ import java.util.stream.Collectors;
 
         }
 
+    /*
+        public void cancelaReserva(Integer clienteId, Integer reservaId){
 
-       // public void cancelReserva(Integer clienteId, Integer reservaId){
+            List<ReservaCliente> reservas = reservaClienteRepository1.findByReserva_id(reservaId);
 
 
-        //}
+        }
 
-
+        */
         //METODOS PRIVADOS
         private ReservaDto toDto(Reserva reserva) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicio y servicioDto
             if (reserva == null) return null;

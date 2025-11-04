@@ -35,7 +35,7 @@ public class ReservaController {
    }
 
 
-   //public void cancelReserva(Integer clienteId, Integer reservaId){
+   //public void cancelaReserva(Integer clienteId, Integer reservaId){
 
    //}
 
