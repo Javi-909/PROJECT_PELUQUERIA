@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface ReservaService {
 
-    ReservaDto createReserva(Integer clienteId, CreateReservaDto dto);
+    ReservaDto createReserva(Integer clienteId, ReservaDto dto);
 
     List<ReservaDto> findByClienteId(Integer clienteId);
 
-    void cancelReserva(Integer clienteId, Integer reservaId);
+   // void cancelReserva(Integer clienteId, Integer reservaId);
 
 }

@@ -16,7 +16,12 @@ public class Reserva {
     private Integer id;
     private Date fecha;
     private Time hora;
-    private Enum estado; //Pendiente, Confirmada, Cancelada
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado")
+    private EstadoReserva estado; //Pendiente, Confirmada, Cancelada
+
+    @Column(name = "serviciopelu_id")
     private Integer idServicioPelu;
 
     public Integer getId() {
@@ -28,7 +33,7 @@ public class Reserva {
     public Time getHora() {
         return hora;
     }
-    public Enum getEstado() {
+    public EstadoReserva getEstado() {
         return estado;
     }
     public Integer getIdServicioPelu() {
@@ -45,7 +50,7 @@ public class Reserva {
     public void setHora(Time hora) {
         this.hora = hora;
     }
-    public void setEstado(Enum estado) {
+    public void setEstado(EstadoReserva estado) {
         this.estado = estado;
     }
     public void setIdServicioPelu(Integer idServicioPelu) {
