@@ -1,7 +1,7 @@
 package com.example.demo.dto;
 
 
-//clase auxiliar que se usa para listar los servicios de cada peluqueria.
+//clase auxiliar que se usa para  el metodo de listar los servicios de cada peluqueria.
 //Mezcla servicioPeluDto con servicioDto
 
 public class ServicioResponseDto {
