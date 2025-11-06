@@ -4,6 +4,7 @@ package com.example.demo.service.implementacion;
 import com.example.demo.dto.ServicioPeluCreacionDto;
 import com.example.demo.dto.ServicioPeluDto;
 import com.example.demo.entity.ServicioPelu;
+import com.example.demo.mapper.ServicioPeluMapper;
 import com.example.demo.repository.peluqueriaRepository;
 import com.example.demo.repository.servicioPeluRepository;
 import com.example.demo.service.ServicioPeluService;
@@ -24,6 +25,17 @@ public class ServicioPeluServiceImpl implements ServicioPeluService {
     private servicioRepository servicioRepository1;
     @Autowired
     private peluqueriaRepository peluqueriaRepository1;
+
+    private ServicioPeluMapper servicioPeluMapper;
+
+
+    public ServicioPeluServiceImpl(servicioPeluRepository servicioPeluRepository1, servicioRepository servicioRepository1, peluqueriaRepository peluqueriaRepository1,
+                                   ServicioPeluMapper servicioPeluMapper){
+        this.servicioPeluMapper = servicioPeluMapper;
+        this.servicioPeluRepository1 = servicioPeluRepository1;
+        this.peluqueriaRepository1 = peluqueriaRepository1;
+        this.servicioRepository1 = servicioRepository1;
+    }
 
     //AÑADIR UN SERVICIO A UNA PELUQUERIA
     @Override
@@ -49,18 +61,7 @@ public class ServicioPeluServiceImpl implements ServicioPeluService {
         servicioPelu.setPrecio(precio);
 
         ServicioPelu saved = servicioPeluRepository1.save(servicioPelu);
-        ServicioPeluDto dto = this.toDto(saved);
-        return dto;
-    }
-
-
-    //METODOS PRIVADOS
-
-    private ServicioPeluDto toDto(ServicioPelu servicioPelu) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicioPelu y servicioPeluDto
-        if (servicioPelu == null) return null;
-        ServicioPeluDto dto = new ServicioPeluDto();
-        dto.setPrecio(servicioPelu.getPrecio());
-        dto.setDuracion(servicioPelu.getDuracion());
+        ServicioPeluDto dto = servicioPeluMapper.toDto(saved);
         return dto;
     }
 

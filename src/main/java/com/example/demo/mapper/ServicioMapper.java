@@ -15,5 +15,8 @@ public interface ServicioMapper {
     ServicioDto toDto(Servicio servicio);
     Servicio toEntity(ServicioDto servicioDto);
 
+    List<ServicioDto> toDtoList(List<Servicio> servicios);
+    List<Servicio> toEntityList(List<ServicioDto> dtos);
+
 
 }

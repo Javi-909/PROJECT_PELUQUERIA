@@ -14,6 +14,8 @@ public interface HorarioMapper {
 
     HorarioDto toDto(Horario horario);
     Horario toEntity(HorarioDto horarioDto);
+    List<HorarioDto> toDtoList(List<Horario> horarios);
+    List<Horario> toEntityList(List<HorarioDto> dtos);
 
 
 }

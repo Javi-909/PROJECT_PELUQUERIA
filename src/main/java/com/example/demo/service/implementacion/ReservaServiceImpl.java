@@ -1,10 +1,12 @@
 package com.example.demo.service.implementacion;
 
+import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
 import com.example.demo.entity.Cliente;
 import com.example.demo.entity.EstadoReserva;
 import com.example.demo.entity.Reserva;
 import com.example.demo.entity.ReservaCliente;
+import com.example.demo.mapper.ReservaMapper;
 import com.example.demo.repository.clienteRepository;
 import com.example.demo.repository.reservaClienteRepository;
 import com.example.demo.repository.reservaRepository;
@@ -28,6 +30,15 @@ import java.util.stream.Collectors;
         @Autowired
         private reservaClienteRepository reservaClienteRepository1;
 
+        private ReservaMapper reservaMapper;
+
+        public ReservaServiceImpl(ReservaMapper reservaMapper, reservaClienteRepository reservaClienteRepository1, reservaRepository reservaRepository1, clienteRepository clienteRepository1){
+            this.reservaMapper = reservaMapper;
+            this.clienteRepository1 = clienteRepository1;
+            this.reservaRepository1 = reservaRepository1;
+            this.reservaClienteRepository1 = reservaClienteRepository1;
+        }
+
 
         //CREAR RESERVA MEDIANTE ID DE CLIENTE
         @Override
@@ -50,7 +61,7 @@ import java.util.stream.Collectors;
                 throw new RuntimeException("El horario ya está reservado para ese servicio");
             }
 
-            Reserva reserva = toEntity(dto);
+            Reserva reserva = reservaMapper.toEntity(dto);
             //guardamos la entity y pasamos a dto
             Reserva saved = reservaRepository1.save(reserva);
 
@@ -60,7 +71,7 @@ import java.util.stream.Collectors;
             mapping.setReserva_id(saved.getId());
             reservaClienteRepository1.save(mapping);
 
-            return toDto(saved);
+            return reservaMapper.toDto(saved);
 
         }
 
@@ -68,7 +79,7 @@ import java.util.stream.Collectors;
         @Override
         public List<ReservaDto> findByClienteId(Integer clienteId){
             return reservaRepository1.findByClienteId(clienteId) //devuelve una entity de Reserva
-                    .stream().map(this::toDto).collect(Collectors.toList());
+                    .stream().map(reservaMapper::toDto).collect(Collectors.toList());
 
         }
 
@@ -80,27 +91,11 @@ import java.util.stream.Collectors;
 
         }
 
-        */
-        //METODOS PRIVADOS
-        private ReservaDto toDto(Reserva reserva) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicio y servicioDto
-            if (reserva == null) return null;
-            ReservaDto dto = new ReservaDto();
-            dto.setFecha(reserva.getFecha());
-            dto.setHora(reserva.getHora());
-            //dto.setEstado(EstadoReserva.PENDIENTE);
-            dto.setIdServicioPelu(reserva.getIdServicioPelu());
-            return dto;
-        }
+     */
 
-        private Reserva toEntity(ReservaDto dto){
-            if(dto == null) return null;
-            Reserva reserva = new Reserva();
-            //reserva.setEstado(dto.getEstado());
-            reserva.setFecha(dto.getFecha());
-            reserva.setHora(dto.getHora());
-            reserva.setIdServicioPelu(dto.getIdServicioPelu());
-            return reserva;
-        }
+
+
+
 
     }
 

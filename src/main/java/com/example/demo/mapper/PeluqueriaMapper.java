@@ -1,7 +1,7 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.*;
-import com.example.demo.entity.*;
+import com.example.demo.dto.PeluqueriaDto;
+import com.example.demo.entity.Peluqueria;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -14,6 +14,9 @@ public interface PeluqueriaMapper {
 
     PeluqueriaDto toDto(Peluqueria peluqueria);
     Peluqueria toEntity(PeluqueriaDto peluqueriaDto);
+
+    List<PeluqueriaDto> toDtoList(List<Peluqueria> peluquerias);
+    List<Peluqueria> toEntityList(List<PeluqueriaDto> dtos);
 
 
 }

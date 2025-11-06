@@ -19,6 +19,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private clienteRepository clienteRepository1;
+    private ClienteMapper clienteMapper;
+
+    public ClienteServiceImpl(ClienteMapper clienteMapper, clienteRepository clienteRepository1) {
+        this.clienteMapper = clienteMapper;
+        this.clienteRepository1 = clienteRepository1;
+    }
 
     //LISTAR TODOS LOS CLIENTES
     @Override
@@ -37,18 +43,18 @@ public class ClienteServiceImpl implements ClienteService {
     //CREAR CLIENTE
    @Override
    public ClienteDto createCliente(ClienteDto clienteDto) {
-       Cliente cliente = this.toEntity(clienteDto);
+       Cliente cliente = clienteMapper.toEntity(clienteDto);
        Cliente saved = clienteRepository1.save(cliente);
        //como el metodo save ya contiene el insert into, no hace falta hacer query en repository
 
-       return this.toDto(saved);
+       return clienteMapper.toDto(saved);
    }
 
    //MOSTRAR CLIENTE POR ID
     @Override
     public ResponseEntity<ClienteDto> mostrarClientePorId(Integer id) {
         return clienteRepository1.findById(id)
-                .map(this::toDto)
+                .map(clienteMapper::toDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -62,25 +68,6 @@ public class ClienteServiceImpl implements ClienteService {
         clienteRepository1.deleteById(id);
     }
 
-
-    //METODOS PRIVADOS
-
-    private ClienteDto toDto(Cliente cliente) {  //sirve para hacer el mappeo natural (sin MapStruct)
-        if (cliente == null) return null;
-        ClienteDto dto = new ClienteDto();
-        dto.setNombre(cliente.getNombre());
-        dto.setEmail(cliente.getEmail());
-        dto.setGenero(cliente.getGenero());
-        return dto;
-    }
-    private Cliente toEntity(ClienteDto clienteDto){   //mappeo de dto a entity
-        if (clienteDto == null) return null;
-        Cliente cliente = new Cliente();
-        cliente.setNombre(clienteDto.getNombre());
-        cliente.setEmail(clienteDto.getEmail());
-        cliente.setGenero(clienteDto.getGenero());
-        return cliente;
-    }
 }
 
 

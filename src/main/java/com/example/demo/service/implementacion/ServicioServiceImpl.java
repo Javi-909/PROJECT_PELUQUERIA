@@ -22,10 +22,17 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Autowired
     private servicioRepository servicioRepository1;
+    @Autowired
     private servicioPeluRepository servicioPeluRepository1;
 
     @Autowired
     ServicioMapper servicioMapper;
+
+    public ServicioServiceImpl(servicioRepository servicioRepository1, servicioPeluRepository servicioPeluRepository1, ServicioMapper servicioMapper){
+        this.servicioMapper = servicioMapper;
+        this.servicioPeluRepository1 = servicioPeluRepository1;
+        this.servicioRepository1 = servicioRepository1;
+    }
 
 
     //LISTAR TODOS LOS SERVICIOS
@@ -33,16 +40,16 @@ public class ServicioServiceImpl implements ServicioService {
     public List<ServicioDto> findAll() {
         List<Servicio> servicio = servicioRepository1.findAll();
         return servicio.stream()
-                .map(this::toDto)
+                .map(servicioMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     //CREAR SERVICIO (GENÉRICO)
     @Override
     public ServicioDto createServicio(ServicioDto servicioDto) { //crear servicio genérico (corte barba, teñir..)
-        Servicio servicio = this.toEntity(servicioDto);
+        Servicio servicio = servicioMapper.toEntity(servicioDto);
         Servicio saved = servicioRepository1.save(servicio);
-        return this.toDto(saved);
+        return servicioMapper.toDto(saved);
     }
 
 
@@ -50,7 +57,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Override
     public ResponseEntity<ServicioDto> mostrarServicioPorId(Integer id) {
         return servicioRepository1.findById(id)
-                .map(this::toDto)
+                .map(servicioMapper::toDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -60,33 +67,6 @@ public class ServicioServiceImpl implements ServicioService {
     @Override
     public void deleteServicio(Integer id) {
         servicioRepository1.deleteById(id);
-    }
-
-
-    //METODOS PRIVADOS
-
-    private ServicioDto toDto(Servicio servicio) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicio y servicioDto
-        if (servicio == null) return null;
-        ServicioDto dto = new ServicioDto();
-        dto.setNombre(servicio.getNombre());
-        dto.setDescripcion(servicio.getDescripcion());
-        return dto;
-    }
-
-    private ServicioPeluDto toDto(ServicioPelu servicioPelu) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicioPelu y servicioPeluDto
-        if (servicioPelu == null) return null;
-        ServicioPeluDto dto = new ServicioPeluDto();
-        dto.setPrecio(servicioPelu.getPrecio());
-        dto.setDuracion(servicioPelu.getDuracion());
-        return dto;
-    }
-
-    private Servicio toEntity(ServicioDto servicioDto) {
-        if (servicioDto == null) return null;
-        Servicio servicio = new Servicio();
-        servicio.setNombre(servicioDto.getNombre());
-        servicio.setDescripcion(servicioDto.getDescripcion());
-        return servicio;
     }
 
 }

@@ -6,7 +6,9 @@ import com.example.demo.entity.Horario;
 import com.example.demo.entity.Peluqueria;
 import com.example.demo.entity.Servicio;
 import com.example.demo.entity.ServicioPelu;
+import com.example.demo.mapper.HorarioMapper;
 import com.example.demo.mapper.PeluqueriaMapper;
+import com.example.demo.mapper.ServicioPeluMapper;
 import com.example.demo.repository.horarioRepository;
 import com.example.demo.repository.projection.ServicioJoinProjection;
 import com.example.demo.repository.servicioPeluRepository;
@@ -37,11 +39,28 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     @Autowired
     private horarioRepository horarioRepository1;
 
+    private PeluqueriaMapper peluqueriaMapper;
+    private HorarioMapper horarioMapper;
+    private ServicioPeluMapper servicioPeluMapper;
+
+    public PeluqueriaServiceImpl(PeluqueriaMapper peluqueriaMapper, horarioRepository horarioRepository1,
+                                 servicioRepository servicioRepository1, servicioPeluRepository servicioPeluRepository1, peluqueriaRepository peluqueriaRepository1, HorarioMapper horarioMapper,
+                                 ServicioPeluMapper servicioPeluMapper){
+        this.horarioRepository1 = horarioRepository1;
+        this.peluqueriaMapper = peluqueriaMapper;
+        this.peluqueriaRepository1 = peluqueriaRepository1;
+        this.servicioPeluRepository1 = servicioPeluRepository1;
+        this.servicioRepository1 = servicioRepository1;
+        this.horarioMapper = horarioMapper;
+        this.servicioPeluMapper = servicioPeluMapper;
+    }
+
+
     @Override
     public List<PeluqueriaDto> findAll() {
         List<Peluqueria> peluqueria = peluqueriaRepository1.findAll();
         return peluqueria.stream()
-                .map(this::toDto)
+                .map(peluqueriaMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -49,16 +68,16 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     //CREAR PELUQUERIA
     @Override
     public PeluqueriaDto createPeluqueria(PeluqueriaDto peluqueriaDto) {
-        Peluqueria peluqueria = this.toEntity(peluqueriaDto);
+        Peluqueria peluqueria = peluqueriaMapper.toEntity(peluqueriaDto);
         Peluqueria saved = peluqueriaRepository1.save(peluqueria); //con el metodo save, solo puedo guardar entitys (pq es base de datos)
-        return this.toDto(saved);
+        return peluqueriaMapper.toDto(saved);
     }
 
     //MOSTRAR PELUQUERIA
     @Override
     public ResponseEntity<PeluqueriaDto> mostrarPeluqueriaPorId(Integer id) {
         return peluqueriaRepository1.findById(id)
-                .map(this::toDto)
+                .map(peluqueriaMapper::toDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -89,7 +108,9 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         if(!peluqueriaRepository1.existsById(peluqueriaId)){
             throw new RuntimeException("No existe la peluqueria con id:" + peluqueriaId);
         }
-        Horario horario = toEntity(horarioDto,peluqueriaId);
+        Horario horario = this.toEntity(horarioDto,peluqueriaId);
+        //Hacer mapeo privado con horario, ya que se le pasa como parametro
+        //peluqueriaId, por lo que con mapStruct no serviria
         Horario saved = horarioRepository1.save(horario);
         return ResponseEntity.ok(toDto(saved));
     }
@@ -131,32 +152,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
 
     //METODOS PRIVADOS
 
-    private PeluqueriaDto toDto(Peluqueria peluqueria) {  //sirve para hacer el mappeo natural (sin MapStruct)
-        if (peluqueria == null) return null;
-        PeluqueriaDto dto = new PeluqueriaDto();
-        dto.setNombre(peluqueria.getNombre());
-        dto.setEmail(peluqueria.getEmail());
-        dto.setDireccion(peluqueria.getDireccion());
-        dto.setTelefono(peluqueria.getTelefono());
-        return dto;
-    }
-    private Peluqueria toEntity(PeluqueriaDto peluqueriaDto) {  //sirve para hacer el mappeo natural (sin MapStruct)
-        if (peluqueriaDto == null) return null;
-        Peluqueria peluqueria = new Peluqueria();
-        peluqueria.setNombre(peluqueriaDto.getNombre());
-        peluqueria.setEmail(peluqueriaDto.getEmail());
-        peluqueria.setDireccion(peluqueriaDto.getDireccion());
-        peluqueria.setTelefono(peluqueriaDto.getTelefono());
-        return peluqueria;
-    }
 
-    private ServicioPeluDto toDto(ServicioPelu servicioPelu) {  //sirve para hacer el mappeo natural (sin MapStruct) entre servicioPelu y servicioPeluDto
-        if (servicioPelu == null) return null;
-        ServicioPeluDto dto = new ServicioPeluDto();
-        dto.setPrecio(servicioPelu.getPrecio());
-        dto.setDuracion(servicioPelu.getDuracion());
-        return dto;
-    }
     private Horario toEntity(HorarioDto horarioDto,Integer peluqueriaId) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (horarioDto == null) return null;
         Horario horario = new Horario();
