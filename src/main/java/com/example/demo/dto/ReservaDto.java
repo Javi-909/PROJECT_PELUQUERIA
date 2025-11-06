@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 import java.sql.Time;
 import java.util.Date;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 
 public class ReservaDto {
 
-    //para poner en POSTMAN el body del JSON de esta forma
+    //para poner en POSTMAN el body del JSON de esta forma.  CAMBIAR A LOCALDATE Y LOCALDATETIME
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date fecha;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")

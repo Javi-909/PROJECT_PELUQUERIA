@@ -171,8 +171,8 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         if (horario == null) return null;
         HorarioDto horarioDto = new HorarioDto();
         horarioDto.setHoraApertura(horario.getHoraApertura());
-        horarioDto.setHoraCierre(horarioDto.getHora_cierre());
-        horario.setDiaSemana(horarioDto.getDia_semana());
+        horarioDto.setHoraCierre(horarioDto.getHoraCierre());
+        horario.setDiaSemana(horarioDto.getDiaSemana());
         return horarioDto;
     }
 

@@ -60,7 +60,7 @@ public class PeluqueriaController {
     }
 
     @DeleteMapping("/deletehorario/{id}")
-    public void deleteHorario(Integer id){
+    public void deleteHorario(@PathVariable Integer id){
         peluqueriaService.deleteHorario(id);
     }
 
