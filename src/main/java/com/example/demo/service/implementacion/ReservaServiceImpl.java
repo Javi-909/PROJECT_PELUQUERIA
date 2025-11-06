@@ -6,6 +6,7 @@ import com.example.demo.entity.Cliente;
 import com.example.demo.entity.EstadoReserva;
 import com.example.demo.entity.Reserva;
 import com.example.demo.entity.ReservaCliente;
+import com.example.demo.mapper.ReservaClienteMapper;
 import com.example.demo.mapper.ReservaMapper;
 import com.example.demo.repository.clienteRepository;
 import com.example.demo.repository.reservaClienteRepository;
@@ -15,7 +16,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,14 +31,18 @@ import java.util.stream.Collectors;
         private clienteRepository clienteRepository1;
         @Autowired
         private reservaClienteRepository reservaClienteRepository1;
-
+        @Autowired
         private ReservaMapper reservaMapper;
 
-        public ReservaServiceImpl(ReservaMapper reservaMapper, reservaClienteRepository reservaClienteRepository1, reservaRepository reservaRepository1, clienteRepository clienteRepository1){
+        @Autowired
+        private ReservaClienteMapper reservaClienteMapper;
+
+        public ReservaServiceImpl(ReservaMapper reservaMapper, reservaClienteRepository reservaClienteRepository1, reservaRepository reservaRepository1, clienteRepository clienteRepository1, ReservaClienteMapper reservaClienteMapper){
             this.reservaMapper = reservaMapper;
             this.clienteRepository1 = clienteRepository1;
             this.reservaRepository1 = reservaRepository1;
             this.reservaClienteRepository1 = reservaClienteRepository1;
+            this.reservaClienteMapper = reservaClienteMapper;
         }
 
 
@@ -45,13 +51,18 @@ import java.util.stream.Collectors;
         @Transactional
             public ReservaDto createReserva(Integer clienteId, ReservaDto dto) {
 
+            if(dto == null || dto.getFecha() == null || dto.getHora() == null){
+                throw new IllegalArgumentException("fecha y hora requeridas");
+            }
+
+
             //vemos si el cliente existe
             Cliente cliente = clienteRepository1.findById(clienteId)
                     .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
             // Comprobamos que la fecha solo sea futura (no puede ser fecha anterior)
-            Date fecha_hoy = new Date();
-            if(dto.getFecha().before(fecha_hoy)) {
+            LocalDate fecha_hoy = LocalDate.now();
+            if(dto.getFecha().isBefore(fecha_hoy)) {
                 throw new IllegalArgumentException("La fecha no puede ser pasada");
             }
 
@@ -77,9 +88,9 @@ import java.util.stream.Collectors;
 
         //MOSTRAR RESERVAS DE UN CLIENTE
         @Override
-        public List<ReservaDto> findByClienteId(Integer clienteId){
-            return reservaRepository1.findByClienteId(clienteId) //devuelve una entity de Reserva
-                    .stream().map(reservaMapper::toDto).collect(Collectors.toList());
+        public List<ReservaClienteDto> findByClienteId(Integer clienteId){
+            return reservaClienteRepository1.findByClienteId(clienteId) //devuelve una entity de Reserva
+                    .stream().map(reservaClienteMapper::toDto).collect(Collectors.toList());
 
         }
 

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ClienteDto;
+import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
 import com.example.demo.service.ClienteService;
 import com.example.demo.service.ReservaService;
@@ -30,8 +31,8 @@ public class ReservaController {
    }
 
    @GetMapping("/{clienteId}")
-   public ResponseEntity<List<ReservaDto>> findByClienteId(Integer clienteId){
-            return ResponseEntity.ok(reservaService.findByClienteId(clienteId));
+   public ResponseEntity<List<ReservaClienteDto>> findByClienteId(@PathVariable Integer clienteId){
+                return ResponseEntity.ok(reservaService.findByClienteId(clienteId));
    }
 
 

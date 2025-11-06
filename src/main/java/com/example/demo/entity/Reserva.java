@@ -3,8 +3,10 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
-import java.util.Date;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 
 @Entity
 @Table(name = "reserva")
@@ -14,8 +16,8 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Integer id;
-    private Date fecha;
-    private Time hora;
+    private LocalDate fecha;
+    private LocalTime hora;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
@@ -27,10 +29,10 @@ public class Reserva {
     public Integer getId() {
         return id;
     }
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
-    public Time getHora() {
+    public LocalTime getHora() {
         return hora;
     }
     public EstadoReserva getEstado() {
@@ -44,10 +46,10 @@ public class Reserva {
     public void setId(Integer id) {
         this.id = id;
     }
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
-    public void setHora(Time hora) {
+    public void setHora(LocalTime hora) {
         this.hora = hora;
     }
     public void setEstado(EstadoReserva estado) {

@@ -2,15 +2,14 @@ package com.example.demo.dto;
 
 
 import com.example.demo.entity.EstadoReserva;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.sql.Time;
-import java.util.Date;
+import lombok.NoArgsConstructor;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 
 
 @NoArgsConstructor
@@ -19,14 +18,11 @@ import java.util.Date;
 
 public class ReservaDto {
 
-    //para poner en POSTMAN el body del JSON de esta forma.  CAMBIAR A LOCALDATE Y LOCALDATETIME
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date fecha;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-    private Time hora;
+
+    private LocalDate fecha;
+    private LocalTime hora;
     //private EstadoReserva estado;
 
-    @Column(name = "serviciopelu_id")
     private Integer idServicioPelu;
 
     public Integer getIdServicioPelu() {
@@ -34,13 +30,13 @@ public class ReservaDto {
     public void setIdServicioPelu(Integer idServicioPelu) { this.idServicioPelu = idServicioPelu; }
 
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;}
-    public void setFecha(Date fecha) { this.fecha = fecha; }
+    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
 
 
-    public Time getHora() { return hora; }
-    public void setHora(Time hora) { this.hora = hora; }
+    public LocalTime getHora() { return hora; }
+    public void setHora(LocalTime hora) { this.hora = hora; }
 
     /*
     public EstadoReserva getEstado(){
