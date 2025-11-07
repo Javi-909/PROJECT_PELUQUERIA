@@ -17,12 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-    @Service
+@Service
     public class ReservaServiceImpl implements ReservaService{
 
         @Autowired
@@ -56,7 +55,6 @@ import java.util.stream.Collectors;
             if(dto == null || dto.getFecha() == null || dto.getHora() == null){
                 throw new IllegalArgumentException("fecha y hora requeridas");
             }
-
 
             //vemos si el cliente existe
             Cliente cliente = clienteRepository1.findById(clienteId)
@@ -99,6 +97,8 @@ import java.util.stream.Collectors;
                     .stream().map(reservaClienteMapper::toDto).collect(Collectors.toList());
 
         }
+
+
 
     /*
         public void cancelaReserva(Integer clienteId, Integer reservaId){
