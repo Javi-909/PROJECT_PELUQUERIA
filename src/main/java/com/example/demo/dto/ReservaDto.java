@@ -21,7 +21,7 @@ public class ReservaDto {
 
     private LocalDate fecha;
     private LocalTime hora;
-    //private EstadoReserva estado;
+    private EstadoReserva estado;
 
     private Integer idServicioPelu;
 
@@ -38,13 +38,13 @@ public class ReservaDto {
     public LocalTime getHora() { return hora; }
     public void setHora(LocalTime hora) { this.hora = hora; }
 
-    /*
+
     public EstadoReserva getEstado(){
         return estado;
     }
     public void setEstado(EstadoReserva estado){
         this.estado = estado;
     }
-*/
+
 
 }

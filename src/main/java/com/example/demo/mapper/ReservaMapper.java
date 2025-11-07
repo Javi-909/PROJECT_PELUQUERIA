@@ -15,8 +15,10 @@ public interface ReservaMapper {
 
     @Mapping(source="fecha", target = "fecha")
     @Mapping(source = "hora", target = "hora")
+    @Mapping(source = "estado", target = "estado")
     ReservaDto toDto(Reserva reserva);
 
+    @Mapping(source = "estado", target = "estado")
     Reserva toEntity(ReservaDto reservaDto);
 
 

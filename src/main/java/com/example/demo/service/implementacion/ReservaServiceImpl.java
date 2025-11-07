@@ -37,6 +37,8 @@ import java.util.stream.Collectors;
         @Autowired
         private ReservaClienteMapper reservaClienteMapper;
 
+        private EstadoReserva estadoReserva;
+
         public ReservaServiceImpl(ReservaMapper reservaMapper, reservaClienteRepository reservaClienteRepository1, reservaRepository reservaRepository1, clienteRepository clienteRepository1, ReservaClienteMapper reservaClienteMapper){
             this.reservaMapper = reservaMapper;
             this.clienteRepository1 = clienteRepository1;
@@ -70,6 +72,10 @@ import java.util.stream.Collectors;
             boolean exists = !reservaRepository1.findByIdServicioPeluAndFechaAndHora(dto.getIdServicioPelu(), dto.getFecha(), dto.getHora()).isEmpty();
             if (exists) {
                 throw new RuntimeException("El horario ya está reservado para ese servicio");
+            }
+
+            if(dto.getEstado() == null){ //si no ponemos nada en estado se pone PENDIENTE automatico
+                dto.setEstado(EstadoReserva.PENDIENTE);
             }
 
             Reserva reserva = reservaMapper.toEntity(dto);
