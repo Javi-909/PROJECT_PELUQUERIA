@@ -132,14 +132,14 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
             .map(horario -> {
                 // Se actualiza los campos que son no-NULL
 
-                if (horarioDto.getHoraApertura() != null) {
-                    horario.setHoraApertura(horarioDto.getHoraApertura());
+                if (horarioDto.getHora_apertura() != null) {
+                    horario.setHoraApertura(horarioDto.getHora_apertura());
                 }
-                if (horarioDto.getHoraCierre() != null) {
-                    horario.setHoraCierre(horarioDto.getHoraCierre());
+                if (horarioDto.getHora_cierre() != null) {
+                    horario.setHoraCierre(horarioDto.getHora_cierre());
                 }
-                if (horarioDto.getDiaSemana() != null) {
-                    horario.setDiaSemana(horarioDto.getDiaSemana());
+                if (horarioDto.getDia_semana() != null) {
+                    horario.setDiaSemana(horarioDto.getDia_semana());
                 }
 
                 Horario saved = horarioRepository1.save(horario);
@@ -157,18 +157,18 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         if (horarioDto == null) return null;
         Horario horario = new Horario();
         horario.setPeluqueriaId(peluqueriaId);
-        horario.setHoraApertura(horarioDto.getHoraApertura());
-        horario.setHoraCierre(horarioDto.getHoraCierre());
-        horario.setDiaSemana(horarioDto.getDiaSemana());
+        horario.setHoraApertura(horarioDto.getHora_apertura());
+        horario.setHoraCierre(horarioDto.getHora_cierre());
+        horario.setDiaSemana(horarioDto.getDia_semana());
         return horario;
     }
 
     private HorarioDto toDto(Horario horario) {  //sirve para hacer el mappeo natural (sin MapStruct)
         if (horario == null) return null;
         HorarioDto horarioDto = new HorarioDto();
-        horarioDto.setHoraApertura(horario.getHoraApertura());
-        horarioDto.setHoraCierre(horarioDto.getHoraCierre());
-        horario.setDiaSemana(horarioDto.getDiaSemana());
+        horarioDto.setHora_apertura(horario.getHoraApertura());
+        horarioDto.setHora_cierre(horario.getHoraCierre());
+        horarioDto.setDia_semana(horario.getDiaSemana());
         return horarioDto;
     }
 
