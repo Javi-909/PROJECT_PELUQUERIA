@@ -115,7 +115,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         return ResponseEntity.ok(toDto(saved));
     }
 
-    //ELIMINAR HORARIO (hay que añadir en el body id y su value, en Postman)
+    //ELIMINAR HORARIO 
     public void deleteHorario(Integer id){
         horarioRepository1.deleteById(id);
     }
