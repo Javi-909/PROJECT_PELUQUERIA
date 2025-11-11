@@ -3,9 +3,6 @@ package com.example.demo.mapper;
 import com.example.demo.dto.ClienteDto;
 import com.example.demo.entity.Cliente;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import java.util.List;
 
 @Mapper(componentModel = "spring")

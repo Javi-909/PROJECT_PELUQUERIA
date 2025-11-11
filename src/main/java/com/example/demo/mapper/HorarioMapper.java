@@ -1,9 +1,8 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.*;
-import com.example.demo.entity.*;
+import com.example.demo.dto.HorarioDto;
+import com.example.demo.entity.Horario;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

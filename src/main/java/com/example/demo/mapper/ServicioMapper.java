@@ -1,10 +1,8 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.*;
-import com.example.demo.entity.*;
+import com.example.demo.dto.ServicioDto;
+import com.example.demo.entity.Servicio;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-
 import java.util.List;
 
 @Mapper(componentModel = "spring")

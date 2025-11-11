@@ -1,8 +1,6 @@
 package com.example.demo.repository;
 
 
-
-import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.entity.ReservaCliente;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
