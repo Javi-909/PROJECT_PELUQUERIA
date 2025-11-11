@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 
-public class PeluqueriaDto {
+public class    PeluqueriaDto {
 
     private String nombre;
     private String email;

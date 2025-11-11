@@ -23,7 +23,7 @@ public interface reservaClienteRepository extends JpaRepository<ReservaCliente, 
     List<ReservaCliente>findByReserva_id(@Param("reservaId") Integer reserva_id);
 
 
-    @Modifying
+    @Modifying //como voy a modificar algo de la BBDD, tengo que poner esta anotacion
     @Transactional
     @Query(value = "DELETE from reservacliente rc WHERE rc.reserva_id = :reservaId", nativeQuery = true)
     void deleteByReservaId(@Param("reservaId")Integer reservaId);
