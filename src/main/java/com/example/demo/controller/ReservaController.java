@@ -29,10 +29,10 @@ public class ReservaController {
                 return ResponseEntity.ok(reservaService.findByClienteId(clienteId));
    }
 
-
-   //public void cancelaReserva(Integer clienteId, Integer reservaId){
-
-   //}
+    @DeleteMapping("/cancelareserva/{reservaId}")
+   public ResponseEntity<ReservaDto> cancelaReserva(@PathVariable Integer reservaId){
+       return reservaService.cancelaReserva(reservaId);
+   }
 
 
 

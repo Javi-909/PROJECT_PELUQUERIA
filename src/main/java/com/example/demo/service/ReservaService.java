@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public interface ReservaService {
 
     List<ReservaClienteDto> findByClienteId(Integer clienteId);
 
-   // void cancelaReserva(Integer clienteId, Integer reservaId);
+    ResponseEntity<ReservaDto> cancelaReserva(Integer reservaId);
 
 }

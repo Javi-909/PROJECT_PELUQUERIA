@@ -14,10 +14,12 @@ import com.example.demo.repository.reservaRepository;
 import com.example.demo.service.ReservaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -98,21 +100,27 @@ import java.util.stream.Collectors;
 
         }
 
+        //CANCELAR UNA RESERVA
+        @Transactional
+        @Override
+        public ResponseEntity<ReservaDto> cancelaReserva(Integer reservaId){
+                return reservaRepository1.findById(reservaId)
+                        .map(reserva -> { //pasamos de OPTIONAL a ENTITY
 
+                            reserva.setEstado(EstadoReserva.CANCELADA); //cambiamos estado a CANCELADA
 
-    /*
-        public void cancelaReserva(Integer clienteId, Integer reservaId){
+                            Reserva saved = reservaRepository1.save(reserva);
 
-            List<ReservaCliente> reservas = reservaClienteRepository1.findByReserva_id(reservaId);
+                            //Eliminamos de la tabla reservacliente
+                            reservaClienteRepository1.deleteByReservaId(reservaId);
 
-
-        }
-
-     */
-
-
-
-
+                            // Map to DTO and return
+                            ReservaDto dto = reservaMapper.toDto(saved);
+                            System.out.println("Reserva con id: " + reservaId + " cancelada");
+                            return ResponseEntity.ok(dto);
+                        })
+                        .orElseGet(() -> ResponseEntity.notFound().build());
+            }
 
     }
 

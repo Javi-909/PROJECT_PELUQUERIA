@@ -4,6 +4,7 @@ import com.example.demo.entity.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 
 
 import java.time.LocalDate;
@@ -20,7 +21,5 @@ public interface reservaRepository extends JpaRepository<Reserva, Integer> {
             "WHERE rc.cliente_id = :clienteId",
             nativeQuery = true)
     List<Reserva> findByClienteId(@Param("clienteId") Integer clienteId);
-
-
 
 }

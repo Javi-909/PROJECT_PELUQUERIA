@@ -4,7 +4,9 @@ package com.example.demo.repository;
 
 import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.entity.ReservaCliente;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,5 +21,11 @@ public interface reservaClienteRepository extends JpaRepository<ReservaCliente, 
 
     @Query(value = "SELECT * FROM reservacliente rc WHERE rc.reserva_id = :reservaId", nativeQuery = true)
     List<ReservaCliente>findByReserva_id(@Param("reservaId") Integer reserva_id);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE from reservacliente rc WHERE rc.reserva_id = :reservaId", nativeQuery = true)
+    void deleteByReservaId(@Param("reservaId")Integer reservaId);
 
 }
