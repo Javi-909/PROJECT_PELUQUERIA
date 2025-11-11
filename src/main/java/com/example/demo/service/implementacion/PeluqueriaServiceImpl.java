@@ -108,6 +108,9 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         if(!peluqueriaRepository1.existsById(peluqueriaId)){
             throw new RuntimeException("No existe la peluqueria con id:" + peluqueriaId);
         }
+        if(peluqueriaRepository1.existsById(peluqueriaId)){
+            throw new RuntimeException("La peluqueria con id:" + peluqueriaId +"ya tiene un horario establecido");
+        }
         Horario horario = this.toEntity(horarioDto,peluqueriaId);
         //Hacer mapeo privado con horario, ya que se le pasa como parametro
         //peluqueriaId, por lo que con mapStruct no serviria
@@ -115,7 +118,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         return ResponseEntity.ok(toDto(saved));
     }
 
-    //ELIMINAR HORARIO 
+    //ELIMINAR HORARIO
     public void deleteHorario(Integer id){
         horarioRepository1.deleteById(id);
     }
