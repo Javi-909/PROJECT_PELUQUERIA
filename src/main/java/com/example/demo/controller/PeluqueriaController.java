@@ -72,5 +72,3 @@ public class PeluqueriaController {
 
 
 
-    // ...otros métodos (actualizarClienteId...)
-
