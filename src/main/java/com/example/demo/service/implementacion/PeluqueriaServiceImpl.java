@@ -123,9 +123,13 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     @Transactional
     public ResponseEntity<HorarioDto> actualizarHorario(Integer id, HorarioDto horarioDto) {
 
-     if (horarioDto == null) {
-            return ResponseEntity.badRequest().build();
-        }
+         if(!horarioRepository1.existsById(id)){
+             throw new RuntimeException("Horario con id " + id + " no existe");
+         }
+
+         if (horarioDto == null) {
+                return ResponseEntity.badRequest().build();
+            }
         return horarioRepository1.findById(id)
             .map(horario -> {
                 // Se actualiza los campos que son no-NULL

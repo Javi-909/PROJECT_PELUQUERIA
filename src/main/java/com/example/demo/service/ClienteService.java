@@ -19,5 +19,5 @@ public interface ClienteService {
 
     void deleteCliente(Integer id);
 
-
+    ResponseEntity<ClienteDto> actualizarCliente(Integer id, ClienteDto clienteDto);
 }

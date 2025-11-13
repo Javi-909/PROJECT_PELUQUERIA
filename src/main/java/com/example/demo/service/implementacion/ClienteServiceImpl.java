@@ -66,6 +66,32 @@ public class ClienteServiceImpl implements ClienteService {
         clienteRepository1.deleteById(id);
     }
 
+    //ACTUALIZAR CLIENTE
+    @Override
+    public ResponseEntity<ClienteDto> actualizarCliente(Integer id, ClienteDto clienteDto){
+        if(!clienteRepository1.existsById(id)){
+            throw new RuntimeException("Cliente con id " + id + " no existe");
+        }
+        if(clienteDto == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return clienteRepository1.findById(id)
+                .map(cliente -> {
+                    if (clienteDto.getNombre() != null) {
+                        cliente.setNombre(clienteDto.getNombre());
+                    }
+                    if (clienteDto.getEmail() != null) {
+                        cliente.setEmail(clienteDto.getEmail());
+                    }
+                    if (clienteDto.getGenero() != null) {
+                        cliente.setGenero(clienteDto.getGenero());
+                    }
+                    Cliente saved = clienteRepository1.save(cliente);
+                    return ResponseEntity.ok(clienteMapper.toDto(saved));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }
 
 
