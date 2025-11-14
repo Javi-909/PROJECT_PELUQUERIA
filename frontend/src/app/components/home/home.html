@@ -1,0 +1,34 @@
+<div class="home-container">
+
+  <!--
+    Esta es la estructura de encabezado actualizada
+    que coincide con el 'home.css' profesional.
+  -->
+  <header class="header">
+
+    <!-- La sección de búsqueda (que te faltaba) -->
+    <div class="search-section">
+      <input type="text" class="search-input" placeholder="Buscar peluquería...">
+      <!-- El botón "Buscar" que faltaba en tu captura -->
+      <button class="search-button">Buscar</button>
+    </div>
+
+    <!-- El título de la app -->
+    <h1 class="app-title">PeluqueríaDev</h1>
+
+  </header>
+
+  <!-- El contenido principal (esto ya lo tenías bien) -->
+  <main class="content">
+    <h2 class="section-title">Peluquerías Cerca de Ti</h2>
+
+    <div class="peluqueria-list">
+      <!-- El bucle para mostrar las tarjetas -->
+      <app-peluqueria-card
+        *ngFor="let pelu of peluquerias"
+        [peluqueriaInfo]="pelu">
+      </app-peluqueria-card>
+    </div>
+  </main>
+
+</div>

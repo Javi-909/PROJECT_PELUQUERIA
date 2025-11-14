@@ -1,0 +1,24 @@
+<!--
+  Este es el contenedor de UNA sola tarjeta.
+  Usa 'peluqueriaInfo' (que recibió del padre) para mostrar los datos.
+-->
+<div class="card-container">
+
+  <!-- Imagen de marcador de posición -->
+  <div class="card-image">
+    <!-- Usamos un placeholder genérico. Más adelante podrías poner la foto real -->
+    <img src="https://placehold.co/400x200/007bff/white?text=Peluquería&font=roboto"
+         alt="Foto de la peluquería {{ peluqueriaInfo.nombre }}">
+  </div>
+
+  <div class="card-content">
+    <h3 class="card-title">{{ peluqueriaInfo.nombre }}</h3>
+    <p class="card-address">{{ peluqueriaInfo.direccion }}</p>
+
+    <!-- (click) es la forma en que Angular maneja los eventos de clic -->
+    <button class="card-button" (click)="verDetalles()">
+      Ver detalles
+    </button>
+  </div>
+
+</div>
