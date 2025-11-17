@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 public class    PeluqueriaDto {
 
+    //private Integer id;
     private String nombre;
     private String email;
     private String direccion;

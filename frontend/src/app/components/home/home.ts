@@ -1,39 +1,42 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necesario para *ngFor
-
-// Importa la tarjeta (sin la extensión .ts)
+import { Component, OnInit, inject } from '@angular/core'; // 1. Importa OnInit
+import { CommonModule } from '@angular/common';
 import { PeluqueriaCardComponent } from '../peluqueria-card/peluqueria-card';
+import { RouterLink } from '@angular/router'; // Para el botón de "Contacto"
+
+// 2. Importaciones corregidas
+import { PeluqueriaService } from '../../services/peluqueria';
+import { Peluqueria } from '../../models/peluqueria.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, PeluqueriaCardComponent],
-
-  // --- CORRECCIÓN CLAVE ---
-  // Estos nombres deben coincidir con tus archivos
+  imports: [CommonModule, PeluqueriaCardComponent, RouterLink], // RouterLink es para el botón de Contacto
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit { // 3. Implementa OnInit
 
-  // Datos de EJEMPLO (esto estaba bien)
-  peluquerias = [
-    {
-      id: 1,
-      nombre: 'Peluquería Estilo Total',
-      direccion: 'Calle Falsa 123, Ciudad'
-    },
-    {
-      id: 2,
-      nombre: 'Cortes Modernos',
-      direccion: 'Avenida Siempre Viva 456'
-    },
-    {
-      id: 3,
-      nombre: 'El Rincón del Peinado',
-      direccion: 'Plaza Central 789'
-    }
-  ];
+  private peluqueriaService = inject(PeluqueriaService);
 
+  peluquerias: Peluqueria[] = [];
+  
   constructor() { }
+
+  // 4. ngOnInit se ejecuta al cargar el componente
+  ngOnInit(): void {
+    this.cargarPeluquerias();
+  }
+
+  // 5. Este método llama al servicio y rellena el array
+  cargarPeluquerias(): void {
+    this.peluqueriaService.getPeluquerias().subscribe({
+      next: (datos) => {
+        this.peluquerias = datos; // Asignamos los datos de la API
+        console.log('Peluquerías cargadas desde la API:', datos);
+      },
+      error: (error) => {
+        console.error('Error al cargar peluquerías:', error);
+      }
+    });
+  }
 }

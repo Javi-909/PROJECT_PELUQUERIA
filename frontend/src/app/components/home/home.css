@@ -1,56 +1,47 @@
 /* Variables CSS para colores consistentes */
-:root {
-  --primary-color: #5a67d8; /* Un azul/púrpura suave para botones */
-  --primary-hover-color: #4c51bf;
-  --text-dark: #2d3748; /* Texto oscuro para títulos */
-  --text-medium: #4a5568; /* Texto para párrafos */
-  --text-light: #718096; /* Texto secundario */
-  --background-light: #f7fafc; /* Fondo general de la página, muy sutil */
-  --border-color: #e2e8f0; /* Bordes sutiles */
-  --card-background: #ffffff; /* Fondo de las tarjetas */
-}
-
+/* Nota: las variables globales fueron movidas a `src/styles.css` para que los
+   cambios en :root se reflejen en toda la aplicación. */
 /* Contenedor principal de la página de inicio */
 .home-container {
   width: 100%;
-  max-width: 1300px; /* Un poco más ancho */
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 30px; /* Más padding */
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Fuente más moderna */
+  padding: 30px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   box-sizing: border-box;
-  background-color: var(--background-light); /* Fondo sutil */
-  min-height: 100vh; /* Para que ocupe toda la altura visible */
+  background-color: var(--background-light);
+  min-height: 100vh;
 }
 
 /* Encabezado */
 .header {
-  display: flex; /* Usamos Flexbox para alinear elementos */
-  justify-content: space-between; /* Espacia los elementos (búsqueda y título) */
-  align-items: center; /* Centra verticalmente */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 50px;
   padding-bottom: 25px;
-  border-bottom: 1px solid var(--border-color); /* Borde más sutil */
+  border-bottom: 1px solid var(--border-color);
 }
 
 .app-title {
-  color: var(--primary-color); /* Color del título */
-  font-size: 2.8rem; /* Tamaño más grande */
+  color: var(--primary-color);
+  font-size: 2.8rem;
   font-weight: 700;
   margin: 0;
-  letter-spacing: -0.5px; /* Pequeño ajuste de espacio entre letras */
+  letter-spacing: -0.5px;
 }
 
 /* Sección de búsqueda */
 .search-section {
   display: flex;
   align-items: center;
-  gap: 10px; /* Espacio entre input y botón */
-  width: 40%; /* La barra de búsqueda ocupa un porcentaje del ancho */
+  gap: 10px;
+  width: 40%;
   max-width: 400px;
 }
 
 .search-input {
-  flex-grow: 1; /* El input crece para ocupar el espacio disponible */
+  flex-grow: 1;
   padding: 12px 18px;
   font-size: 1rem;
   border: 1px solid var(--border-color);
@@ -61,7 +52,7 @@
 
 .search-input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2); /* Sutil brillo al enfocar */
+  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
   outline: none;
 }
 
@@ -70,7 +61,7 @@
   font-size: 1rem;
   border: none;
   background-color: var(--primary-color);
-  color: white;
+  color: rgb(255, 255, 255); 
   cursor: pointer;
   border-radius: 8px;
   transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
@@ -96,9 +87,32 @@
   text-align: center;
 }
 
-/* Rejilla para las tarjetas (sin cambios, ya era bueno) */
+/* Rejilla para las tarjetas */
 .peluqueria-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Tarjetas un poco más grandes */
-  gap: 25px; /* Más espacio entre tarjetas */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+
+/* Estilo para botón de contcto */
+
+.contact-button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: 1px solid var(--primary-color); /* Borde sutil */
+  background-color: transparent; /* Fondo transparente (estilo "outline") */
+  color: var(--primary-color); /* Texto del color primario */
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  font-weight: 600;
+  text-decoration: none; /* Quita el subrayado del enlace */
+  display: inline-block; /* Necesario para que el padding funcione bien */
+}
+
+.contact-button:hover {
+  background-color: var(--primary-color); /* Se rellena al pasar el ratón */
+  color: white; /* Texto blanco al pasar el ratón */
+  transform: translateY(-1px);
 }
