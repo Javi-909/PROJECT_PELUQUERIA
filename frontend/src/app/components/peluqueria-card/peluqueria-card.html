@@ -1,6 +1,10 @@
-<div class="card-container">
+<!-- 
+  IMPORTANTE: El *ngIf="peluqueriaInfo" es el escudo. 
+  Si no hay datos, no dibuja nada y evita el error 'reading nombre'.
+-->
+<div class="card-container" *ngIf="peluqueriaInfo">
+  
   <div class="card-image">
-    <!-- Imagen de placeholder profesional en azul -->
     <img src="https://placehold.co/400x200/4f46e5/white?text=Peluquería&font=roboto" 
          alt="Imagen de {{ peluqueriaInfo.nombre }}">
   </div>
@@ -9,8 +13,10 @@
     <h3 class="card-title">{{ peluqueriaInfo.nombre }}</h3>
     <p class="card-address">{{ peluqueriaInfo.direccion }}</p>
     
-    <button class="card-button">
+    <!-- Enlace que usa el ID para ir al detalle -->
+    <a [routerLink]="['/peluqueria', peluqueriaInfo.id]" class="card-button">
       Ver detalles
-    </button>
+    </a>
   </div>
+
 </div>

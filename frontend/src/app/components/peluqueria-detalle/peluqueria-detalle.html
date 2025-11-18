@@ -1,0 +1,61 @@
+
+
+<div class="detalle-container">
+
+  <!-- BLOQUE DE ERROR (Solo sale si algo falla) -->
+  <div *ngIf="errorMsg" style="background: #fee2e2; color: #991b1b; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #f87171;">
+    <h3>⚠️ Ha ocurrido un problema:</h3>
+    <p>{{ errorMsg }}</p>
+    <a routerLink="/" style="color: #991b1b; font-weight: bold;">Volver al inicio</a>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <!-- Solo lo mostramos si NO hay error y si ya tenemos al menos el nombre cargado -->
+  <div class="content-card fade-in" *ngIf="!errorMsg">
+    
+    <header class="detalle-header">
+      <div class="header-text">
+        <!-- Si el nombre está vacío, mostramos "Cargando..." -->
+        <h1 class="nombre-peluqueria">{{ peluqueria.nombre || 'Cargando...' }}</h1>
+        <p class="subtitulo" *ngIf="peluqueria.id !== 0">Detalles y contacto</p>
+      </div>
+      <a routerLink="/" class="btn-volver">
+        ← Volver al listado
+      </a>
+    </header>
+
+    <div class="detalle-body">
+      
+      <div class="imagen-wrapper">
+        <img [src]="peluqueria.nombre ? 'https://placehold.co/600x400/4f46e5/white?text=' + peluqueria.nombre : 'https://placehold.co/600x400/e2e8f0/white?text=Cargando...'" 
+             alt="Foto de {{ peluqueria.nombre }}" 
+             class="imagen-peluqueria">
+      </div>
+
+      <div class="info-wrapper">
+        
+        <div class="info-section">
+          <h3>📍 Dirección</h3>
+          <p>{{ peluqueria.direccion || '...' }}</p>
+        </div>
+
+        <div class="info-section">
+          <h3>📞 Teléfono</h3>
+          <p>{{ peluqueria.telefono || '...' }}</p>
+        </div>
+
+        <div class="info-section">
+          <h3>📧 Email</h3>
+          <p>{{ peluqueria.email || '...' }}</p>
+        </div>
+
+        <div class="acciones">
+          <button class="btn-primary">📅 Reservar Cita</button>
+          <button class="btn-secondary">🕒 Ver Horarios</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

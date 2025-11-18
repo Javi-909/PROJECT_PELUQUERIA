@@ -1,0 +1,192 @@
+/* Variables locales (copiadas de tu tema principal para consistencia) */
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --bg-light: #f8fafc;
+}
+
+.detalle-container {
+  max-width: 1000px; /* Ancho máximo para que no se desparrame en pantallas gigantes */
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- Tarjeta Principal --- */
+.content-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Para que nada se salga de las esquinas redondeadas */
+  border: 1px solid #e2e8f0;
+}
+
+/* --- Cabecera --- */
+.detalle-header {
+  background-color: #f8fafc;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.nombre-peluqueria {
+  font-size: 2rem;
+  color: #1e293b;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.subtitulo {
+  color: #64748b;
+  margin: 5px 0 0 0;
+  font-size: 1rem;
+}
+
+.btn-volver {
+  text-decoration: none;
+  color: #4f46e5;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: #eef2ff;
+  transition: all 0.2s;
+}
+
+.btn-volver:hover {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+/* --- Cuerpo (Grid) --- */
+.detalle-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 0;
+}
+
+@media (max-width: 768px) {
+  .detalle-body {
+    grid-template-columns: 1fr; /* En móvil, una sola columna */
+  }
+}
+
+/* --- Imagen --- */
+.imagen-wrapper {
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.imagen-peluqueria {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ¡Esto evita que la imagen se deforme! */
+  display: block;
+}
+
+/* --- Información --- */
+.info-wrapper {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.info-section h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.info-section p {
+  font-size: 1.2rem;
+  color: #334155;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* --- Botones de Acción --- */
+.acciones {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-primary {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #475569;
+  border: 2px solid #e2e8f0;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+}
+
+/* --- Animación de entrada --- */
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Estados de Carga y Error --- */
+.loading-state, .error-state {
+  text-align: center;
+  padding: 60px;
+  color: #64748b;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #4f46e5;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

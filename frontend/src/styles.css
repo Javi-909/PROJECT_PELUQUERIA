@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc; /* Un fondo gris muy suave para toda la app */
+  box-sizing: border-box;
+}
+
+/* Esto ayuda a que las imagenes no se desborden por defecto */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
