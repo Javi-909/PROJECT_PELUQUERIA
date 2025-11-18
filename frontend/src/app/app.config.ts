@@ -1,14 +1,12 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http'; // Importante para conectar con Java
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), // Habilita las rutas que acabamos de definir
-    provideClientHydration(),
-    provideHttpClient(withFetch()) // Habilita HttpClient para el servicio
+    provideRouter(routes),
+    provideHttpClient() // Habilita las llamadas a la API
   ]
 };

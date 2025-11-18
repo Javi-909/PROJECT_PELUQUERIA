@@ -1,118 +1,73 @@
-/* Variables CSS para colores consistentes */
-/* Nota: las variables globales fueron movidas a `src/styles.css` para que los
-   cambios en :root se reflejen en toda la aplicación. */
-/* Contenedor principal de la página de inicio */
-.home-container {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 30px;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  box-sizing: border-box;
-  background-color: var(--background-light);
-  min-height: 100vh;
+/* Variables de color */
+:root {
+  --bg-color: #f8fafc;
+  --primary: #4f46e5;
+  --text-dark: #1e293b;
 }
 
-/* Encabezado */
+.home-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding-bottom: 40px;
+}
+
 .header {
+  background-color: white;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;
-  padding-bottom: 25px;
-  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
 }
 
-.app-title {
-  color: var(--primary-color);
-  font-size: 2.8rem;
-  font-weight: 700;
+.brand h1 {
+  font-size: 1.8rem;
+  color: #1e293b;
   margin: 0;
-  letter-spacing: -0.5px;
 }
 
-/* Sección de búsqueda */
-.search-section {
+.brand .accent {
+  color: #4f46e5;
+}
+
+.search-bar {
   display: flex;
-  align-items: center;
   gap: 10px;
-  width: 40%;
-  max-width: 400px;
 }
 
-.search-input {
-  flex-grow: 1;
-  padding: 12px 18px;
-  font-size: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+.search-bar input {
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  width: 300px;
 }
 
-.search-input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
-  outline: none;
-}
-
-.search-button {
-  padding: 12px 25px;
-  font-size: 1rem;
+.search-bar button {
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: white;
   border: none;
-  background-color: var(--primary-color);
-  color: rgb(255, 255, 255); 
+  border-radius: 6px;
   cursor: pointer;
-  border-radius: 8px;
-  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-  font-weight: 600;
 }
 
-.search-button:hover {
-  background-color: var(--primary-hover-color);
-  transform: translateY(-1px);
-}
-
-/* Contenido principal y lista */
-.content {
-  width: 100%;
-  padding-top: 20px;
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .section-title {
-  color: var(--text-dark);
   font-size: 2rem;
-  font-weight: 600;
+  color: #1e293b;
   margin-bottom: 30px;
   text-align: center;
 }
 
-/* Rejilla para las tarjetas */
-.peluqueria-list {
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
-}
-
-
-/* Estilo para botón de contcto */
-
-.contact-button {
-  padding: 12px 25px;
-  font-size: 1rem;
-  border: 1px solid var(--primary-color); /* Borde sutil */
-  background-color: transparent; /* Fondo transparente (estilo "outline") */
-  color: var(--primary-color); /* Texto del color primario */
-  cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.2s ease-in-out;
-  font-weight: 600;
-  text-decoration: none; /* Quita el subrayado del enlace */
-  display: inline-block; /* Necesario para que el padding funcione bien */
-}
-
-.contact-button:hover {
-  background-color: var(--primary-color); /* Se rellena al pasar el ratón */
-  color: white; /* Texto blanco al pasar el ratón */
-  transform: translateY(-1px);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
 }

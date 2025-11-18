@@ -1,8 +1,10 @@
-//espejo de mi clase PeluqueriaDto en el backend
+// Define la estructura de los datos que vienen de Spring Boot.
+// Asegúrate de que coincida con tu DTO de Java.
 
 export interface Peluqueria {
+  id?: number; // Opcional (?) porque al principio puede no venir
   nombre: string;
   email: string;
   direccion: string;
-  telefono: number; // 'int' en Java se convierte en 'number' en TypeScript
+  telefono: number;
 }

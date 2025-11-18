@@ -1,18 +1,1 @@
 /* You can add global styles to this file, and also import other style files */
-/* Variables CSS globales - mover aquí para que sean accesibles desde toda la app */
-
-
-
-/* ESTE ROOT SON ESTILOS DEL HOME.CSS (global)*/
-:root {
-  --primary-color: #4f46e5; 
-  --primary-hover-color: #4338ca; 
-  --card-background: #ffffff; 
-  
-  --text-dark: #2d3748;
-  --text-medium: #4a5568;
-  --text-light: #718096;
-  --background-light: #f7fafc;
-  --border-color: #e2e8f0;
-}
-

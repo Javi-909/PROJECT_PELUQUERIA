@@ -1,30 +1,24 @@
 <div class="home-container">
+  
   <header class="header">
-
-    <!-- La sección de búsqueda (que te faltaba) -->
-    <div class="search-section">
-      <input type="text" class="search-input" placeholder="Buscar peluquería...">
-      <!-- El botón "Buscar" que faltaba en tu captura -->
-      <button class="search-button">Buscar</button>
+    <div class="brand">
+      <h1>Peluquería<span class="accent">Dev</span></h1>
     </div>
-
-    <!-- El título de la app -->
-    <h1 class="app-title">Reserva tu Peluquería</h1>
-
-    <!-- Botón de contacto-->
-    <a routerLink="/contacto" class="contact-button">Contacto</a>
-
+    
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar peluquería...">
+      <button>Buscar</button>
+    </div>
   </header>
 
-  <!-- El contenido principal-->
-  <main class="content">
-    <h2 class="section-title">Peluquerías Cerca de Ti</h2>
-
-    <div class="peluqueria-list">
-      <!-- El bucle para mostrar las tarjetas -->
-      <app-peluqueria-card
-        *ngFor="let pelu of peluquerias"
-        [peluqueriaInfo]="pelu">
+  <main>
+    <h2 class="section-title">Nuestras Peluquerías</h2>
+    
+    <div class="grid">
+      <!-- Bucle que pinta las tarjetas -->
+      <app-peluqueria-card 
+        *ngFor="let item of peluquerias" 
+        [peluqueriaInfo]="item">
       </app-peluqueria-card>
     </div>
   </main>
