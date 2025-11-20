@@ -1,85 +1,13 @@
-/* Variables de color */
-:root {
-  --bg-color: #f8fafc;
-  --primary: #4f46e5;
-  --text-dark: #1e293b;
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ced4da; /* Mantiene el borde gris sutil */
 }
 
-.home-container {
-  min-height: 100vh;
+/* Opcional: Un fondo suave para toda la página si no lo pusiste en styles.css */
+:host {
+  display: block;
   background-color: #f8fafc;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
   padding-bottom: 40px;
-}
-
-.header {
-  background-color: white;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  margin-bottom: 40px;
-}
-
-.brand h1 {
-  font-size: 1.8rem;
-  color: #1e293b;
-  margin: 0;
-}
-
-.brand .accent {
-  color: #4f46e5;
-}
-
-.search-bar {
-  display: flex;
-  gap: 10px;
-}
-
-.search-bar input {
-  padding: 10px 15px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  width: 300px;
-}
-
-.search-bar button {
-  padding: 10px 20px;
-  background-color: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.section-title {
-  font-size: 2rem;
-  color: #1e293b;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-/* Estilo para cuando no hay resultados */
-.no-results {
-  text-align: center;
-  padding: 40px;
-  color: #64748b;
-  font-size: 1.2rem;
-  background-color: white;
-  border-radius: 12px;
-  border: 1px dashed #cbd5e1;
-  margin-top: 20px;
 }

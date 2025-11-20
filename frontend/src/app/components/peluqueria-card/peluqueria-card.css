@@ -1,59 +1,12 @@
-.card-container {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  background-color: #ffffff;
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+
+/* Como utilizo bootstrap, lo hace solo por mi (utilizando sus clases en el HTML, no hace falta escribirlo a mano*/
+
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: none; /* Opcional: quita el borde gris para un look más limpio */
 }
 
-.card-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-image img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin: 0 0 8px 0;
-}
-
-.card-address {
-  font-size: 0.95rem;
-  color: #718096;
-  margin-bottom: 20px;
-  flex-grow: 1;
-}
-
-.card-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4f46e5; /* Azul profesional */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.card-button:hover {
-  background-color: #4338ca;
+.card:hover {
+  transform: translateY(-5px); /* Se mueve hacia arriba */
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important; /* Sombra más fuerte */
 }

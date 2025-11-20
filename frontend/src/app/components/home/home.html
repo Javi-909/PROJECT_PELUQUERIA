@@ -1,44 +1,64 @@
-<div class="home-container">
-  
-  <header class="header">
-    <div class="brand">
-      <h1>Peluquería<span class="accent">Dev</span></h1>
-    </div>
+<!-- Navbar o Encabezado -->
+<nav class="navbar navbar-light bg-white shadow-sm mb-4">
+  <div class="container">
+    <a class="navbar-brand fw-bold fs-3 text-dark" href="#">
+      Peluquería<span class="text-primary">Dev</span>
+    </a>
     
-    <div class="search-bar">
-      <!-- 
-         Vinculamos el input a la variable 'searchTerm' y ejecutamos el filtro al escribir.
-      -->
-      <input type="text" 
-             placeholder="Buscar peluquería..." 
-             [(ngModel)]="searchTerm"
-             (ngModelChange)="filtrarResultados()">
-      
-      <button>Buscar</button>
+    <!-- Botones de navegación (ej: Contacto) -->
+    <div class="d-flex">
+      <a routerLink="/contacto" class="btn btn-outline-primary">Contacto</a>
     </div>
-  </header>
+  </div>
+</nav>
 
-  <main>
-    <h2 class="section-title">
-      <!-- El título cambia dinámicamente si estás buscando algo -->
+<!-- Contenido Principal -->
+<div class="container">
+
+  <!-- Sección de Búsqueda (Centrada y bonita) -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-md-8 col-lg-6">
+      <div class="input-group input-group-lg shadow-sm">
+        <span class="input-group-text bg-white border-end-0">
+          🔍 <!-- O un icono de bootstrap <i class="bi bi-search"></i> -->
+        </span>
+        <input type="text" 
+               class="form-control border-start-0" 
+               placeholder="Buscar peluquería por nombre..." 
+               [(ngModel)]="searchTerm"
+               (ngModelChange)="filtrarResultados()">
+      </div>
+    </div>
+  </div>
+
+  <!-- Título de la Sección -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-secondary">
       {{ searchTerm ? 'Resultados de búsqueda' : 'Nuestras Peluquerías' }}
     </h2>
+    <p class="text-muted" *ngIf="!searchTerm">Encuentra los mejores profesionales cerca de ti</p>
+  </div>
+
+  <!-- REJILLA RESPONSIVE AUTOMÁTICA -->
+  <!-- row-cols-1 (1 col en móvil), row-cols-md-2 (2 en tablet), row-cols-lg-3 (3 en PC) -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     
-    <!-- 
-       Iteramos sobre 'peluqueriasFiltradas' (la lista que cambia),
-       NO sobre 'peluquerias' (que es la lista fija completa).
-    -->
-    <div class="grid">
-      <app-peluqueria-card 
-        *ngFor="let item of peluqueriasFiltradas" 
-        [peluqueriaInfo]="item">
-      </app-peluqueria-card>
+    <!-- Bucle de tarjetas -->
+    <div class="col" *ngFor="let item of peluqueriasFiltradas">
+      <app-peluqueria-card [peluqueriaInfo]="item" class="h-100"></app-peluqueria-card>
     </div>
 
-    <!-- Mensaje si no se encuentra nada al buscar -->
-    <div *ngIf="peluqueriasFiltradas.length === 0 && peluquerias.length > 0" class="no-results">
-      <p>No hemos encontrado ninguna peluquería con ese nombre.</p>
-    </div>
-  </main>
+  </div>
+
+  <!-- Mensajes de Estado (Alertas Bootstrap) -->
+  <div *ngIf="peluqueriasFiltradas.length === 0 && peluquerias.length > 0" 
+       class="alert alert-warning text-center mt-4" role="alert">
+    No hemos encontrado ninguna peluquería con ese nombre.
+  </div>
+
+  <div *ngIf="peluquerias.length === 0" 
+       class="alert alert-info text-center mt-4" role="alert">
+    Cargando peluquerías o no hay datos disponibles...
+  </div>
 
 </div>
