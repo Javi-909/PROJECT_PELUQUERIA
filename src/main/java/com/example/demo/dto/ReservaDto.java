@@ -16,12 +16,20 @@ import java.time.LocalTime;
 
 public class ReservaDto {
 
-
+    private Integer id; //lo he añadido para poder implementar la reserva en el backend
     private LocalDate fecha;
     private LocalTime hora;
     private EstadoReserva estado;
 
     private Integer idServicioPelu;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getIdServicioPelu() {
         return idServicioPelu; }

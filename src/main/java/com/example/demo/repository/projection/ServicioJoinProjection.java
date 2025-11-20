@@ -7,4 +7,5 @@ public interface ServicioJoinProjection {
     Integer getPrecio();
     Integer getDuracion();
     Integer getServicioId();
+    Integer getId();
 }

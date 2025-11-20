@@ -84,12 +84,12 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
 
         List<ServicioResponseDto> dtos = rows.stream()
                 .map(sp -> new ServicioResponseDto(
+                        sp.getId(),
                         sp.getNombre(),
                         sp.getDescripcion(),
                         sp.getPrecio(),
                         sp.getDuracion()))
                 .collect(Collectors.toList());
-
         return ResponseEntity.ok(dtos);
     }
 

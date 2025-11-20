@@ -14,8 +14,11 @@ import com.example.demo.repository.reservaRepository;
 import com.example.demo.service.ReservaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import  org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -70,7 +73,7 @@ import java.util.stream.Collectors;
             // Vemos que exista la reserva (es decir que alguien haya reservado)
             boolean exists = !reservaRepository1.findByIdServicioPeluAndFechaAndHora(dto.getIdServicioPelu(), dto.getFecha(), dto.getHora()).isEmpty();
             if (exists) {
-                throw new RuntimeException("El horario ya está reservado para ese servicio");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El horario ya está reservado para ese servicio");
             }
 
             if(dto.getEstado() == null){ //si no ponemos nada en estado se pone PENDIENTE automatico

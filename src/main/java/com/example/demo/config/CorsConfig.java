@@ -9,7 +9,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/peluqueria/**") //  Coincide con tu @RequestMapping("/peluqueria")
+        registry.addMapping("/**") //  Coincide con tu @RequestMapping("/peluqueria")
                 .allowedOrigins("http://localhost:4200") // El origen de app Angular
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")

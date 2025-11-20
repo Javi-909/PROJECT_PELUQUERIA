@@ -5,23 +5,39 @@
       <h1>Peluquería<span class="accent">Dev</span></h1>
     </div>
     
-    <div class="search-bar"> <!-- Barra de búsqueda para buscar peluquerias -->
-      <input type="text" placeholder="Buscar peluquería por nombre..."
-      [(ngModel)]="searchTerm"
-      (input)="filtrarResultados()">
-      <button (click)="filtrarResultados()" >Buscar</button>
+    <div class="search-bar">
+      <!-- 
+         Vinculamos el input a la variable 'searchTerm' y ejecutamos el filtro al escribir.
+      -->
+      <input type="text" 
+             placeholder="Buscar peluquería..." 
+             [(ngModel)]="searchTerm"
+             (ngModelChange)="filtrarResultados()">
+      
+      <button>Buscar</button>
     </div>
   </header>
 
   <main>
-    <h2 class="section-title">Nuestras Peluquerías</h2>
+    <h2 class="section-title">
+      <!-- El título cambia dinámicamente si estás buscando algo -->
+      {{ searchTerm ? 'Resultados de búsqueda' : 'Nuestras Peluquerías' }}
+    </h2>
     
+    <!-- 
+       Iteramos sobre 'peluqueriasFiltradas' (la lista que cambia),
+       NO sobre 'peluquerias' (que es la lista fija completa).
+    -->
     <div class="grid">
-      <!-- Bucle que pinta las tarjetas -->
       <app-peluqueria-card 
-        *ngFor="let item of peluquerias" 
+        *ngFor="let item of peluqueriasFiltradas" 
         [peluqueriaInfo]="item">
       </app-peluqueria-card>
+    </div>
+
+    <!-- Mensaje si no se encuentra nada al buscar -->
+    <div *ngIf="peluqueriasFiltradas.length === 0 && peluquerias.length > 0" class="no-results">
+      <p>No hemos encontrado ninguna peluquería con ese nombre.</p>
     </div>
   </main>
 
