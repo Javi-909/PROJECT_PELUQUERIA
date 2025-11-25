@@ -93,7 +93,6 @@ export class PeluqueriaDetalleComponent implements OnInit {
       idServicioPelu: this.servicioSeleccionadoId 
     };
 
-    console.log(`Enviando reserva...`, nuevaReserva);
 
     this.reservaService.crearReserva(CLIENTE_ID_MOCK, nuevaReserva).subscribe({
       next: () => {
