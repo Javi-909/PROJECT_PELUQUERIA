@@ -22,16 +22,23 @@ export class PeluqueriaService {
   }
 
 
-  //metodo para mostrar la peluqueria con id (cuando se clicka en "Ver detalle")
+  //Llamada a metodo para mostrar la peluqueria con id (cuando se clicka en "Ver detalle")
   getPeluqueriaById(id: number): Observable<Peluqueria>{
 
     return this.http.get<Peluqueria>(`${this.apiUrl}/${id}`);
   }
 
+  //Llamada a metodo para mostrar los servicios de cada peluqueria
   getServiciosPeluqueria(id: number): Observable<Servicio[]>{
 
     return this.http.get<Servicio[]>(`${this.apiUrl}/${id}/servicios`);
 
+  }
+
+
+  //Llamada a metodo para crear peluqueria
+  createPeluqueria(peluqueria: Peluqueria): Observable<Peluqueria>{
+    return this.http.post<Peluqueria>(`${this.apiUrl}/create`, peluqueria);
   }
 
 

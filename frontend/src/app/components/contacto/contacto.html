@@ -1,0 +1,48 @@
+<div class="container py-5">
+  
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      
+      <!-- Tarjeta de Contacto -->
+      <div class="card shadow border-0 text-center p-4 animate__fadeIn">
+        
+        <!-- Avatar / Foto -->
+        <div class="d-flex justify-content-center mb-4">
+          <div class="avatar-circle bg-primary text-white d-flex align-items-center justify-content-center shadow">
+            <span class="display-4 fw-bold">JQ</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h2 class="fw-bold text-dark mb-1">{{ desarrollador.nombre }}</h2>          
+
+
+          <!-- Lista de Info -->
+          <div class="list-group list-group-flush text-start mb-4 shadow-sm rounded">
+            <div class="list-group-item p-3">
+              <span class="me-3">📧</span> 
+              <a href="mailto:{{ desarrollador.email }}" class="text-decoration-none text-dark fw-medium">
+                {{ desarrollador.email }}
+              </a>
+            </div>
+            <div class="list-group-item p-3">
+              <span class="me-3">📍</span> 
+              <span class="text-dark fw-medium">{{ desarrollador.ubicacion }}</span>
+            </div>
+            <div class="list-group-item p-3">
+              <span class="me-3">💻</span> 
+              <span class="text-dark fw-medium">PeluqueríaDev App v1.0</span>
+            </div>
+          </div>
+
+          <!-- Botón Volver -->
+          <a routerLink="/" class="btn btn-outline-secondary w-100">
+            &larr; Volver al inicio
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>

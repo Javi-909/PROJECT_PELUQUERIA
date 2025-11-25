@@ -89,7 +89,7 @@ export class PeluqueriaDetalleComponent implements OnInit {
       fecha: this.fechaSeleccionada,
       hora: this.horaSeleccionada + ":00",
       clienteId: CLIENTE_ID_MOCK,
-      peluqueriaId: this.peluqueria.id,
+      peluqueriaId: this.peluqueria.id || 0,
       idServicioPelu: this.servicioSeleccionadoId 
     };
 

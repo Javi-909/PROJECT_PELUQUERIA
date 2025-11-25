@@ -2,7 +2,7 @@
 // Asegúrate de que coincida con tu DTO de Java.
 
 export interface Peluqueria {
-  id: number; 
+  id?: number; 
   nombre: string;
   email: string;
   direccion: string;

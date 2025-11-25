@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 
-public class    PeluqueriaDto {
+public class  PeluqueriaDto {
 
     private Integer id;
     private String nombre;
     private String email;
     private String direccion;
-    private int telefono;
+    private Integer telefono;
 }

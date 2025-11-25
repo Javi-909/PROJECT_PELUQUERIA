@@ -4,11 +4,12 @@ import { PeluqueriaCardComponent } from '../peluqueria-card/peluqueria-card';
 import { PeluqueriaService } from '../../services/peluqueria';
 import { Peluqueria } from '../../models/peluqueria.model';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, PeluqueriaCardComponent, FormsModule],
+  imports: [CommonModule, PeluqueriaCardComponent, FormsModule, RouterLink],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
