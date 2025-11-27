@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface peluqueriaRepository extends JpaRepository<Peluqueria, Integer>{
 
+    Peluqueria findByEmail(String email);
+
 }

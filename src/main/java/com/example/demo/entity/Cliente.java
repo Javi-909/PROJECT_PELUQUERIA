@@ -18,6 +18,7 @@ public class Cliente {
     private String nombre;
     private String email;
     private String genero;
+    private String password;
 
     public Integer getId() {
         return id;
@@ -32,6 +33,10 @@ public class Cliente {
         return genero;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     // Setters
     public void setId(Integer id) {
         this.id = id;
@@ -44,6 +49,10 @@ public class Cliente {
     }
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
     }
 
 }

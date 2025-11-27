@@ -4,12 +4,14 @@ import { PeluqueriaCardComponent } from './components/peluqueria-card/peluqueria
 import { PeluqueriaDetalleComponent } from './components/peluqueria-detalle/peluqueria-detalle';
 import { Contacto } from './components/contacto/contacto';
 import { PeluqueriaForm } from './components/peluqueria-form/peluqueria-form';
+import { NuevoServicio } from './components/nuevo-servicio/nuevo-servicio';
+import { Login } from './components/login/login';
  
 
 export const routes: Routes = [
   {
     path: '', // Cuando la ruta está vacía (inicio)
-    component: HomeComponent
+    component: Login
   },
 
   //Ruta dinámica: id es reemplazado por un número
@@ -17,6 +19,10 @@ export const routes: Routes = [
 
   {path: 'contacto', component: Contacto},
 
-  {path: 'nueva-peluqueria', component: PeluqueriaForm}
+  {path: 'nueva-peluqueria', component: PeluqueriaForm},
+
+  {path: 'peluqueria/:peluqueriaId/nuevo-servicio', component: NuevoServicio},
+
+  {path: 'home', component: HomeComponent}
 
 ];

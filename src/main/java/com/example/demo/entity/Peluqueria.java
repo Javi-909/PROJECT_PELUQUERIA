@@ -20,6 +20,7 @@ public class Peluqueria {
     private String email;
     private String direccion;
     private Integer telefono;
+    private String password;
 
 
     public Integer getId() {
@@ -38,6 +39,10 @@ public class Peluqueria {
         return telefono;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     // Setters
     public void setId(Integer id) {
         this.id = id;
@@ -53,6 +58,10 @@ public class Peluqueria {
     }
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

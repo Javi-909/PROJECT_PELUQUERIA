@@ -6,15 +6,27 @@
     </a>
     
     <!-- Boton de Añadir Peluqueria -->
-    <div class="d-flex gap-2">
-      <a routerLink="/nueva-peluqueria" class="btn btn-primary">
-        + Añadir Peluqueria
+     <div class="d-flex gap-2"> 
+      <a *ngIf="authService.isNegocio()" 
+      routerLink="/nueva-peluqueria" 
+      class="btn btn-primary">
+          + Añadir Peluqueria
       </a>
 
       <!-- Boton de Contacto -->
       <a routerLink="/contacto" class="btn btn-outline-primary">Contacto</a>
     </div>
   </div>
+
+  <!-- Boton de LogOut -->
+
+  <button *ngIf="authService.isLoggedIn()" 
+          (click)="authService.logout()" 
+          class="btn btn-danger">
+    LogOut
+  </button>
+
+
 
 </nav>
 

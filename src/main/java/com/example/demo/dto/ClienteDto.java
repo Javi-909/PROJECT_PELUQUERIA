@@ -14,6 +14,7 @@ public class ClienteDto {
     private String nombre;
     private String email;
     private String genero;
+    private String password;
 
     public String getNombre() {
         return nombre;
@@ -23,6 +24,10 @@ public class ClienteDto {
     }
     public String getGenero() {
         return genero;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     // Setters
@@ -35,5 +40,9 @@ public class ClienteDto {
     }
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
     }
 }

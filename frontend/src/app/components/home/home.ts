@@ -5,6 +5,7 @@ import { PeluqueriaService } from '../../services/peluqueria';
 import { Peluqueria } from '../../models/peluqueria.model';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { RouterLink } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   private peluqueriaService = inject(PeluqueriaService);
+  public authService = inject(Auth);
   peluquerias: Peluqueria[] = [];
 
   //Lista que muestra las peluquerias (resultado del filtro)

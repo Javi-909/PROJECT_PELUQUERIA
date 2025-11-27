@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Peluqueria } from '../models/peluqueria.model';
 import { Servicio } from '../models/servicio.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +14,9 @@ export class PeluqueriaService {
   
   // URL de tu Backend (ajustada a tu controlador)
   private apiUrl = 'http://localhost:8080/peluqueria';
+
+  // URL base para servicios genéricos
+  private apiServiciosUrl = 'http://localhost:8080/servicio'
 
   constructor() { }
 
@@ -41,5 +45,10 @@ export class PeluqueriaService {
     return this.http.post<Peluqueria>(`${this.apiUrl}/create`, peluqueria);
   }
 
+
+  getServiciosDisponibles(): Observable<any[]>{
+    //Devuelve la url de todos los serviciios (findAll)
+    return this.http.get<any[]>(`${this.apiServiciosUrl}/findAll`);
+  }
 
 }

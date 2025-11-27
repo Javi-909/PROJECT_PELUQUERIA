@@ -1,0 +1,47 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-4 border-0" style="width: 100%; max-width: 400px;">
+    
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-primary">Iniciar Sesión</h2>
+      <p class="text-muted">Bienvenido a PeluqueríaDev</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+      
+      <div class="mb-3">
+        <label class="form-label fw-bold">Email</label>
+        <input type="email" 
+               class="form-control" 
+               [(ngModel)]="credentials.email" 
+               name="email" 
+               placeholder="ejemplo@correo.com" 
+               required>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-bold">Contraseña</label>
+        <input type="password" 
+               class="form-control" 
+               [(ngModel)]="credentials.password" 
+               name="password" 
+               placeholder="******" 
+               required>
+      </div>
+
+      <!-- Mensaje de Error -->
+      <div *ngIf="errorMsg" class="alert alert-danger text-center py-2 mb-3">
+        {{ errorMsg }}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+        Entrar
+      </button>
+
+    </form>
+    
+    <div class="text-center mt-3">
+      <small class="text-muted">¿No tienes cuenta? <a href="#">Regístrate</a></small>
+    </div>
+
+  </div>
+</div>

@@ -2,7 +2,7 @@
 
   <!-- Mensaje de error (solo si falla la carga inicial gravemente) -->
   <div *ngIf="errorMsg" class="alert alert-danger text-center shadow-sm mb-4">
-    {{ errorMsg }} <a routerLink="/" class="alert-link">Volver</a>
+    {{ errorMsg }} <a routerLink="/home" class="alert-link">Volver</a>
   </div>
 
   <!-- TARJETA PRINCIPAL -->
@@ -15,7 +15,7 @@
         <h1 class="h2 fw-bold text-dark mb-0">{{ peluqueria.nombre || 'Cargando...' }}</h1>
         <span class="badge bg-light text-secondary mt-2">Detalles y Servicios</span>
       </div>
-      <a routerLink="/" class="btn btn-outline-secondary btn-sm">
+      <a routerLink="/home" class="btn btn-outline-secondary btn-sm">
         &larr; Volver
       </a>
     </div>
@@ -46,7 +46,15 @@
         <div class="col-lg-8">
           
           <!-- 1. SERVICIOS -->
-          <h3 class="h5 fw-bold text-primary mb-3">1. Selecciona un Servicio</h3>
+           <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="h5 fw-bold text-primary mb-3">1. Selecciona un Servicio</h3>
+          
+              <!-- Botón para AÑADIR SERVICIOS -->
+              <a [routerLink]="['/peluqueria', peluqueria.id, 'nuevo-servicio']" 
+                class="btn btn-sm btn-outline-success fw-bold">
+                + Añadir Servicio
+              </a>
+            </div>
           
           <div class="list-group mb-5 shadow-sm" *ngIf="servicios.length > 0">
             <button type="button" 

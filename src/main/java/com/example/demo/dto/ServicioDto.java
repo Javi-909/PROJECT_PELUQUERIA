@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 public class ServicioDto {
 
+    private Integer id;
     private String nombre;
     private String descripcion;
 
@@ -22,9 +23,14 @@ public class ServicioDto {
     public String getDescripcion() {
         return descripcion;
     }
+    public Integer getId(){
+        return id;
+    }
 
     // Setters
-
+    public void setId(Integer id){
+        this.id = id;
+    }
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
