@@ -1,0 +1,91 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      
+      <div class="card shadow border-0 overflow-hidden">
+        
+        <!-- CABECERA CON PESTAÑAS -->
+        <div class="card-header bg-white p-0 border-bottom-0">
+          <ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link rounded-0 py-3 fw-bold" 
+                      [class.active]="tipoRegistro === 'CLIENTE'"
+                      (click)="tipoRegistro = 'CLIENTE'">
+                👤 Soy Cliente
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link rounded-0 py-3 fw-bold" 
+                      [class.active]="tipoRegistro === 'NEGOCIO'"
+                      (click)="tipoRegistro = 'NEGOCIO'">
+                ✂️ Soy Negocio
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-body p-4 bg-light">
+          
+          <h3 class="text-center mb-4 text-secondary">
+            {{ tipoRegistro === 'CLIENTE' ? 'Crea tu cuenta personal' : 'Registra tu Peluquería' }}
+          </h3>
+
+          <!-- FORMULARIO UNIFICADO (Cambia según el tipo) -->
+          <form (ngSubmit)="registrar()">
+            
+            <!-- Campos Comunes -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre {{ tipoRegistro === 'NEGOCIO' ? 'del Establecimiento' : 'Completo' }}</label>
+              <input type="text" class="form-control" [(ngModel)]="datos.nombre" name="nombre" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="datos.email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Contraseña</label>
+              <input type="password" class="form-control" [(ngModel)]="datos.password" name="password" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Teléfono</label>
+              <input type="number" class="form-control" [(ngModel)]="datos.telefono" name="telefono" required>
+            </div>
+
+            <!-- Campo SOLO para Negocio -->
+            <div class="mb-4" *ngIf="tipoRegistro === 'NEGOCIO'">
+              <label class="form-label fw-bold">Dirección del Local</label>
+              <input type="text" class="form-control" [(ngModel)]="datos.direccion" name="direccion" placeholder="Calle, Número, Ciudad">
+            </div>
+            
+        
+            <!-- CAMPO GÉNERO (Solo para Clientes) -->
+            <div class="mb-3" *ngIf="tipoRegistro === 'CLIENTE'">
+              <label class="form-label fw-bold">Género</label>
+              <select class="form-select" [(ngModel)]="datos.genero" name="genero" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="HOMBRE">Hombre</option>
+                <option value="MUJER">Mujer</option>
+                <option value="OTRO">Otro</option>
+              </select>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                Registrarme como {{ tipoRegistro === 'CLIENTE' ? 'Cliente' : 'Negocio' }}
+              </button>
+              <a routerLink="/" class="btn btn-link text-decoration-none">
+                ¿Ya tienes cuenta? Inicia sesión
+              </a>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

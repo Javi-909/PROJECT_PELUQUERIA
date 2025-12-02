@@ -25,7 +25,7 @@ export class PeluqueriaDetalleComponent implements OnInit {
   private peluqueriaService = inject(PeluqueriaService);
   private reservaService = inject(ReservaService);
   private servicioPeluService = inject(ServicioPeluService);
-  private authService = inject(Auth);
+  public authService = inject(Auth);
 
 
   // Inicializamos con datos vacíos para que el HTML no falle nunca

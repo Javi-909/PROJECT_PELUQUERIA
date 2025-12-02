@@ -6,6 +6,8 @@ import { Contacto } from './components/contacto/contacto';
 import { PeluqueriaForm } from './components/peluqueria-form/peluqueria-form';
 import { NuevoServicio } from './components/nuevo-servicio/nuevo-servicio';
 import { Login } from './components/login/login';
+import { MiPerfil } from './components/mi-perfil/mi-perfil';
+import { RegistroComponent } from './components/registro/registro';
  
 
 export const routes: Routes = [
@@ -23,6 +25,11 @@ export const routes: Routes = [
 
   {path: 'peluqueria/:peluqueriaId/nuevo-servicio', component: NuevoServicio},
 
-  {path: 'home', component: HomeComponent}
+  {path: 'home', component: HomeComponent},
+
+  {path: 'mi-perfil', component: MiPerfil},
+
+  {path: 'registro', component: RegistroComponent}
+  
 
 ];

@@ -7,4 +7,5 @@ export interface Peluqueria {
   email: string;
   direccion: string;
   telefono: number;
+  password?: string;
 }

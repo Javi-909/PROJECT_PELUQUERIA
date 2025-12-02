@@ -4,7 +4,8 @@
     <a class="navbar-brand fw-bold fs-3 text-dark" href="#">
       Peluquería<span class="text-primary">Dev</span>
     </a>
-    
+
+ 
     <!-- Boton de Añadir Peluqueria -->
      <div class="d-flex gap-2"> 
       <a *ngIf="authService.isNegocio()" 
@@ -25,8 +26,13 @@
           class="btn btn-danger">
     LogOut
   </button>
-
-
+   <!-- Boton de MiPerfil -->
+    
+  <a *ngIf="authService.isCliente()"  
+     routerLink="/mi-perfil" 
+     class="btn btn-outline-primary">
+    👤 Mi Perfil
+  </a>
 
 </nav>
 

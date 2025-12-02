@@ -86,6 +86,9 @@ public class ClienteServiceImpl implements ClienteService {
                     if (clienteDto.getGenero() != null) {
                         cliente.setGenero(clienteDto.getGenero());
                     }
+                    if (clienteDto.getPassword() != null){
+                        cliente.setPassword(clienteDto.getPassword());
+                    }
                     Cliente saved = clienteRepository1.save(cliente);
                     return ResponseEntity.ok(clienteMapper.toDto(saved));
                 })

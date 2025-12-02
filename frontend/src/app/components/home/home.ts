@@ -35,13 +35,23 @@ export class HomeComponent implements OnInit {
   cargarPeluquerias() {
     this.peluqueriaService.getPeluquerias().subscribe({
       next: (data) => {
-        this.peluquerias = data;
-        this.peluqueriasFiltradas = data;
+
+        if(this.authService.isNegocio()){ //si es un negocio, mostrar solo su peluqueria
+          const negocioId = this.authService.userId;
+          this.peluquerias = data.filter(pelu => pelu.id === negocioId);
+          if(this.peluquerias.length === 0){
+            console.warn('No se encontró ninguna peluquería para el negocio con ID:', negocioId);
+          }
+        } else {
+          this.peluquerias = data;
+        }
+        this.peluqueriasFiltradas = this.peluquerias;
         console.log('Datos cargados:', data);
       },
       error: (err) => console.error('Error al conectar:', err)
     });
   }
+
   //metodo que se ejecuta cada vez que escribes una letra
 
 filtrarResultados() {

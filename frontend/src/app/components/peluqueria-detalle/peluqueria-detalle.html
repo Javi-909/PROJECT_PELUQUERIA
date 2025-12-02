@@ -49,8 +49,9 @@
            <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="h5 fw-bold text-primary mb-3">1. Selecciona un Servicio</h3>
           
-              <!-- Botón para AÑADIR SERVICIOS -->
-              <a [routerLink]="['/peluqueria', peluqueria.id, 'nuevo-servicio']" 
+              <!-- Botón para AÑADIR SERVICIOS (solo para negocios)-->
+              <a *ngIf = "authService.isNegocio()" 
+              [routerLink]="['/peluqueria', peluqueria.id, 'nuevo-servicio']" 
                 class="btn btn-sm btn-outline-success fw-bold">
                 + Añadir Servicio
               </a>
