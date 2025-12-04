@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "jXcm30PljgTrqeMnbuE";
+    private static final String SECRET_KEY = "aGVsbG93b3JsZHRoaXNpc2F2ZXJ5c2VjcmV0a2V5Zm9yand0dG9rZW5zMjU2Yml0cw==";
 
     private Key getSigningKey(){
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
