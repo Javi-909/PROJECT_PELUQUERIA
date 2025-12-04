@@ -14,15 +14,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Collections;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.*;
+
+
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
@@ -36,7 +32,8 @@ class AuthControllerTest {
     @InjectMocks
     private AuthController authController;
 
-    @Test
+
+    @Test //Comprueba que un Cliente se ha registrado y lo encuentra
     public void login_ClienteExisteYpassCorrecta(){
 
         String mail = "juan@gmail.com";
@@ -62,7 +59,7 @@ class AuthControllerTest {
     }
 
 
-    @Test
+    @Test //Comprueba que un Negocio se ha registrado y lo encuentra
     public void login_NegocioYpassCorrecta(){
         LoginRequestDto request = new LoginRequestDto("negocio@gmail.com","1234");
 
@@ -80,7 +77,7 @@ class AuthControllerTest {
     }
 
 
-    @Test
+    @Test //Comprueba que un usuario no existe
     public void login_UsuarioNoExiste(){
         String email = "nadie@gmail.com";
         LoginRequestDto request = new LoginRequestDto(email,"1234");
@@ -89,6 +86,26 @@ class AuthControllerTest {
         doReturn(null).when(clienteRepository1).findByEmail(email);
         doReturn(null).when(peluqueriaRepository1).findByEmail(email);
 
+        ResponseEntity<LoginResponseDto> respuesta = authController.login(request);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, respuesta.getStatusCode());
+    }
+
+    @Test   //Comprueba que el login tiene contraseña incorrecta
+    public void login_PasswordIncorrect(){
+
+        String email = "juan@gmail.com";
+        LoginRequestDto request = new LoginRequestDto(email,"pass_falsa");
+
+        //Creamos un nuevo cliente pero con otra contraseña
+        Cliente clienteMock = new Cliente();
+        clienteMock.setEmail(email);
+        clienteMock.setPassword("1234");
+
+        //Encuentra el cliente con el email indicado
+        doReturn(clienteMock).when(clienteRepository1).findByEmail(email);
+
+        //pero la contraseña no coincide
         ResponseEntity<LoginResponseDto> respuesta = authController.login(request);
 
         assertEquals(HttpStatus.UNAUTHORIZED, respuesta.getStatusCode());

@@ -1,13 +1,16 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter,withDebugTracing } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http'; // Importante para conectar con Java
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http'; // Importar withInterceptors
+import { authInterceptor } from './interceptors/auth.interceptor'; // Importar tu interceptor
+import { provideClientHydration } from '@angular/platform-browser';
 
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
 
-    provideRouter(routes,withDebugTracing()),
-    provideHttpClient() // Habilita las llamadas a la API
+    provideRouter(routes),
+    provideClientHydration(),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])) 
   ]
 };
