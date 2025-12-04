@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 @RestController
 @RequestMapping("/serviciopelu")
 public class ServicioPeluController {
@@ -20,4 +21,5 @@ public class ServicioPeluController {
     public ServicioPeluDto añadirServicioApeluqueria(@RequestBody ServicioPeluCreacionDto request) {
         return servicioPeluService.añadirServicioApeluqueria(request);
     }
+
 }

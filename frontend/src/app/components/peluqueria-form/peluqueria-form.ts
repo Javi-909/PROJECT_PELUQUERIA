@@ -24,13 +24,15 @@ export class PeluqueriaForm {
     nombre: '',
     direccion: '',
     email: '',
+    password: '',
     telefono: 0
   };
 
   guardarPeluqueria(){
-    if(!this.nuevaPeluqueria.nombre || !this.nuevaPeluqueria.direccion){
-      alert('Por favor, rellena al menos el nombre y la dirección.');
+    if(!this.nuevaPeluqueria.nombre || !this.nuevaPeluqueria.direccion || !this.nuevaPeluqueria.password){
+      alert('Por favor, rellena al menos el nombre, la dirección y la contraseña.');
       return;
+
     }
   
 

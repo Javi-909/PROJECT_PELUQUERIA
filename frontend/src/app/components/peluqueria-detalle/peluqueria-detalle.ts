@@ -69,11 +69,15 @@ export class PeluqueriaDetalleComponent implements OnInit {
       });
 
       // 2. Cargar Servicios
-      this.peluqueriaService.getServiciosPeluqueria(id).subscribe({
-        next: (data) => this.servicios = data,
-        error: (err) => console.error(err)
-      });
+      this.cargarServiciosDeLaPeluqueria(id);
     }
+  }
+  // --- Metodo para cargar servicios de cada peluqueria ---
+  cargarServiciosDeLaPeluqueria(id: number) {
+    this.peluqueriaService.getServiciosPeluqueria(id).subscribe({
+      next: (data) => this.servicios = data,
+      error: (err) => console.error('Error cargando servicios:', err)
+    });
   }
 
   seleccionarServicio(id: number) {
@@ -130,4 +134,6 @@ export class PeluqueriaDetalleComponent implements OnInit {
       }
     });
   }
+
+ 
 }

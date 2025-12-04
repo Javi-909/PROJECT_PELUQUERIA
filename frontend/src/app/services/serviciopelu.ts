@@ -18,4 +18,6 @@ export class ServicioPeluService {
     // La URL final será: http://localhost:8080/serviciopelu/add
     return this.http.post(`${this.apiUrl}/add`, dto);
   }
+
+
 }

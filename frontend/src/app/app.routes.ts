@@ -30,6 +30,6 @@ export const routes: Routes = [
   {path: 'mi-perfil', component: MiPerfil},
 
   {path: 'registro', component: RegistroComponent}
-  
+
 
 ];
