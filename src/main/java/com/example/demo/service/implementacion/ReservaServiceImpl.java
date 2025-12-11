@@ -2,15 +2,11 @@ package com.example.demo.service.implementacion;
 
 import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
-import com.example.demo.entity.Cliente;
-import com.example.demo.entity.EstadoReserva;
-import com.example.demo.entity.Reserva;
-import com.example.demo.entity.ReservaCliente;
+import com.example.demo.dto.ReservaNegocioDto;
+import com.example.demo.entity.*;
 import com.example.demo.mapper.ReservaClienteMapper;
 import com.example.demo.mapper.ReservaMapper;
-import com.example.demo.repository.clienteRepository;
-import com.example.demo.repository.reservaClienteRepository;
-import com.example.demo.repository.reservaRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.ReservaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +18,7 @@ import  org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -36,6 +33,10 @@ import java.util.stream.Collectors;
         private reservaClienteRepository reservaClienteRepository1;
         @Autowired
         private ReservaMapper reservaMapper;
+        @Autowired
+        private servicioPeluRepository servicioPeluRepository1;
+        @Autowired
+        private servicioRepository servicioRepository1;
 
         @Autowired
         private ReservaClienteMapper reservaClienteMapper;
@@ -122,7 +123,59 @@ import java.util.stream.Collectors;
                             return ResponseEntity.ok(dto);
                         })
                         .orElseGet(() -> ResponseEntity.notFound().build());
-            }
+        }
+
+        @Override
+        public List<ReservaNegocioDto> getReservasDePeluqueria(Integer peluqueriaId){
+            List<Reserva> reservas = reservaRepository1.findByPeluqueriaId(peluqueriaId);
+            return reservas.stream().map(reserva -> {
+
+                // Valores por defecto
+                String nombreCliente = "Desconocido";
+                String emailCliente = "-";
+                String nombreServicio = "Servicio General";
+                Integer precio = 0;
+
+                //BUSCAR EL CLIENTE
+                List<ReservaCliente> rcs = reservaClienteRepository1.findByReserva_id(reserva.getId());
+                ReservaCliente rc = null;
+
+                if(rcs!= null && !rcs.isEmpty()){
+                    rc = rcs.get(0);
+                }
+
+                if(rc != null){ //Si encontramos la relación, buscamos los datos personales del cliente que tiene la reserva
+                    Cliente cliente = clienteRepository1.findById(rc.getCliente_id()).orElse(null);
+                    if(cliente != null) {
+                        nombreCliente = cliente.getNombre();
+                        emailCliente = cliente.getEmail();
+                    }
+                }
+
+                //BUSCAR EL SERVICIO
+                if(reserva.getIdServicioPelu() != null){
+                    ServicioPelu sp = servicioPeluRepository1.findById(reserva.getIdServicioPelu()).orElse(null);
+                    if(sp != null){
+                        precio = sp.getPrecio();
+                        Servicio s = servicioRepository1.findById(sp.getServicioId()).orElse(null);
+                        if(s != null){
+                            nombreServicio = s.getNombre();
+                        }
+                    }
+                }
+                //DEVOLVEMOS EL DTO (que es lo que el negocio va a ver)
+                return new ReservaNegocioDto(
+                        reserva.getId(),
+                        reserva.getFecha(),
+                        reserva.getHora(),
+                        nombreCliente,
+                        emailCliente,
+                        nombreServicio,
+                        precio
+                );
+            }).collect(Collectors.toList());
+        }
+
 
     }
 

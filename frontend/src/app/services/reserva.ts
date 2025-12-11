@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ReservaDto } from '../models/reserva.model';
+import { ReservaNegocio } from '../models/reserva-negocio.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class ReservaService {
   cancelarReserva(reservaId: number): Observable<any> {
       return this.http.delete(`${this.apiUrl}/cancelareserva/${reservaId}`);
     }
+
+    getReservasDeNegocio(peluqueriaId: number): Observable<ReservaNegocio[]> {
+    return this.http.get<ReservaNegocio[]>(`${this.apiUrl}/peluqueria/${peluqueriaId}`);
+  }
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
+import com.example.demo.dto.ReservaNegocioDto;
 import com.example.demo.service.ReservaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,11 @@ public class ReservaController {
     @DeleteMapping("/cancelareserva/{reservaId}")
    public ResponseEntity<ReservaDto> cancelaReserva(@PathVariable Integer reservaId){
        return reservaService.cancelaReserva(reservaId);
+   }
+
+   @GetMapping("/peluqueria/{peluqueriaId}")
+    public ResponseEntity<List<ReservaNegocioDto>> getReservasDeNegocio(@PathVariable Integer peluqueriaId){
+        return ResponseEntity.ok(reservaService.getReservasDePeluqueria(peluqueriaId));
    }
 
 

@@ -20,14 +20,14 @@
   </div>
 
   <!-- Boton de LogOut -->
-
   <button *ngIf="authService.isLoggedIn()" 
           (click)="authService.logout()" 
           class="btn btn-danger">
     LogOut
   </button>
-   <!-- Boton de MiPerfil -->
-    
+  
+
+   <!-- Boton de MiPerfil -->  
   <a *ngIf="authService.isCliente()"  
      routerLink="/mi-perfil" 
      class="btn btn-outline-primary">

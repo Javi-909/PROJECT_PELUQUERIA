@@ -19,4 +19,11 @@ public interface reservaRepository extends JpaRepository<Reserva, Integer> {
             nativeQuery = true)
     List<Reserva> findByClienteId(@Param("clienteId") Integer clienteId);
 
+
+    // Busca las reservas de una determinada peluqueria
+    @Query(value = "SELECT r.* FROM reserva r " +
+            "JOIN serviciopelu sp ON r.serviciopelu_id = sp.id " +
+            "WHERE sp.peluqueria_id = :peluqueriaId", nativeQuery = true)
+    List<Reserva> findByPeluqueriaId(@Param("peluqueriaId") Integer peluqueriaId);
+
 }

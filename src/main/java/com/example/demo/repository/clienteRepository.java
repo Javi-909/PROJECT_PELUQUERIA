@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface clienteRepository extends JpaRepository<Cliente, Integer>{
 
     Cliente findByEmail(String email);
+
+
 }

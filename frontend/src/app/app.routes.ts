@@ -8,6 +8,7 @@ import { NuevoServicio } from './components/nuevo-servicio/nuevo-servicio';
 import { Login } from './components/login/login';
 import { MiPerfil } from './components/mi-perfil/mi-perfil';
 import { RegistroComponent } from './components/registro/registro';
+import { ReservasNegocio } from './components/reservas-negocio/reservas-negocio';
  
 
 export const routes: Routes = [
@@ -29,7 +30,9 @@ export const routes: Routes = [
 
   {path: 'mi-perfil', component: MiPerfil},
 
-  {path: 'registro', component: RegistroComponent}
+  {path: 'registro', component: RegistroComponent},
+
+  {path: 'peluqueria/:id/reservas-negocio', component: ReservasNegocio}
 
 
 ];
