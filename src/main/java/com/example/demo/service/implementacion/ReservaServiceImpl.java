@@ -124,6 +124,25 @@ import java.util.stream.Collectors;
                         .orElseGet(() -> ResponseEntity.notFound().build());
         }
 
+
+    //CONFIRMAR UNA RESERVA
+    @Transactional
+    @Override
+    public ResponseEntity<ReservaDto> confirmaReserva(Integer reservaId) {
+
+        return reservaRepository1.findById(reservaId)
+                .map(reserva -> {
+                    reserva.setEstado(EstadoReserva.CONFIRMADA);
+
+                    Reserva saved = reservaRepository1.saveAndFlush(reserva);
+
+                    ReservaDto dto = reservaMapper.toDto(saved);
+                    System.out.println("Reserva con id " + reservaId + "ha sido CONFIRMADA");
+                    return ResponseEntity.ok(dto);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+    }
         @Override
         public List<ReservaNegocioDto> getReservasDePeluqueria(Integer peluqueriaId){
             List<Reserva> reservas = reservaRepository1.findByPeluqueriaId(peluqueriaId);
@@ -170,7 +189,8 @@ import java.util.stream.Collectors;
                         nombreCliente,
                         emailCliente,
                         nombreServicio,
-                        precio
+                        precio,
+                        reserva.getEstado()
                 );
             }).collect(Collectors.toList());
         }

@@ -31,4 +31,8 @@ export class ReservaService {
     return this.http.get<ReservaNegocio[]>(`${this.apiUrl}/peluqueria/${peluqueriaId}`);
   }
 
+  confirmaReserva(reservaId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/confirmar/${reservaId}`, null);
+
+}
 }

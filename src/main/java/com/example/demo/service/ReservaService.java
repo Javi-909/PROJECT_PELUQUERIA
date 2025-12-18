@@ -19,4 +19,6 @@ public interface ReservaService {
 
     List<ReservaNegocioDto> getReservasDePeluqueria(Integer peluqueriaId);
 
+    ResponseEntity<ReservaDto> confirmaReserva(Integer id);
+
 }

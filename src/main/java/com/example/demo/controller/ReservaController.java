@@ -40,5 +40,10 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.getReservasDePeluqueria(peluqueriaId));
    }
 
+   @PutMapping("/confirmar/{reservaId}")
+    public ResponseEntity<ReservaDto> confirmaReserva(@PathVariable Integer reservaId){
+        return reservaService.confirmaReserva(reservaId);
+   }
+
 
 }

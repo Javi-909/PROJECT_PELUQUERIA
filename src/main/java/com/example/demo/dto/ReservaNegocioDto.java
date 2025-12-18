@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.EstadoReserva;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,5 @@ public class ReservaNegocioDto {  //Este DTO sirve para poder mostrarle al negoc
     private String emailCliente;
     private String nombreServicio;
     private Integer precioServicio;
+    private EstadoReserva estado;
 }

@@ -1,3 +1,5 @@
+export type EstadoReserva = 'PENDIENTE' | 'CONFIRMADA' | 'CANCELADA';
+
 export interface ReservaNegocio {
   id: number;
   fecha: string;
@@ -6,4 +8,5 @@ export interface ReservaNegocio {
   emailCliente: string;
   nombreServicio: string;
   precioServicio: number;
+  estado: EstadoReserva;
 }

@@ -49,4 +49,25 @@ export class ReservasNegocio implements OnInit {
     });
   }
 
+  aceptar(reserva: ReservaNegocio) {
+    this.reservaService.confirmaReserva(reserva.id).subscribe({
+      next: () => {
+        // No hace falta alert, solo recargamos para ver el cambio de estado
+        this.cargarAgenda(); 
+      },
+      error: () => alert("Error al confirmar la reserva.")
+    });
+
+}
+  rechazar(reserva: ReservaNegocio) {
+    if(confirm("¿Seguro que quieres rechazar esta reserva? Se eliminará de la agenda.")) {
+      this.reservaService.cancelarReserva(reserva.id).subscribe({
+        next: () => {
+          this.cargarAgenda();
+        },
+        error: () => alert("Error al rechazar la reserva.")
+      });
+    }
+  }
+
 }

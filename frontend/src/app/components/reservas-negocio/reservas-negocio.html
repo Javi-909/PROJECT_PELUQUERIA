@@ -23,22 +23,52 @@
             <th class="py-3 ps-4">Fecha / Hora</th>
             <th class="py-3">Cliente</th>
             <th class="py-3">Servicio</th>
+            <th class="py-3">Estado / Acciones</th>
             <th class="py-3">Precio</th>
             <th class="py-3">Contacto</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let res of reservas">
+            <!-- Fecha y Hora -->
             <td class="ps-4">
               <div class="fw-bold text-dark">{{ res.fecha }}</div>
               <div class="text-primary small fw-bold">🕒 {{ res.hora }}</div>
             </td>
+            
+            <!-- Nombre del Cliente -->
             <td>
               <div class="fw-bold">{{ res.nombreCliente }}</div>
             </td>
+
+            <!-- Nombre del Servicio -->
             <td>
               <span class="badge bg-info text-dark">{{ res.nombreServicio }}</span>
             </td>
+
+            <!-- Caso A: PENDIENTE -> Mostrar botones Aceptar/Rechazar -->
+             <td class="text-center">
+              <div *ngIf="res.estado === 'PENDIENTE'" class="btn-group shadow-sm" role="group">
+                <button class="btn btn-sm btn-success" (click)="aceptar(res)" title="Aceptar Cita">
+                  ✔
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="rechazar(res)" title="Rechazar Cita">
+                  ✖
+                </button>
+              </div>
+
+              <!-- Caso B: CONFIRMADA -> Mostrar etiqueta Verde -->
+              <span *ngIf="res.estado === 'CONFIRMADA'" class="badge bg-success p-2">
+                ✅ Aceptada
+              </span>
+              
+              <!-- Caso C: CANCELADA -> Mostrar etiqueta Gris -->
+              <span *ngIf="res.estado === 'CANCELADA'" class="badge bg-secondary p-2">
+                ❌ Rechazada
+              </span>
+            
+            </td>
+
             <td class="fw-bold text-success">
               {{ res.precioServicio }}€
             </td>
