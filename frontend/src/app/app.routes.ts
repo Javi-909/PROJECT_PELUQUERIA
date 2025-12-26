@@ -9,6 +9,7 @@ import { Login } from './components/login/login';
 import { MiPerfil } from './components/mi-perfil/mi-perfil';
 import { RegistroComponent } from './components/registro/registro';
 import { ReservasNegocio } from './components/reservas-negocio/reservas-negocio';
+import { authGuard } from './guards/auth.guard';
  
 
 export const routes: Routes = [
@@ -18,21 +19,21 @@ export const routes: Routes = [
   },
 
   //Ruta dinámica: id es reemplazado por un número
-  {path: 'peluqueria/:id', component: PeluqueriaDetalleComponent},
+  {path: 'peluqueria/:id', component: PeluqueriaDetalleComponent, canActivate: [authGuard]},
 
   {path: 'contacto', component: Contacto},
 
-  {path: 'nueva-peluqueria', component: PeluqueriaForm},
+  {path: 'nueva-peluqueria', component: PeluqueriaForm, canActivate: [authGuard]},
 
-  {path: 'peluqueria/:peluqueriaId/nuevo-servicio', component: NuevoServicio},
+  {path: 'peluqueria/:peluqueriaId/nuevo-servicio', component: NuevoServicio, canActivate: [authGuard]},
 
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent, canActivate: [authGuard]},
 
-  {path: 'mi-perfil', component: MiPerfil},
+  {path: 'mi-perfil', component: MiPerfil, canActivate: [authGuard]},
 
   {path: 'registro', component: RegistroComponent},
 
-  {path: 'peluqueria/:id/reservas-negocio', component: ReservasNegocio}
+  {path: 'peluqueria/:id/reservas-negocio', component: ReservasNegocio, canActivate: [authGuard]},
 
 
 ];
