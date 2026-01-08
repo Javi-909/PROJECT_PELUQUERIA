@@ -34,7 +34,11 @@
             <div class="card-body">
               <h5 class="card-title fw-bold mb-3">Contacto</h5>
               <ul class="list-unstyled">
-                <li class="mb-3">📍 {{ peluqueria.direccion || '...' }}</li>
+                <li class="mb-3">📍 {{ peluqueria.direccion || '...' }}  <a [href]="'https://www.google.com/maps/search/?api=1&query=' + peluqueria.direccion" 
+                    target="_blank" 
+                    class="btn btn-outline-secondary">
+                    📍 Mapa
+                  </a></li>
                 <li class="mb-3">📧 {{ peluqueria.email || '...' }}</li>
                 <li class="mb-3">📞 {{ peluqueria.telefono || '...' }}</li>
               </ul>
