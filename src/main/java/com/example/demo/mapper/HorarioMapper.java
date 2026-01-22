@@ -12,7 +12,8 @@ public interface HorarioMapper {
 
     HorarioMapper mapper = Mappers.getMapper(HorarioMapper.class);
 
-    //@Mapping(source="hora_apertura", target = "hora_apertura")
+    //@Mapping(source="hora_apertura", target = "hora_apertura") es una tonteria esta linea
+    //porque dice, coge el atributo hora_apertura y asocialo con hora_apertura. TE LO HACE SOLO MAPSTRUCT
     HorarioDto toDto(Horario horario);
 
     //@Mapping(source="hora_apertura", target = "hora_apertura")
