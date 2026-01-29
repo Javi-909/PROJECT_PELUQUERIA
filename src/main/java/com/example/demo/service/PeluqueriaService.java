@@ -1,7 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.*;
-
+import com.example.demo.dto.PeluqueriaDto;
+import com.example.demo.dto.ServicioResponseDto;
+import com.example.demo.dto.HorarioDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

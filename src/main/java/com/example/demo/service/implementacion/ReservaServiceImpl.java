@@ -3,10 +3,19 @@ package com.example.demo.service.implementacion;
 import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
 import com.example.demo.dto.ReservaNegocioDto;
-import com.example.demo.entity.*;
+import com.example.demo.entity.Cliente;
+import com.example.demo.entity.Reserva;
+import com.example.demo.entity.ReservaCliente;
+import com.example.demo.entity.Servicio;
+import com.example.demo.entity.ServicioPelu;
+import com.example.demo.entity.EstadoReserva;
 import com.example.demo.mapper.ReservaClienteMapper;
 import com.example.demo.mapper.ReservaMapper;
-import com.example.demo.repository.*;
+import com.example.demo.repository.clienteRepository;
+import com.example.demo.repository.reservaClienteRepository;
+import com.example.demo.repository.reservaRepository;
+import com.example.demo.repository.servicioPeluRepository;
+import com.example.demo.repository.servicioRepository;
 import com.example.demo.service.ReservaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +34,20 @@ import java.util.stream.Collectors;
     public class ReservaServiceImpl implements ReservaService{
 
         @Autowired
-        private reservaRepository reservaRepository1;
+        private final reservaRepository reservaRepository1;
         @Autowired
-        private clienteRepository clienteRepository1;
+        private final clienteRepository clienteRepository1;
         @Autowired
-        private reservaClienteRepository reservaClienteRepository1;
+        private final reservaClienteRepository reservaClienteRepository1;
         @Autowired
-        private ReservaMapper reservaMapper;
+        private final ReservaMapper reservaMapper;
         @Autowired
         private servicioPeluRepository servicioPeluRepository1;
         @Autowired
         private servicioRepository servicioRepository1;
 
         @Autowired
-        private ReservaClienteMapper reservaClienteMapper;
+        private final ReservaClienteMapper reservaClienteMapper;
 
         private EstadoReserva estadoReserva;
 
