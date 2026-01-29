@@ -26,15 +26,15 @@ import java.util.stream.Collectors;
 public class PeluqueriaServiceImpl implements PeluqueriaService {
 
     @Autowired
-    private peluqueriaRepository peluqueriaRepository1;
+    private final peluqueriaRepository peluqueriaRepository1;
     @Autowired
-    private servicioRepository servicioRepository1;
+    private final servicioRepository servicioRepository1;
     @Autowired
-    private servicioPeluRepository servicioPeluRepository1;
+    private final servicioPeluRepository servicioPeluRepository1;
     @Autowired
-    private horarioRepository horarioRepository1;
+    private final horarioRepository horarioRepository1;
 
-    private PeluqueriaMapper peluqueriaMapper;
+    private final PeluqueriaMapper peluqueriaMapper;
     private HorarioMapper horarioMapper;
     private ServicioPeluMapper servicioPeluMapper;
 

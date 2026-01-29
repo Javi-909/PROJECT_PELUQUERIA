@@ -18,13 +18,13 @@ import com.example.demo.repository.servicioRepository;
 public class ServicioPeluServiceImpl implements ServicioPeluService {
 
     @Autowired
-    private servicioPeluRepository servicioPeluRepository1;
+    private final servicioPeluRepository servicioPeluRepository1;
     @Autowired
-    private servicioRepository servicioRepository1;
+    private final servicioRepository servicioRepository1;
     @Autowired
-    private peluqueriaRepository peluqueriaRepository1;
+    private final peluqueriaRepository peluqueriaRepository1;
 
-    private ServicioPeluMapper servicioPeluMapper;
+    private final ServicioPeluMapper servicioPeluMapper;
 
 
     public ServicioPeluServiceImpl(servicioPeluRepository servicioPeluRepository1, servicioRepository servicioRepository1, peluqueriaRepository peluqueriaRepository1,

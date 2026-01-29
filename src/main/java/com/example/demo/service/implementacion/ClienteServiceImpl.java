@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
-    private clienteRepository clienteRepository1;
-    private ClienteMapper clienteMapper;
+    private final clienteRepository clienteRepository1;
+    private final ClienteMapper clienteMapper;
 
     public ClienteServiceImpl(ClienteMapper clienteMapper, clienteRepository clienteRepository1) {
         this.clienteMapper = clienteMapper;

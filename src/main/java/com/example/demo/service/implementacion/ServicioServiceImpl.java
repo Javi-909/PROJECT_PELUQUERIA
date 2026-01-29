@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ServicioServiceImpl implements ServicioService {
 
     @Autowired
-    private servicioRepository servicioRepository1;
+    private final servicioRepository servicioRepository1;
     @Autowired
     private servicioPeluRepository servicioPeluRepository1;
 
