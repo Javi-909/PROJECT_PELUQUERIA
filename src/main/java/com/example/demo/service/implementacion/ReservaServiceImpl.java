@@ -3,19 +3,11 @@ package com.example.demo.service.implementacion;
 import com.example.demo.dto.ReservaClienteDto;
 import com.example.demo.dto.ReservaDto;
 import com.example.demo.dto.ReservaNegocioDto;
-import com.example.demo.entity.Cliente;
-import com.example.demo.entity.Reserva;
-import com.example.demo.entity.ReservaCliente;
-import com.example.demo.entity.Servicio;
-import com.example.demo.entity.ServicioPelu;
-import com.example.demo.entity.EstadoReserva;
+import com.example.demo.entity.*;
 import com.example.demo.mapper.ReservaClienteMapper;
 import com.example.demo.mapper.ReservaMapper;
-import com.example.demo.repository.clienteRepository;
-import com.example.demo.repository.reservaClienteRepository;
-import com.example.demo.repository.reservaRepository;
-import com.example.demo.repository.servicioPeluRepository;
-import com.example.demo.repository.servicioRepository;
+import com.example.demo.repository.*;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.ReservaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +37,13 @@ import java.util.stream.Collectors;
         private servicioPeluRepository servicioPeluRepository1;
         @Autowired
         private servicioRepository servicioRepository1;
-
         @Autowired
         private final ReservaClienteMapper reservaClienteMapper;
+        @Autowired
+        private peluqueriaRepository peluqueriaRepository1;
+
+        @Autowired
+        private EmailService emailService;
 
         private EstadoReserva estadoReserva;
 
@@ -92,6 +88,28 @@ import java.util.stream.Collectors;
             Reserva reserva = reservaMapper.toEntity(dto);
             //guardamos la entity y pasamos a dto
             Reserva saved = reservaRepository1.save(reserva);
+
+            //ESTO ES PARA ENVIAR EL MAIL AL CLIENTE QUE HA RESERVADO
+
+            String emailPeluqueria = "noreply@peluqueriadev.com"; //Valor por defecto
+
+            if(dto.getIdServicioPelu() != null) {
+                ServicioPelu sp = servicioPeluRepository1.findById(dto.getIdServicioPelu()).orElse(null);
+                if (sp != null) {
+                    Peluqueria p = peluqueriaRepository1.findById(sp.getPeluqueriaId()).orElse(null);
+                    if (p != null && p.getEmail() != null) {
+                        emailPeluqueria = p.getEmail();
+                    }
+                }
+            }
+            if(cliente.getEmail() != null && !cliente.getEmail().isEmpty()){
+                emailService.enviarCorreoReserva(
+                        cliente.getEmail(),
+                        emailPeluqueria,
+                        saved.getFecha().toString(),
+                        saved.getHora().toString()
+                );
+            }
 
             //Para enlazar cliente y reserva en la tabla reservaCliente:
             ReservaCliente mapping = new ReservaCliente();
