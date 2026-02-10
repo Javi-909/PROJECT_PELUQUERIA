@@ -40,6 +40,13 @@ export class RegistroComponent {
       return;
     }
 
+    //VALIDACION DE MAIL (que sea formato correcto)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.datos.email)) {
+      alert("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+
     console.log(`Registrando como ${this.tipoRegistro}...`, this.datos);
 
     if (this.tipoRegistro === 'CLIENTE') {

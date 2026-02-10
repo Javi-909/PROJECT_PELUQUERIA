@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ServicioPeluService {
 
-    ServicioPeluDto añadirServicioApeluqueria(ServicioPeluCreacionDto request);
+    ServicioPeluDto addServicioToPeluqueria(ServicioPeluCreacionDto request);
 
 }

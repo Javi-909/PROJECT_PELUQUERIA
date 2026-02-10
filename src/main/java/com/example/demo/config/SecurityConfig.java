@@ -30,8 +30,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()// Login y Registro públicos
+                .requestMatchers("/cliente/create").permitAll()
+                .requestMatchers("/peluqueria/create").permitAll()
                 .requestMatchers("/error").permitAll()// Mensajes de error publicos
-                .anyRequest().authenticated()            // Todo lo demás PROTEGIDO
+                .anyRequest().authenticated()
         )
         .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider)

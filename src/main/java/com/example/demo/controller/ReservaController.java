@@ -23,8 +23,13 @@ import java.util.List;
 @RequestMapping("/reserva")
 public class ReservaController {
 
-    @Autowired
+    //@Autowired
     private ReservaService reservaService;
+
+    @Autowired
+    public ReservaController(ReservaService reservaService) {
+        this.reservaService = reservaService;
+    }
 
 
     @PostMapping("/create/{clienteId}")

@@ -4,7 +4,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.HorarioDto;
 import com.example.demo.dto.PeluqueriaDto;
 import com.example.demo.dto.ServicioResponseDto;
-import com.example.demo.service.ServicioService;
 import com.example.demo.service.PeluqueriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,13 @@ import java.util.List;
 @RequestMapping("/peluqueria")
 public class PeluqueriaController {
 
-    @Autowired
+    //@Autowired
     private PeluqueriaService peluqueriaService;
-    private ServicioService servicioService;
+
+    @Autowired
+    public PeluqueriaController(PeluqueriaService peluqueriaService) {
+        this.peluqueriaService = peluqueriaService;
+    }
 
     @GetMapping("/findAll")
     public List<PeluqueriaDto> findAll() {

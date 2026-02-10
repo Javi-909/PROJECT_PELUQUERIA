@@ -33,6 +33,8 @@ export const routes: Routes = [
 
   {path: 'registro', component: RegistroComponent},
 
+  { path: 'login', component: Login },
+
   {path: 'peluqueria/:id/reservas-negocio', component: ReservasNegocio, canActivate: [authGuard]},
 
 

@@ -19,8 +19,13 @@ import java.util.List;
 @RequestMapping("/servicio")
 public class ServicioController {
 
-    @Autowired
+    //@Autowired
     private ServicioService servicioService;
+
+    @Autowired
+    public ServicioController(ServicioService servicioService) {
+        this.servicioService = servicioService;
+    }
 
     @GetMapping("/findAll")
     public List<ServicioDto> findAll() {

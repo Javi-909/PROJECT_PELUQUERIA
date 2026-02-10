@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/serviciopelu")
 public class ServicioPeluController {
 
+    //@Autowired
+    private final ServicioPeluService servicioPeluService;
+
     @Autowired
-    private ServicioPeluService servicioPeluService;
+    public ServicioPeluController(ServicioPeluService servicioPeluService) {
+        this.servicioPeluService = servicioPeluService;
+    }
 
     @PostMapping("/add") //se ha tenido que crear la clase auxililar de servicioPeluCreacion para poder hacer bien el postman
-    public ServicioPeluDto añadirServicioApeluqueria(@RequestBody ServicioPeluCreacionDto request) {
-        return servicioPeluService.añadirServicioApeluqueria(request);
+    public ServicioPeluDto addServicioToPeluqueria(@RequestBody ServicioPeluCreacionDto request) {
+        return servicioPeluService.addServicioToPeluqueria(request);
     }
 
 }
