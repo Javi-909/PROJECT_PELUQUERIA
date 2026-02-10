@@ -1,118 +1,146 @@
-//package com.example.demo.controller;
-//
-//import com.example.demo.dto.LoginRequestDto;
-//import com.example.demo.dto.LoginResponseDto;
-//import com.example.demo.entity.Cliente;
-//import com.example.demo.entity.Peluqueria;
-//import com.example.demo.repository.clienteRepository;
-//import com.example.demo.repository.peluqueriaRepository;
-//import com.example.demo.security.JwtService;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.Mockito;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotNull;
-//import static org.mockito.Mockito.doReturn;
-//
-//
-//
-//@ExtendWith(MockitoExtension.class)
-//class AuthControllerTest {
-//
-//    @Mock //simulamos los escenarios
-//    private peluqueriaRepository peluqueriaRepository1;
-//
-//    @Mock
-//    private clienteRepository clienteRepository1;
-//
-//    @InjectMocks
-//    private AuthController authController;
-//
-//    @Mock
-//    private JwtService jwtService;
-//
-//
-//    @Test //Comprueba que un Cliente se ha registrado y lo encuentra
-//    public void login_ClienteExisteYpassCorrecta(){
-//
-//        String mail = "juan@gmail.com";
-//        LoginRequestDto request = new LoginRequestDto(mail, "1234");
-//
-//        //Creamos un cliente ficticio
-//        Cliente clienteMock = new Cliente();
-//        clienteMock.setId(1);
-//        clienteMock.setNombre("Juan");
-//        clienteMock.setEmail(mail);
-//        clienteMock.setPassword("1234");
-//
-//        //Cuando busques todos los clientes, devuelve el ficticio
-//        doReturn(clienteMock).when(clienteRepository1).findByEmail(mail);
-//
-//        ResponseEntity<LoginResponseDto> respuesta = authController.login(request);
-//
-//        //Verificamos
-//        assertEquals(HttpStatus.OK, respuesta.getStatusCode());
-//        assertNotNull(respuesta.getBody());
-//        assertEquals("CLIENTE", respuesta.getBody().getRole());
-//        assertEquals("Juan", respuesta.getBody().getNombre());
-//    }
-//
-//
-//    @Test //Comprueba que un Negocio se ha registrado y lo encuentra
-//    public void login_NegocioYpassCorrecta(){
-//        LoginRequestDto request = new LoginRequestDto("negocio@gmail.com","1234");
-//
-//        Peluqueria peluqueriaMock = new Peluqueria();
-//        peluqueriaMock.setId(2);
-//        peluqueriaMock.setEmail("negocio@gmail.com");
-//        peluqueriaMock.setPassword("1234");
-//
-//        doReturn(peluqueriaMock).when(peluqueriaRepository1).findByEmail("negocio@gmail.com");
-//
-//        ResponseEntity<LoginResponseDto> respuesta = authController.login(request);
-//
-//        assertEquals(HttpStatus.OK, respuesta.getStatusCode());
-//        assertEquals("NEGOCIO", respuesta.getBody().getRole());
-//    }
-//
-//
-//    @Test //Comprueba que un usuario no existe
-//    public void login_UsuarioNoExiste(){
-//        String email = "nadie@gmail.com";
-//        LoginRequestDto request = new LoginRequestDto(email,"1234");
-//
-//        //No lo encuentra nadie (pq no lo hemos setteado, deberia no existir)
-//        doReturn(null).when(clienteRepository1).findByEmail(email);
-//        doReturn(null).when(peluqueriaRepository1).findByEmail(email);
-//
-//        ResponseEntity<LoginResponseDto> respuesta = authController.login(request);
-//
-//        assertEquals(HttpStatus.UNAUTHORIZED, respuesta.getStatusCode());
-//    }
-//
-//    @Test   //Comprueba que el login tiene contraseña incorrecta
-//    public void login_PasswordIncorrect(){
-//
-//        String email = "juan@gmail.com";
-//        LoginRequestDto request = new LoginRequestDto(email,"pass_falsa");
-//
-//        //Creamos un nuevo cliente pero con otra contraseña
-//        Cliente clienteMock = new Cliente();
-//        clienteMock.setEmail(email);
-//        clienteMock.setPassword("1234");
-//
-//        //Encuentra el cliente con el email indicado
-//        doReturn(clienteMock).when(clienteRepository1).findByEmail(email);
-//
-//        //pero la contraseña no coincide
-//        ResponseEntity<LoginResponseDto> respuesta = authController.login(request);
-//
-//        assertEquals(HttpStatus.UNAUTHORIZED, respuesta.getStatusCode());
-//    }
-//
-//}
+package com.example.demo.controller;
+
+import com.example.demo.dto.LoginRequestDto;
+import com.example.demo.dto.LoginResponseDto;
+import com.example.demo.entity.Cliente;
+import com.example.demo.entity.Peluqueria;
+import com.example.demo.repository.clienteRepository;
+import com.example.demo.repository.peluqueriaRepository;
+import com.example.demo.security.JwtService;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class AuthControllerTest {
+
+    // 1. Mockeamos TODAS las dependencias que usa tu AuthController
+    @Mock
+    private clienteRepository clienteRepository1;
+
+    @Mock
+    private peluqueriaRepository peluqueriaRepository1;
+
+    @Mock
+    private JwtService jwtService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    // 2. Inyectamos los mocks en el controlador real
+    @InjectMocks
+    private AuthController authController;
+
+    @Test
+    public void login_ClienteExisteYPassCorrecta_DevuelveToken() {
+        // DATOS
+        String email = "cliente@test.com";
+        String password = "123"; // La que envía el usuario
+        String encodedPassword = "$2a$10$hash..."; // La que está en BD
+
+        LoginRequestDto request = new LoginRequestDto(email, password);
+
+        Cliente clienteMock = new Cliente();
+        clienteMock.setId(1);
+        clienteMock.setEmail(email);
+        clienteMock.setNombre("Pepe");
+        clienteMock.setPassword(encodedPassword);
+
+        // SIMULACIONES (MOCKS)
+        // 1. Que el repositorio encuentre al cliente
+        when(clienteRepository1.findByEmail(email)).thenReturn(clienteMock);
+
+        // 2. Que el PasswordEncoder diga que las contraseñas coinciden
+        when(passwordEncoder.matches(password, encodedPassword)).thenReturn(true);
+
+        // 3. Que el JwtService genere un token falso
+        when(jwtService.generateToken(anyString(), anyString(), anyInt())).thenReturn("TOKEN_FALSO_123");
+
+        // EJECUCIÓN
+        ResponseEntity<LoginResponseDto> response = authController.login(request);
+
+        // VERIFICACIÓN
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("TOKEN_FALSO_123", response.getBody().getToken());
+        assertEquals("CLIENTE", response.getBody().getRole());
+    }
+
+    @Test
+    public void login_NegocioExisteYPassCorrecta_DevuelveToken() {
+        // DATOS
+        String email = "negocio@test.com";
+        String password = "123";
+        LoginRequestDto request = new LoginRequestDto(email, password);
+
+        Peluqueria peluMock = new Peluqueria();
+        peluMock.setId(5);
+        peluMock.setEmail(email);
+        peluMock.setNombre("Barber Shop");
+        peluMock.setPassword("hash_negocio");
+
+        // SIMULACIONES
+        // 1. Cliente NO existe
+        when(clienteRepository1.findByEmail(email)).thenReturn(null);
+
+        // 2. Peluquería SÍ existe
+        when(peluqueriaRepository1.findByEmail(email)).thenReturn(peluMock);
+
+        // 3. Contraseña coincide
+        when(passwordEncoder.matches(password, "hash_negocio")).thenReturn(true);
+
+        // 4. Token generado
+        when(jwtService.generateToken(anyString(), anyString(), anyInt())).thenReturn("TOKEN_NEGOCIO");
+
+        // EJECUCIÓN
+        ResponseEntity<LoginResponseDto> response = authController.login(request);
+
+        // VERIFICACIÓN
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("NEGOCIO", response.getBody().getRole());
+    }
+
+    @Test
+    public void login_PasswordIncorrecta_Devuelve401() {
+        String email = "cliente@test.com";
+        String password = "mal";
+        LoginRequestDto request = new LoginRequestDto(email, password);
+
+        Cliente clienteMock = new Cliente();
+        clienteMock.setEmail(email);
+        clienteMock.setPassword("hash_real");
+
+        // Encuentra usuario...
+        when(clienteRepository1.findByEmail(email)).thenReturn(clienteMock);
+
+        // ...pero la contraseña NO coincide
+        when(passwordEncoder.matches(password, "hash_real")).thenReturn(false);
+
+        ResponseEntity<LoginResponseDto> response = authController.login(request);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+
+    @Test
+    public void login_UsuarioNoExiste_Devuelve401() {
+        LoginRequestDto request = new LoginRequestDto("nadie@test.com", "123");
+
+        // No encuentra nada en ningún lado
+        when(clienteRepository1.findByEmail("nadie@test.com")).thenReturn(null);
+        when(peluqueriaRepository1.findByEmail("nadie@test.com")).thenReturn(null);
+
+        ResponseEntity<LoginResponseDto> response = authController.login(request);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+}

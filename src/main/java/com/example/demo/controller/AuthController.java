@@ -10,6 +10,7 @@ import com.example.demo.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,13 +30,16 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequest) {
 
         //  BUSCAR EN CLIENTES
         Cliente cliente = clienteRepository1.findByEmail(loginRequest.getEmail());
 
-            if ( cliente != null && cliente.getPassword().equals(loginRequest.getPassword())) {
+            if ( cliente != null && passwordEncoder.matches(loginRequest.getPassword(), cliente.getPassword())) {
                 // ¡Es un CLIENTE!
 
                 String token = jwtService.generateToken(cliente.getEmail(), "CLIENTE", cliente.getId());
@@ -52,7 +56,7 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
         //  SI NO ES CLIENTE, BUSCAR EN PELUQUERÍAS
         Peluqueria peluqueria = peluqueriaRepository1.findByEmail(loginRequest.getEmail());
 
-            if ( peluqueria != null && peluqueria.getPassword().equals(loginRequest.getPassword())) {
+            if ( peluqueria != null && passwordEncoder.matches(loginRequest.getPassword(), peluqueria.getPassword())) {
                 // ¡Es una PELUQUERÍA (NEGOCIO)!  Generamos el token
                 String token = jwtService.generateToken(peluqueria.getEmail(), "NEGOCIO", peluqueria.getId());
 

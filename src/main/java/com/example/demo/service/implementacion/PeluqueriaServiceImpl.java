@@ -15,28 +15,25 @@ import com.example.demo.repository.servicioPeluRepository;
 import com.example.demo.repository.servicioRepository;
 import com.example.demo.service.PeluqueriaService;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.peluqueriaRepository;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PeluqueriaServiceImpl implements PeluqueriaService {
 
-    @Autowired
     private final peluqueriaRepository peluqueriaRepository1;
-    @Autowired
     private final servicioRepository servicioRepository1;
-    @Autowired
     private final servicioPeluRepository servicioPeluRepository1;
-    @Autowired
     private final horarioRepository horarioRepository1;
 
     private final PeluqueriaMapper peluqueriaMapper;
-    private HorarioMapper horarioMapper;
-    private ServicioPeluMapper servicioPeluMapper;
+    private final HorarioMapper horarioMapper;
+    private final ServicioPeluMapper servicioPeluMapper;
 
     public PeluqueriaServiceImpl(PeluqueriaMapper peluqueriaMapper, horarioRepository horarioRepository1,
                                  servicioRepository servicioRepository1, servicioPeluRepository servicioPeluRepository1, peluqueriaRepository peluqueriaRepository1, HorarioMapper horarioMapper,
@@ -56,7 +53,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         List<Peluqueria> peluqueria = peluqueriaRepository1.findAll();
         return peluqueria.stream()
                 .map(peluqueriaMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 
@@ -90,7 +87,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
                         sp.getDescripcion(),
                         sp.getPrecio(),
                         sp.getDuracion()))
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(dtos);
     }
 
@@ -102,14 +99,12 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     //CREAR HORARIO PARA UNA PELUQUERIA
     public ResponseEntity<HorarioDto> createHorario(Integer peluqueriaId, HorarioDto horarioDto){
         if(!peluqueriaRepository1.existsById(peluqueriaId)){
-            throw new RuntimeException("No existe la peluqueria con id:" + peluqueriaId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe la peluqueria con id: " + peluqueriaId);
         }
-        if(peluqueriaRepository1.existsById(peluqueriaId)){
-            throw new RuntimeException("La peluqueria con id:" + peluqueriaId +"ya tiene un horario establecido");
+        if(horarioRepository1.existsById(peluqueriaId)){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "La peluqueria con id: " + peluqueriaId + " ya tiene un horario establecido");
         }
         Horario horario = this.toEntity(horarioDto,peluqueriaId);
-        //Hacer mapeo privado con horario, ya que se le pasa como parametro
-        //peluqueriaId, por lo que con mapStruct no serviria
         Horario saved = horarioRepository1.save(horario);
         return ResponseEntity.ok(toDto(saved));
     }
@@ -125,7 +120,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     public ResponseEntity<HorarioDto> actualizarHorario(Integer id, HorarioDto horarioDto) {
 
          if(!horarioRepository1.existsById(id)){
-             throw new RuntimeException("Horario con id " + id + " no existe");
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Horario con id " + id + " no existe");
          }
 
          if (horarioDto == null) {
@@ -152,7 +147,6 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     }
 
 
-
     //METODOS PRIVADOS
 
 
@@ -176,6 +170,4 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     }
 
 }
-
-
 
