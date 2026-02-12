@@ -35,7 +35,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- BASE DE DATOS H2 -->
+        <!-- BASE DE DATOS -->
 
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -104,7 +104,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>com.h2database</groupId>     <!-- BASE DE DATOS FALSA PARA PROBAR LOS TEST-->
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
