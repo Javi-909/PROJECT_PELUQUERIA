@@ -15,7 +15,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class) // Habilita Mockito
 public class ClienteControllerTest {
@@ -56,7 +59,6 @@ public class ClienteControllerTest {
         // 1. PREPARACIÓN
         Integer id = 1;
         ClienteDto clienteDto = new ClienteDto();
-        // clienteDto.setId(id); // ELIMINADO
         clienteDto.setNombre("Carlos");
 
 
