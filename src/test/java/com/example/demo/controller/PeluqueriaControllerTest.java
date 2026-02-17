@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PeluqueriaDto;
+import com.example.demo.dto.HorarioDto;
 import com.example.demo.entity.Peluqueria;
+import com.example.demo.repository.horarioRepository;
 import com.example.demo.repository.peluqueriaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.test.context.support.WithMockUser;
 
 
+import java.sql.Time;
+
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -44,6 +49,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private horarioRepository horarioRepo;
 
     @Test
     void crearPeluqueria_DeberiaGuardarEnBaseDeDatos() throws Exception{
@@ -122,5 +129,118 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
         //THEN Verificamos que la base de datos sigue teniendo las 2 peluquerias (no se han eliminado ni modificado)
         assertEquals(2, peluqueriaRepo.count());
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void crearHorario_DeberiaCrearHorarioParaPeluqueria() throws Exception {
+        // Creamos una peluqueria para asociarle un horario
+        Peluqueria pelu = new Peluqueria();
+        pelu.setNombre("Peluqueria Horario");
+        pelu.setEmail("horario@test.com");
+        pelu.setDireccion("Calle Test 5");
+        pelu.setTelefono(987654321);
+        pelu.setPassword("pwd");
+        Peluqueria saved = peluqueriaRepo.save(pelu);
+
+        // Construimos el DTO de horario
+       HorarioDto horarioDto = new HorarioDto();
+        horarioDto.setDia_semana("Lunes");
+        horarioDto.setHora_apertura(Time.valueOf("09:00:00"));
+        horarioDto.setHora_cierre(Time.valueOf("17:00:00"));
+
+        // WHEN: Llamamos al endpoint para crear el horario
+        mockMvc.perform(post("/peluqueria/createhorario/" + saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(horarioDto)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.dia_semana", is("Lunes")))
+                .andExpect(jsonPath("$.hora_apertura", notNullValue()))
+                .andExpect(jsonPath("$.hora_cierre", notNullValue()));
+
+        // THEN: Verificamos que se ha creado un horario en la base de datos
+        assertEquals(1, horarioRepo.count());
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void eliminarHorario_DeberiaEliminarHorario() throws Exception {
+        // Creamos peluqueria
+        Peluqueria pelu = new Peluqueria();
+        pelu.setNombre("Peluqueria Horario Borrar");
+        pelu.setEmail("horarioborrar@test.com");
+        pelu.setDireccion("Calle Borrar 1");
+        pelu.setTelefono(555111222);
+        pelu.setPassword("pwd");
+        Peluqueria saved = peluqueriaRepo.save(pelu);
+
+        // Creamos el horario mediante el endpoint
+        HorarioDto horarioDto = new HorarioDto();
+        horarioDto.setDia_semana("Martes");
+        horarioDto.setHora_apertura(Time.valueOf("08:00:00"));
+        horarioDto.setHora_cierre(Time.valueOf("12:00:00"));
+
+        mockMvc.perform(post("/peluqueria/createhorario/" + saved.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(horarioDto)))
+                .andExpect(status().isOk());
+
+        // Obtenemos el id del horario creado
+        Integer horarioId = horarioRepo.findAll().get(0).getId();
+
+        // WHEN: eliminamos el horario con DELETE
+        mockMvc.perform(delete("/peluqueria/deletehorario/" + horarioId))
+                .andExpect(status().isOk());
+
+        // THEN: el repositorio de horarios debe quedar vacío
+        assertEquals(0, horarioRepo.count());
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = {"USER"})
+    void actualizarHorario_DeberiaActualizarHorarioExistente() throws Exception {
+        // Creamos peluqueria
+        Peluqueria pelu = new Peluqueria();
+        pelu.setNombre("Peluqueria Horario Actualizar");
+        pelu.setEmail("pelu1@gmail.com");
+        pelu.setDireccion("Calle Actualizar 1");
+        pelu.setTelefono(555111222);
+        pelu.setPassword("pwd");
+        Peluqueria saved = peluqueriaRepo.save(pelu);
+
+        HorarioDto horarioDto = new HorarioDto();
+        horarioDto.setDia_semana("Martes");
+        horarioDto.setHora_apertura(Time.valueOf("08:00:00"));
+        horarioDto.setHora_cierre(Time.valueOf("12:00:00"));
+
+        // WHEN Creamos el horario mediante el endpoint
+        mockMvc.perform(post("/peluqueria/createhorario/" + saved.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(horarioDto)))
+                .andExpect(status().isOk());
+
+        Integer horarioId = horarioRepo.findAll().get(0).getId();
+
+        //THEN: Actualizamos el horario con PUT
+        HorarioDto horarioActualizado = new HorarioDto();
+        horarioActualizado.setDia_semana("Miércoles");
+        horarioActualizado.setHora_apertura(Time.valueOf("10:00:00"));
+        horarioActualizado.setHora_cierre(Time.valueOf("18:00:00"));
+
+        // WHEN: Llamamos al endpoint PUT para actualizar el horario
+        mockMvc.perform(put("/peluqueria/actualizarhorario/" + horarioId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(horarioActualizado)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.dia_semana", is("Miércoles")))
+                .andExpect(jsonPath("$.hora_apertura", notNullValue()))
+                .andExpect(jsonPath("$.hora_cierre", notNullValue()));
+
+        // THEN: Verificamos en la base de datos que los cambios se han aplicado
+        com.example.demo.entity.Horario updated = horarioRepo.findById(horarioId).orElseThrow();
+        assertEquals("Miércoles", updated.getDiaSemana());
+        assertEquals(Time.valueOf("10:00:00"), updated.getHoraApertura());
+        assertEquals(Time.valueOf("18:00:00"), updated.getHoraCierre());
+
     }
 }
