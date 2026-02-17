@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.security.test.context.support.WithMockUser;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // 4. HACE ROLLBACK AL TERMINAR CADA TEST (Base de datos siempre limpia)
 @Transactional
 
-public class ServicioPeluControllerTest {
+ class ServicioPeluControllerTest {
 
     @Autowired
     private MockMvc mockMvc; // Para lanzar peticiones a la API
