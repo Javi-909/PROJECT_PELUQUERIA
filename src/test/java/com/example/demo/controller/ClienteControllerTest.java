@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.doNothing;
 
 @ExtendWith(MockitoExtension.class) // Habilita Mockito
-public class ClienteControllerTest {
+ class ClienteControllerTest {
 
     @Mock // Simulamos el servicio (el "falso")
     private ClienteService clienteService;
@@ -30,7 +30,7 @@ public class ClienteControllerTest {
     private ClienteController clienteController;
 
     @Test
-    public void findAll_DeberiaRetornarListaDeClientes() {
+     void findAll_DeberiaRetornarListaDeClientes() {
         // 1. PREPARACIÓN (Given)
         ClienteDto cliente1 = new ClienteDto();
         cliente1.setNombre("Juan");
@@ -55,7 +55,7 @@ public class ClienteControllerTest {
     }
 
     @Test
-    public void mostrarClientePorId_DeberiaRetornarClienteYStatus200() {
+     void mostrarClientePorId_DeberiaRetornarClienteYStatus200() {
         // 1. PREPARACIÓN
         Integer id = 1;
         ClienteDto clienteDto = new ClienteDto();
@@ -75,7 +75,7 @@ public class ClienteControllerTest {
     }
 
     @Test
-    public void createCliente_DeberiaRetornarClienteCreado() {
+     void createCliente_DeberiaRetornarClienteCreado() {
         // 1. PREPARACIÓN
         ClienteDto inputDto = new ClienteDto();
         inputDto.setNombre("Nuevo");
@@ -96,7 +96,7 @@ public class ClienteControllerTest {
     }
 
     @Test
-    public void deleteCliente_DeberiaLlamarAlServicio() {
+     void deleteCliente_DeberiaLlamarAlServicio() {
         // 1. PREPARACIÓN
         Integer id = 5;
 
@@ -112,7 +112,7 @@ public class ClienteControllerTest {
     }
 
     @Test
-    public void actualizarCliente_DeberiaRetornarClienteActualizado() {
+     void actualizarCliente_DeberiaRetornarClienteActualizado() {
         // 1. PREPARACIÓN
         Integer id = 1;
         ClienteDto inputDto = new ClienteDto();

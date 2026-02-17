@@ -105,6 +105,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Add Spring Security Test for @WithMockUser and security test helpers -->
+        <!-- Esto es para que cuando queramos probar algun metodo que necesite estar logueado, se pueda hacer sin problemas -->
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>com.h2database</groupId>     <!-- BASE DE DATOS FALSA PARA PROBAR LOS TEST-->

@@ -17,13 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AuthControllerTest {
+ class AuthControllerTest {
 
     // 1. Mockeamos TODAS las dependencias que usa tu AuthController
     @Mock
@@ -43,7 +42,7 @@ public class AuthControllerTest {
     private AuthController authController;
 
     @Test
-    public void login_ClienteExisteYPassCorrecta_DevuelveToken() {
+     void login_ClienteExisteYPassCorrecta_DevuelveToken() {
         // DATOS
         String email = "cliente@test.com";
         String password = "123"; // La que envía el usuario
@@ -77,7 +76,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void login_NegocioExisteYPassCorrecta_DevuelveToken() {
+     void login_NegocioExisteYPassCorrecta_DevuelveToken() {
         // DATOS
         String email = "negocio@test.com";
         String password = "123";
@@ -111,7 +110,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void login_PasswordIncorrecta_Devuelve401() {
+     void login_PasswordIncorrecta_Devuelve401() {
         String email = "cliente@test.com";
         String password = "mal";
         LoginRequestDto request = new LoginRequestDto(email, password);
@@ -132,7 +131,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    public void login_UsuarioNoExiste_Devuelve401() {
+     void login_UsuarioNoExiste_Devuelve401() {
         LoginRequestDto request = new LoginRequestDto("nadie@test.com", "123");
 
         // No encuentra nada en ningún lado
