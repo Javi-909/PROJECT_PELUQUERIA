@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ReservaDto;
 import com.example.demo.entity.*;
-import com.example.demo.repository.reservaRepository;
+import com.example.demo.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +49,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
     // Repositorios necesarios para crear datos previos
     @Autowired
-    private com.example.demo.repository.clienteRepository clienteRepo;
+    private clienteRepository clienteRepo;
 
     @Autowired
-    private com.example.demo.repository.peluqueriaRepository peluRepo;
+    private peluqueriaRepository peluRepo;
 
     @Autowired
-    private com.example.demo.repository.servicioRepository servicioRepo;
+    private servicioRepository servicioRepo;
 
     @Autowired
-    private com.example.demo.repository.servicioPeluRepository servicioPeluRepo;
+    private servicioPeluRepository servicioPeluRepo;
 
     @Autowired
-    private com.example.demo.repository.reservaClienteRepository reservaClienteRepo;
+    private reservaClienteRepository reservaClienteRepo;
 
     @Test
     @WithMockUser
@@ -260,6 +260,70 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 .andExpect(jsonPath("$.length()", is(1)))
                 .andExpect(jsonPath("$[0].cliente_id", is(savedCliente.getId())))
                 .andExpect(jsonPath("$[0].reserva_id", is(creada.getId())));
+    }
+
+    @Test
+    @WithMockUser
+    void getReservasDePeluqueria_DeberiaDevolverReservasNegocio() throws Exception {
+        // Crear peluqueria
+        Peluqueria pelu = new Peluqueria();
+        pelu.setNombre("Pelu Negocio");
+        pelu.setEmail("negocio@test.com");
+        pelu.setDireccion("Calle Negocio 1");
+        pelu.setTelefono(601234567);
+        pelu.setPassword("pwd");
+        Peluqueria savedPelu = peluRepo.save(pelu);
+
+        // Crear servicio genérico
+        Servicio servicio = new Servicio();
+        servicio.setNombre("Corte Premium");
+        servicio.setDescripcion("Corte con estilo");
+        Servicio savedServicio = servicioRepo.save(servicio);
+
+        // Asociar servicio a peluqueria
+        ServicioPelu sp = new ServicioPelu();
+        sp.setPeluqueria_id(savedPelu.getId());
+        sp.setServicioId(savedServicio.getId());
+        sp.setPrecio(40);
+        sp.setDuracion(45);
+        ServicioPelu savedSp = servicioPeluRepo.save(sp);
+
+        // Crear cliente y reservar
+        Cliente cliente = new Cliente();
+        cliente.setNombre("Cliente Negocio");
+        cliente.setEmail("cliente.negocio@test.com");
+        cliente.setGenero("M");
+        cliente.setPassword("pwd");
+        Cliente savedCliente = clienteRepo.save(cliente);
+
+        // Crear reserva DTO
+        ReservaDto nuevaReserva = new ReservaDto();
+        nuevaReserva.setIdServicioPelu(savedSp.getId());
+        nuevaReserva.setFecha(LocalDate.parse("2026-10-10"));
+        nuevaReserva.setHora(LocalTime.parse("14:00:00"));
+
+        // Crear reserva mediante POST
+        String createResp = mockMvc.perform(post("/reserva/create/" + savedCliente.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(nuevaReserva)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", notNullValue()))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        ReservaDto creada = objectMapper.readValue(createResp, ReservaDto.class);
+
+        // WHEN: solicitamos reservas del negocio
+        mockMvc.perform(get("/reserva/peluqueria/" + savedPelu.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()", is(1)))
+                .andExpect(jsonPath("$[0].id", is(creada.getId())))
+                .andExpect(jsonPath("$[0].nombreCliente", is(savedCliente.getNombre())))
+                .andExpect(jsonPath("$[0].emailCliente", is(savedCliente.getEmail())))
+                .andExpect(jsonPath("$[0].nombreServicio", is(savedServicio.getNombre())))
+                .andExpect(jsonPath("$[0].precioServicio", is(40)))
+                .andExpect(jsonPath("$[0].estado", is("PENDIENTE")));
     }
 
 
