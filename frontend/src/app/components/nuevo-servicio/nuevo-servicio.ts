@@ -22,7 +22,7 @@ private router = inject(Router);
 private peluqueriaService = inject(PeluqueriaService);
 private servicioPeluService = inject(ServicioPeluService);
 
-peluqueriaId: number = 0;
+peluqueriaId = 0;
   serviciosGenericos: any[] = [];
   
   // Modelo del formulario
@@ -32,7 +32,7 @@ peluqueriaId: number = 0;
     duracion: 30
   };
 
-  constructor() { }
+  //constructor() { }
 
   ngOnInit(): void {
     // 1. Obtener el ID de la peluquería de la URL

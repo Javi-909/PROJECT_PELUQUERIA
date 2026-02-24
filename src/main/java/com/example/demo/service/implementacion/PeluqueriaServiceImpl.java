@@ -16,6 +16,7 @@ import com.example.demo.repository.servicioRepository;
 import com.example.demo.service.PeluqueriaService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.peluqueriaRepository;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,9 +36,11 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     private final HorarioMapper horarioMapper;
     private final ServicioPeluMapper servicioPeluMapper;
 
+    private PasswordEncoder passwordEncoder;
+
     public PeluqueriaServiceImpl(PeluqueriaMapper peluqueriaMapper, horarioRepository horarioRepository1,
                                  servicioRepository servicioRepository1, servicioPeluRepository servicioPeluRepository1, peluqueriaRepository peluqueriaRepository1, HorarioMapper horarioMapper,
-                                 ServicioPeluMapper servicioPeluMapper){
+                                 ServicioPeluMapper servicioPeluMapper, PasswordEncoder passwordEncoder){
         this.horarioRepository1 = horarioRepository1;
         this.peluqueriaMapper = peluqueriaMapper;
         this.peluqueriaRepository1 = peluqueriaRepository1;
@@ -45,6 +48,7 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
         this.servicioRepository1 = servicioRepository1;
         this.horarioMapper = horarioMapper;
         this.servicioPeluMapper = servicioPeluMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -60,6 +64,10 @@ public class PeluqueriaServiceImpl implements PeluqueriaService {
     //CREAR PELUQUERIA
     @Override
     public PeluqueriaDto createPeluqueria(PeluqueriaDto peluqueriaDto) {
+        if (peluqueriaDto.getPassword() != null && !peluqueriaDto.getPassword().isEmpty()) {
+            String passEncriptada = passwordEncoder.encode(peluqueriaDto.getPassword());
+            peluqueriaDto.setPassword(passEncriptada); // Sustituimos el "1234" por el "$2a$10..."
+        }
         Peluqueria peluqueria = peluqueriaMapper.toEntity(peluqueriaDto);
         peluqueria.setId(null); //para que funcione en el front Añadir Servicio a una peluqueria
         Peluqueria saved = peluqueriaRepository1.save(peluqueria); //con el metodo save, solo puedo guardar entitys (pq es base de datos)

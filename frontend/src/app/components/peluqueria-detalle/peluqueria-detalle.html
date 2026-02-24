@@ -1,10 +1,11 @@
 <div class="container py-5">
 
   <!-- Mensaje de error (solo si falla la carga inicial gravemente) -->
-  <div *ngIf="errorMsg" class="alert alert-danger text-center shadow-sm mb-4">
-    {{ errorMsg }} <a routerLink="/home" class="alert-link">Volver</a>
-  </div>
-
+   @if(errorMsg) {
+    <div class="alert alert-danger text-center shadow-sm mb-4">
+      {{ errorMsg }} <a routerLink="/home" class="alert-link">Volver</a>
+    </div>
+  }
   <!-- TARJETA PRINCIPAL -->
   <div class="card shadow border-0 animate__fadeIn">
     
@@ -49,14 +50,14 @@
         <!-- COLUMNA DERECHA -->
         <div class="col-lg-8">
 
-          
-          
           <!-- 1. SERVICIOS -->
            <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="h5 fw-bold text-primary mb-3">1. Selecciona un Servicio</h3>
-          
-              <div *ngIf="authService.isNegocio() && authService.userId === peluqueria.id" class="d-flex gap-2">
               
+              @if(authService.isNegocio() && authService.userId === peluqueria.id) {
+
+              <div class="d-flex gap-2">
+
               <!-- Botón 1: Añadir Servicio -->
               <a [routerLink]="['/peluqueria', peluqueria.id, 'nuevo-servicio']" 
                  class="btn btn-sm btn-outline-success fw-bold">
@@ -68,15 +69,17 @@
                  class="btn btn-sm btn-warning fw-bold text-dark">
                  📅 Ver Agenda
               </a>
-
             </div>
+          }
           </div>
             
             
-          <div class="list-group mb-5 shadow-sm" *ngIf="servicios.length > 0">
+          @if(servicios.length > 0){
+            <div class="list-group mb-5 shadow-sm">
+
+            @for (serv of servicios; track serv.id){  
             <button type="button" 
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3"
-                    *ngFor="let serv of servicios"
                     [class.active]="servicioSeleccionadoId === serv.id"
                     (click)="seleccionarServicio(serv.id)">
               
@@ -97,12 +100,14 @@
               </span>
               
             </button>
-          </div>
-
-          <div *ngIf="servicios.length === 0" class="alert alert-light border mb-4">
+           }
+           </div>
+        } @else {
+          <!-- Bloque @else para cuando no hay servicios -->
+          <div class="alert alert-light border mb-4">
             <small>Cargando servicios o no hay disponibles...</small>
           </div>
-
+        }
           <!-- 2. FECHA Y HORA -->
           <h3 class="h5 fw-bold text-primary mb-3">2. Elige Fecha y Hora</h3>
           
@@ -110,12 +115,12 @@
             <div class="card-body">
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label class="form-label fw-bold">Fecha</label>
-                  <input type="date" class="form-control" [(ngModel)]="fechaSeleccionada">
+                  <label for = "fecha" class="form-label fw-bold">Fecha</label>
+                  <input id = "fecha" type="date" class="form-control" [(ngModel)]="fechaSeleccionada">
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label fw-bold">Hora</label>
-                  <input type="time" class="form-control" [(ngModel)]="horaSeleccionada">
+                  <label for = "hora" class="form-label fw-bold">Hora</label>
+                  <input id = "hora" type="time" class="form-control" [(ngModel)]="horaSeleccionada">
                 </div>
               </div>
             </div>

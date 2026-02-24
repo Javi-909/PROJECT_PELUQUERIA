@@ -24,9 +24,9 @@ export class HomeComponent implements OnInit {
   peluqueriasFiltradas: Peluqueria[] = [];
 
   //Lo que escribe el usuario en la barra de búsqueda
-  searchTerm: string = '';
+  searchTerm = '';
 
-  constructor() { }
+ // constructor() { }
 
   ngOnInit(): void {
     this.cargarPeluquerias();

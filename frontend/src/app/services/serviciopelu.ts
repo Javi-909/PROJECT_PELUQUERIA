@@ -12,7 +12,7 @@ export class ServicioPeluService {
   // URL base correcta para este controlador
   private apiUrl = 'http://localhost:8080/serviciopelu';
 
-  constructor() { }
+  //constructor() { }
 
   addServicio(dto: ServicioPeluCreacionDto): Observable<any> {
     // La URL final será: http://localhost:8080/serviciopelu/add

@@ -7,7 +7,6 @@ import { ReservaService } from '../../services/reserva';
 import { Peluqueria } from '../../models/peluqueria.model';
 import { Servicio } from '../../models/servicio.model';
 import { ReservaDto } from '../../models/reserva.model';
-import { ServicioPeluCreacionDto } from '../../models/servicioPeluCreacion.model';
 import { ServicioPeluService } from '../../services/serviciopelu';
 import { Auth } from '../../services/auth';
 
@@ -41,20 +40,20 @@ export class PeluqueriaDetalleComponent implements OnInit {
   servicioSeleccionadoId: number | null = null;
   
   // Variables para el formulario
-  fechaSeleccionada: string = '';
-  horaSeleccionada: string = '';
+  fechaSeleccionada = '';
+  horaSeleccionada = '';
 
   //Variables para AÑADIR NUEVO SERVICIO   EN PROCESOO
-  mostrarFormularioServicio: boolean = false;
+  mostrarFormularioServicio = false;
   serviciosGnericos: Servicio[] = [];
   nuevoServicioForm = {
     servicioId: null,
     precio: 0,
     duracion: 0
   };
-  errorMsg: string = '';
+  errorMsg = '';
 
-  constructor() { }
+  //constructor() { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));

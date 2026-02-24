@@ -26,6 +26,7 @@ export class Login {
 
   onLogin() {
     // Llamamos al servicio
+    console.log("Datos exactos que ANGULAR envia al backend:", this.credentials);
     this.authService.login(this.credentials).subscribe({
       next: (data) => {
         console.log('Login correcto:', data);

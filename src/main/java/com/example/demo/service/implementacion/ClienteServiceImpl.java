@@ -7,6 +7,7 @@ import com.example.demo.repository.clienteRepository;
 import com.example.demo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +19,12 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private final clienteRepository clienteRepository1;
     private final ClienteMapper clienteMapper;
+    private PasswordEncoder passwordEncoder;
 
-    public ClienteServiceImpl(ClienteMapper clienteMapper, clienteRepository clienteRepository1) {
+    public ClienteServiceImpl(ClienteMapper clienteMapper, clienteRepository clienteRepository1, PasswordEncoder passwordEncoder) {
         this.clienteMapper = clienteMapper;
         this.clienteRepository1 = clienteRepository1;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //LISTAR TODOS LOS CLIENTES
@@ -41,6 +44,12 @@ public class ClienteServiceImpl implements ClienteService {
     //CREAR CLIENTE
    @Override
    public ClienteDto createCliente(ClienteDto clienteDto) {
+
+       // 1. ENCRIPTAMOS LA CONTRASEÑA EN EL DTO ANTES DE MAPEAR
+       if (clienteDto.getPassword() != null && !clienteDto.getPassword().isEmpty()) {
+           String passEncriptada = passwordEncoder.encode(clienteDto.getPassword());
+           clienteDto.setPassword(passEncriptada); // Sustituimos el "1234" por el "$2a$10..."
+       }
        Cliente cliente = clienteMapper.toEntity(clienteDto);
        Cliente saved = clienteRepository1.save(cliente);
        //como el metodo save ya contiene el insert into, no hace falta hacer query en repository
@@ -86,8 +95,11 @@ public class ClienteServiceImpl implements ClienteService {
                     if (clienteDto.getGenero() != null) {
                         cliente.setGenero(clienteDto.getGenero());
                     }
-                    if (clienteDto.getPassword() != null){
-                        cliente.setPassword(clienteDto.getPassword());
+
+
+                    if (clienteDto.getPassword() != null && !clienteDto.getPassword().trim().isEmpty()){
+                        String passEncriptada = passwordEncoder.encode(clienteDto.getPassword());
+                        cliente.setPassword(passEncriptada);
                     }
                     Cliente saved = clienteRepository1.save(cliente);
                     return ResponseEntity.ok(clienteMapper.toDto(saved));

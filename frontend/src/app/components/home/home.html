@@ -5,14 +5,14 @@
       Peluquería<span class="text-primary">Dev</span>
     </a>
 
- 
     <!-- Boton de Añadir Peluqueria -->
      <div class="d-flex gap-2"> 
-      <a *ngIf="authService.isNegocio()" 
-      routerLink="/nueva-peluqueria" 
-      class="btn btn-primary">
-          + Añadir Peluqueria
-      </a>
+      
+      @if (authService.isNegocio()) {
+        <a routerLink="/nueva-peluqueria" class="btn btn-primary">
+            + Añadir Peluqueria
+        </a>
+      }
 
       <!-- Boton de Contacto -->
       <a routerLink="/contacto" class="btn btn-outline-primary">Contacto</a>
@@ -20,20 +20,18 @@
   </div>
 
   <!-- Boton de LogOut -->
-  <button *ngIf="authService.isLoggedIn()" 
-          (click)="authService.logout()" 
-          class="btn btn-danger">
-    LogOut
-  </button>
+  @if (authService.isLoggedIn()) {
+    <button (click)="authService.logout()" class="btn btn-danger">
+      LogOut
+    </button>
+  }
   
-
    <!-- Boton de MiPerfil -->  
-  <a *ngIf="authService.isCliente()"  
-     routerLink="/mi-perfil" 
-     class="btn btn-outline-primary">
-    👤 Mi Perfil
-  </a>
-
+  @if (authService.isCliente()) {
+    <a routerLink="/mi-perfil" class="btn btn-outline-primary">
+      👤 Mi Perfil
+    </a>
+  }
 </nav>
 
 <!-- Contenido Principal -->
@@ -60,29 +58,36 @@
     <h2 class="fw-bold text-secondary">
       {{ searchTerm ? 'Resultados de búsqueda' : 'Nuestras Peluquerías' }}
     </h2>
-    <p class="text-muted" *ngIf="!searchTerm">Encuentra los mejores profesionales cerca de ti</p>
+    
+    @if (!searchTerm) {
+      <p class="text-muted">Encuentra los mejores profesionales cerca de ti</p>
+    }
   </div>
 
   <!-- REJILLA RESPONSIVE AUTOMÁTICA -->
-  <!-- row-cols-1 (1 col en móvil), row-cols-md-2 (2 en tablet), row-cols-lg-3 (3 en PC) -->
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     
-    <!-- Bucle de tarjetas -->
-    <div class="col" *ngFor="let item of peluqueriasFiltradas">
-      <app-peluqueria-card [peluqueriaInfo]="item" class="h-100"></app-peluqueria-card>
-    </div>
+    <!-- NUEVO BUCLE @for -->
+    <!-- 'track item.id' es obligatorio en la nueva sintaxis para que Angular sepa identificar cada tarjeta y sea más rápido -->
+    @for (item of peluqueriasFiltradas; track item.id) {
+      <div class="col">
+        <app-peluqueria-card [peluqueriaInfo]="item" class="h-100"></app-peluqueria-card>
+      </div>
+    }
 
   </div>
 
   <!-- Mensajes de Estado (Alertas Bootstrap) -->
-  <div *ngIf="peluqueriasFiltradas.length === 0 && peluquerias.length > 0" 
-       class="alert alert-warning text-center mt-4" role="alert">
-    No hemos encontrado ninguna peluquería con ese nombre.
-  </div>
+  @if (peluqueriasFiltradas.length === 0 && peluquerias.length > 0) {
+    <div class="alert alert-warning text-center mt-4" role="alert">
+      No hemos encontrado ninguna peluquería con ese nombre.
+    </div>
+  }
 
-  <div *ngIf="peluquerias.length === 0" 
-       class="alert alert-info text-center mt-4" role="alert">
-    Cargando peluquerías o no hay datos disponibles...
-  </div>
+  @if (peluquerias.length === 0) {
+    <div class="alert alert-info text-center mt-4" role="alert">
+      Cargando peluquerías o no hay datos disponibles...
+    </div>
+  }
 
 </div>

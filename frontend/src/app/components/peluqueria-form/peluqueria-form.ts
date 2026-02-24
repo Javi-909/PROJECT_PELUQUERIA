@@ -37,7 +37,7 @@ export class PeluqueriaForm {
   
 
   this.peluqueriaService.createPeluqueria(this.nuevaPeluqueria).subscribe({
-    next: (data) => {
+    next: () => {
         alert('¡Peluquería creada con éxito!');
         // Redirigir al Home para ver la nueva peluquería en la lista
         this.router.navigate(['/']);

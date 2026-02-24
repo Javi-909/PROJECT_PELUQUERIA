@@ -18,7 +18,7 @@ export class PeluqueriaService {
   // URL base para servicios genéricos
   private apiServiciosUrl = 'http://localhost:8080/servicio'
 
-  constructor() { }
+  //constructor() { }
 
   // Método para obtener la lista de todas las peluquerias
   getPeluquerias(): Observable<Peluqueria[]> {

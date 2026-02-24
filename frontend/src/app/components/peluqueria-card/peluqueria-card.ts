@@ -15,5 +15,5 @@ export class PeluqueriaCardComponent {
   // Recibe datos del padre
   @Input() peluqueriaInfo!: Peluqueria;
 
-  constructor() { }
+ // constructor() { }
 }

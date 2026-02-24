@@ -20,7 +20,7 @@ export class ClienteService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/cliente';
 
-  constructor() { }
+  //constructor() { }
 
   getClienteById(id: number): Observable<Cliente> {
     return this.http.get<Cliente>(`${this.apiUrl}/${id}`);

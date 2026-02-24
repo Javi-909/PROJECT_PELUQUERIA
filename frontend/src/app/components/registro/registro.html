@@ -35,42 +35,45 @@
             
             <!-- Campos Comunes -->
             <div class="mb-3">
-              <label class="form-label fw-bold">Nombre {{ tipoRegistro === 'NEGOCIO' ? 'del Establecimiento' : 'Completo' }}</label>
-              <input type="text" class="form-control" [(ngModel)]="datos.nombre" name="nombre" required>
+              <label for = "nombre" class="form-label fw-bold">Nombre {{ tipoRegistro === 'NEGOCIO' ? 'del Establecimiento' : 'Completo' }}</label>
+              <input id = "nombre" type="text" class="form-control" [(ngModel)]="datos.nombre" name="nombre" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label fw-bold">Email</label>
-              <input type="email" class="form-control" [(ngModel)]="datos.email" name="email" required>
+              <label for = "email" class="form-label fw-bold">Email</label>
+              <input id = "email" type="email" class="form-control" [(ngModel)]="datos.email" name="email" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label fw-bold">Contraseña</label>
-              <input type="password" class="form-control" [(ngModel)]="datos.password" name="password" required>
+              <label for = "password" class="form-label fw-bold">Contraseña</label>
+              <input id = "password" type="password" class="form-control" [(ngModel)]="datos.password" name="password" required>
             </div>
 
             <div class="mb-3">
-              <label class="form-label fw-bold">Teléfono</label>
-              <input type="number" class="form-control" [(ngModel)]="datos.telefono" name="telefono" required>
+              <label for = "telefono" class="form-label fw-bold">Teléfono</label>
+              <input id = "telefono" type="number" class="form-control" [(ngModel)]="datos.telefono" name="telefono" required>
             </div>
 
             <!-- Campo SOLO para Negocio -->
-            <div class="mb-4" *ngIf="tipoRegistro === 'NEGOCIO'">
-              <label class="form-label fw-bold">Dirección del Local</label>
-              <input type="text" class="form-control" [(ngModel)]="datos.direccion" name="direccion" placeholder="Calle, Número, Ciudad">
+             @if(tipoRegistro === 'NEGOCIO'){
+            <div class="mb-4">
+              <label for = "direccion" class="form-label fw-bold">Dirección del Local</label>
+              <input id = "direccion" type="text" class="form-control" [(ngModel)]="datos.direccion" name="direccion" placeholder="Calle, Número, Ciudad">
             </div>
-            
+          }
         
             <!-- CAMPO GÉNERO (Solo para Clientes) -->
-            <div class="mb-3" *ngIf="tipoRegistro === 'CLIENTE'">
-              <label class="form-label fw-bold">Género</label>
-              <select class="form-select" [(ngModel)]="datos.genero" name="genero" required>
+             @if(tipoRegistro === 'CLIENTE'){
+            <div class="mb-3">
+              <label for = "genero" class="form-label fw-bold">Género</label>
+              <select id = "genero" class="form-select" [(ngModel)]="datos.genero" name="genero" required>
                 <option value="" disabled selected>Selecciona una opción</option>
                 <option value="HOMBRE">Hombre</option>
                 <option value="MUJER">Mujer</option>
                 <option value="OTRO">Otro</option>
               </select>
             </div>
+          }
 
             <div class="d-grid gap-2">
               <button type="submit" class="btn btn-primary btn-lg fw-bold">

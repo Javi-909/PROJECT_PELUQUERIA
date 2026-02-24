@@ -12,8 +12,8 @@
             
             <!-- Nombre -->
             <div class="mb-3">
-              <label class="form-label fw-bold">Nombre del Establecimiento</label>
-              <input type="text" 
+              <label for = "nombre" class="form-label fw-bold">Nombre del Establecimiento</label>
+              <input id = "nombre" type="text" 
                      class="form-control form-control-lg" 
                      [(ngModel)]="nuevaPeluqueria.nombre" 
                      name="nombre" 
@@ -23,8 +23,8 @@
 
             <!-- Dirección -->
             <div class="mb-3">
-              <label class="form-label fw-bold">Dirección Completa</label>
-              <input type="text" 
+              <label for = "direccion" class="form-label fw-bold">Dirección Completa</label>
+              <input id = "direccion" type="text" 
                      class="form-control" 
                      [(ngModel)]="nuevaPeluqueria.direccion" 
                      name="direccion" 
@@ -35,8 +35,8 @@
             <div class="row">
               <!-- Email -->
               <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Email de Contacto</label>
-                <input type="email" 
+                <label for = "email" class="form-label fw-bold">Email de Contacto</label>
+                <input id = "email" type="email" 
                        class="form-control" 
                        [(ngModel)]="nuevaPeluqueria.email" 
                        name="email" 
@@ -45,8 +45,8 @@
 
               <!-- CONTRASEÑA -->
               <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Contraseña de Acceso</label>
-                <input type="password" 
+                <label for = "password" class="form-label fw-bold">Contraseña de Acceso</label>
+                <input id = "password" type="password" 
                        class="form-control" 
                        [(ngModel)]="nuevaPeluqueria.password" 
                        name="password" 
@@ -56,8 +56,8 @@
 
               <!-- Teléfono -->
               <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Teléfono</label>
-                <input type="number" 
+                <label for = "telefono" class="form-label fw-bold">Teléfono</label>
+                <input id = "telefono" type="number" 
                        class="form-control" 
                        [(ngModel)]="nuevaPeluqueria.telefono" 
                        name="telefono" 

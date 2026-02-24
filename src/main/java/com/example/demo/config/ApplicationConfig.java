@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class ApplicationConfig {
 private final clienteRepository clienteRepo;
 private final peluqueriaRepository peluqueriaRepo;
 
-// ESTE ES EL MÉTODO QUE SPRING SECURITY USA PARA ENCONTRAR USUARIOS
+// ESTE ES EL QUE SPRING SECURITY USA PARA ENCONTRAR USUARIOS
 // El filtro JWT llama a esto.
 @Bean
 public UserDetailsService userDetailsService() {
@@ -34,13 +36,13 @@ public UserDetailsService userDetailsService() {
         var cliente = clienteRepo.findByEmail(username);
         if (cliente != null) {
             // Convertimos tu entidad Cliente a un objeto User de Spring Security
-            return new User(cliente.getEmail(), cliente.getPassword(), new ArrayList<>());
+            return new User(cliente.getEmail(), cliente.getPassword(), List.of(new SimpleGrantedAuthority("CLIENTE")));
         }
 
         // 2. Si no, buscamos en la tabla PELUQUERÍAS
         var peluqueria = peluqueriaRepo.findByEmail(username);
         if (peluqueria != null) {
-            return new User(peluqueria.getEmail(), peluqueria.getPassword(), new ArrayList<>());
+            return new User(peluqueria.getEmail(), peluqueria.getPassword(), List.of(new SimpleGrantedAuthority("NEGOCIO")));
         }
         throw new UsernameNotFoundException("Usuario no encontrado");
     };

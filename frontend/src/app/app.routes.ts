@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home';
-import { PeluqueriaCardComponent } from './components/peluqueria-card/peluqueria-card';
 import { PeluqueriaDetalleComponent } from './components/peluqueria-detalle/peluqueria-detalle';
 import { Contacto } from './components/contacto/contacto';
 import { PeluqueriaForm } from './components/peluqueria-form/peluqueria-form';

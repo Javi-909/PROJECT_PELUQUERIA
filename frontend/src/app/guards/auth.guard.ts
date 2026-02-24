@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { Router, CanActivateFn } from '@angular/router';
 import { Auth } from '../services/auth';
 
-export const authGuard: CanActivateFn = (route, state) => {  //esto es para que se verfique si 
+export const authGuard: CanActivateFn = () => {  //esto es para que se verfique si 
                                                              // el usuario esta logueado 
   
   const authService = inject(Auth);

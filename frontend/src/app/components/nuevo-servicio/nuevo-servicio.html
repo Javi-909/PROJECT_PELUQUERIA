@@ -15,15 +15,18 @@
             
             <!-- 1. SELECTOR DE SERVICIO -->
             <div class="mb-4">
-              <label class="form-label fw-bold">Tipo de Servicio</label>
-              <select class="form-select form-select-lg" 
+              <label  for = "servicioId" class="form-label fw-bold">Tipo de Servicio</label>
+              <select id ="servicioId" class="form-select form-select-lg" 
                       [(ngModel)]="nuevoServicio.servicioId" 
                       name="servicioId" 
                       required>
                 <option [ngValue]="null" disabled>-- Selecciona del catálogo --</option>
-                <option *ngFor="let s of serviciosGenericos" [ngValue]="s.id">
+
+                @for (s of serviciosGenericos; track s.id) {
+                <option [ngValue]="s.id"> 
                   {{ s.nombre }}
                 </option>
+              }
               </select>
               <div class="form-text">Elige un servicio base (Corte, Tinte, etc.)</div>
             </div>
@@ -31,9 +34,10 @@
             <div class="row g-3">
               <!-- 2. PRECIO -->
               <div class="col-md-6">
-                <label class="form-label fw-bold">Tu Precio (€)</label>
+                <label for = "precio" class="form-label fw-bold">Tu Precio (€)</label>
                 <div class="input-group">
                   <input type="number" 
+                          id="precio"
                          class="form-control" 
                          [(ngModel)]="nuevoServicio.precio" 
                          name="precio" 
@@ -45,9 +49,10 @@
 
               <!-- 3. DURACIÓN -->
               <div class="col-md-6">
-                <label class="form-label fw-bold">Duración (min)</label>
+                <label for = "duracion" class="form-label fw-bold">Duración (min)</label>
                 <div class="input-group">
                   <input type="number" 
+                         id = "duracion"
                          class="form-control" 
                          [(ngModel)]="nuevoServicio.duracion" 
                          name="duracion" 

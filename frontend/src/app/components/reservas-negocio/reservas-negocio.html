@@ -10,12 +10,15 @@
     </a>
   </div>
 
-  <div *ngIf="loading" class="text-center py-5">
+  @if(loading){
+  <div class="text-center py-5">
     <div class="spinner-border text-primary" role="status"></div>
     <p class="mt-2">Cargando agenda...</p>
   </div>
+  }
 
-  <div class="card shadow border-0" *ngIf="!loading">
+  @if(!loading){
+  <div class="card shadow border-0">
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
         <thead class="bg-light">
@@ -29,7 +32,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let res of reservas">
+          @for (res of reservas; track res.id){
+          <tr>
             <!-- Fecha y Hora -->
             <td class="ps-4">
               <div class="fw-bold text-dark">{{ res.fecha }}</div>
@@ -45,48 +49,55 @@
             <td>
               <span class="badge bg-info text-dark">{{ res.nombreServicio }}</span>
             </td>
-
-            <!-- Caso A: PENDIENTE -> Mostrar botones Aceptar/Rechazar -->
-             <td class="text-center">
-              <div *ngIf="res.estado === 'PENDIENTE'" class="btn-group shadow-sm" role="group">
-                <button class="btn btn-sm btn-success" (click)="aceptar(res)" title="Aceptar Cita">
-                  ✔
-                </button>
-                <button class="btn btn-sm btn-danger" (click)="rechazar(res)" title="Rechazar Cita">
-                  ✖
-                </button>
-              </div>
-
-              <!-- Caso B: CONFIRMADA -> Mostrar etiqueta Verde -->
-              <span *ngIf="res.estado === 'CONFIRMADA'" class="badge bg-success p-2">
-                ✅ Aceptada
-              </span>
-              
-              <!-- Caso C: CANCELADA -> Mostrar etiqueta Gris -->
-              <span *ngIf="res.estado === 'CANCELADA'" class="badge bg-secondary p-2">
-                ❌ Rechazada
-              </span>
             
-            </td>
+            <td class="text-center">
+              @switch (res.estado) {
+                    
+                    @case ('PENDIENTE') {
+                      <div class="btn-group shadow-sm" role="group">
+                        <button class="btn btn-sm btn-success" (click)="aceptar(res)" title="Aceptar Cita">
+                          ✔
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="rechazar(res)" title="Rechazar Cita">
+                          ✖
+                        </button>
+                      </div>
+                    }
+
+                    @case ('CONFIRMADA') {
+                      <span class="badge bg-success p-2">
+                        ✅ Aceptada
+                      </span>
+                    }
+
+                    @case ('CANCELADA') {
+                      <span class="badge bg-secondary p-2">
+                        ❌ Rechazada
+                      </span>
+                    }
+                  }
+                </td>
 
             <td class="fw-bold text-success">
               {{ res.precioServicio }}€
             </td>
+
             <td>
-              
               <a href="mailto:{{res.emailCliente}}" class="btn btn-sm btn-outline-primary" title="Enviar correo">
                 ✉️ 
               </a>
             </td>
           </tr>
-          
-          <tr *ngIf="reservas.length === 0">
-            <td colspan="5" class="text-center py-5 text-muted">
+        }@empty {  <!-- Si no hay reservas, equivale a *ngIf="reservas.length === 0" -->
+          <tr>
+            <td colspan="6" class="text-center py-5 text-muted">
               📭 No tienes reservas pendientes.
             </td>
           </tr>
+        }
         </tbody>
       </table>
     </div>
   </div>
+}
 </div>

@@ -17,8 +17,8 @@ export class ReservasNegocio implements OnInit {
   private reservaService = inject(ReservaService);
 
   reservas: ReservaNegocio[] = [];
-  peluqueriaId: number = 0;
-  loading: boolean = true;
+  peluqueriaId = 0;
+  loading = true;
 
   ngOnInit() {
     // Cogemos el ID de la URL
