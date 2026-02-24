@@ -39,10 +39,8 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
         //  BUSCAR EN CLIENTES
         Cliente cliente = clienteRepository1.findByEmail(loginRequest.getEmail());
 
-            if ( cliente != null) {
-                System.out.println("✅ Cliente ENCONTRADO en PostgreSQL.");
-                System.out.println("DEBUG - Password que Java lee de la BD: [" + cliente.getPassword() + "]");
-                if (passwordEncoder.matches(loginRequest.getPassword(), cliente.getPassword())) {
+
+                if ( cliente != null && passwordEncoder.matches(loginRequest.getPassword(), cliente.getPassword())) {
                     // ¡Es un CLIENTE!
                     String token = jwtService.generateToken(cliente.getEmail(), "CLIENTE", cliente.getId());
 
@@ -54,8 +52,6 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
                             token
                     ));
                 }
-            }
-
         //  SI NO ES CLIENTE, BUSCAR EN PELUQUERÍAS
         Peluqueria peluqueria = peluqueriaRepository1.findByEmail(loginRequest.getEmail());
 
@@ -71,8 +67,6 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
                         token
                 ));
         }
-        System.out.println("❌ LOGIN FALLIDO (401)");
-        System.out.println("**************************************************\n");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); //NO EXISTE
     }
 }
