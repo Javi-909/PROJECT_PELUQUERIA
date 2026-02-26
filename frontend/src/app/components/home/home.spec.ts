@@ -6,7 +6,7 @@ import { Auth } from '../../services/auth';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
