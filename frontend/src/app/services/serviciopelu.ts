@@ -14,9 +14,9 @@ export class ServicioPeluService {
 
   //constructor() { }
 
-  addServicio(dto: ServicioPeluCreacionDto): Observable<any> {
+  addServicio(dto: ServicioPeluCreacionDto): Observable<ServicioPeluCreacionDto> {
     // La URL final será: http://localhost:8080/serviciopelu/add
-    return this.http.post(`${this.apiUrl}/add`, dto);
+    return this.http.post<ServicioPeluCreacionDto>(`${this.apiUrl}/add`, dto);
   }
 
 

@@ -6,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 // Servicios
 import { ClienteService } from '../../services/cliente';
 import { PeluqueriaService } from '../../services/peluqueria';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-registro',
@@ -72,7 +73,7 @@ export class RegistroComponent {
         direccion: this.datos.direccion // Campo extra
       }).subscribe({
         next: () => this.exito(),
-        error: (err) => this.error(err)
+        error: (err: HttpErrorResponse) => this.error(err)
       });
     }
   }
@@ -82,8 +83,8 @@ export class RegistroComponent {
     this.router.navigate(['/login']);
   }
 
-  error(err: any) {
-    console.error(err);
+  error(err: HttpErrorResponse) {
+    console.error('Error de registro:', err);
     alert('Hubo un error al registrarse. Revisa los datos o si el email ya existe.');
   }
 }

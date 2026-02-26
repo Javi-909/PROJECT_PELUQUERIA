@@ -14,25 +14,25 @@ export class ReservaService {
 
   //constructor() { }
 
-  crearReserva(clienteId: number, reserva: ReservaDto): Observable<any> {
-    return this.http.post(`${this.apiUrl}/create/${clienteId}`, reserva);
+  crearReserva(clienteId: number, reserva: ReservaDto): Observable<ReservaDto> {
+    return this.http.post<ReservaDto>(`${this.apiUrl}/create/${clienteId}`, reserva);
   }
 
-  getReservasPorCliente(clienteId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${clienteId}`);
+  getReservasPorCliente(clienteId: number): Observable<ReservaDto[]> {
+    return this.http.get<ReservaDto[]>(`${this.apiUrl}/${clienteId}`);
 
 }
 
-  cancelarReserva(reservaId: number): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/cancelareserva/${reservaId}`);
+  cancelarReserva(reservaId: number): Observable<ReservaDto> {
+      return this.http.delete<ReservaDto>(`${this.apiUrl}/cancelareserva/${reservaId}`);
     }
 
     getReservasDeNegocio(peluqueriaId: number): Observable<ReservaNegocio[]> {
     return this.http.get<ReservaNegocio[]>(`${this.apiUrl}/peluqueria/${peluqueriaId}`);
   }
 
-  confirmaReserva(reservaId: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/confirmar/${reservaId}`, null);
+  confirmaReserva(reservaId: number): Observable<ReservaDto> {
+    return this.http.put<ReservaDto>(`${this.apiUrl}/confirmar/${reservaId}`, null);
 
 }
 }

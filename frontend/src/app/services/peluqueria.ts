@@ -46,9 +46,9 @@ export class PeluqueriaService {
   }
 
 
-  getServiciosDisponibles(): Observable<any[]>{
+  getServiciosDisponibles(): Observable<Servicio[]>{
     //Devuelve la url de todos los serviciios (findAll)
-    return this.http.get<any[]>(`${this.apiServiciosUrl}/findAll`);
+    return this.http.get<Servicio[]>(`${this.apiServiciosUrl}/findAll`);
   }
 
 }

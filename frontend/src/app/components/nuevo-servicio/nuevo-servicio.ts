@@ -5,6 +5,7 @@ import { ServicioPeluCreacionDto } from '../../models/servicioPeluCreacion.model
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Servicio } from '../../models/servicio.model';
 
 
 
@@ -23,7 +24,7 @@ private peluqueriaService = inject(PeluqueriaService);
 private servicioPeluService = inject(ServicioPeluService);
 
 peluqueriaId = 0;
-  serviciosGenericos: any[] = [];
+  serviciosGenericos: Servicio[] = [];
   
   // Modelo del formulario
   nuevoServicio = {
