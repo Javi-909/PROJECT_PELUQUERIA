@@ -38,12 +38,9 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
 
         //  BUSCAR EN CLIENTES
         Cliente cliente = clienteRepository1.findByEmail(loginRequest.getEmail());
-
-
                 if ( cliente != null && passwordEncoder.matches(loginRequest.getPassword(), cliente.getPassword())) {
                     // ¡Es un CLIENTE!
                     String token = jwtService.generateToken(cliente.getEmail(), "CLIENTE", cliente.getId());
-
                     return ResponseEntity.ok(new LoginResponseDto(
                             cliente.getId(),
                             cliente.getNombre(),
@@ -58,7 +55,6 @@ public class AuthController {  //GESTIONA EL TEMA DE INICIO DE SESIÓN
             if ( peluqueria != null && passwordEncoder.matches(loginRequest.getPassword(), peluqueria.getPassword())) {
                 // ¡Es una PELUQUERÍA (NEGOCIO)!  Generamos el token
                 String token = jwtService.generateToken(peluqueria.getEmail(), "NEGOCIO", peluqueria.getId());
-
                 return ResponseEntity.ok(new LoginResponseDto(
                         peluqueria.getId(),
                         peluqueria.getNombre(),
