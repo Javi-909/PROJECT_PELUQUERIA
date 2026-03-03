@@ -23,11 +23,13 @@ describe('NuevoServicio Component', () => {
 
   beforeEach(async () => {
     mockPeluService = {
-      getServiciosDisponibles: jasmine.createSpy('getServiciosDisponibles').and.returnValue(of(serviciosFalsos))
+      //getServiciosDisponibles: jasmine.createSpy('getServiciosDisponibles').and.returnValue(of(serviciosFalsos))
+      getServiciosDisponibles: jest.fn().mockReturnValue(of(serviciosFalsos))
     };
 
     mockServicioPeluService = {
-      addServicio: jasmine.createSpy('addServicio').and.returnValue(of({}))
+      //addServicio: jasmine.createSpy('addServicio').and.returnValue(of({}))
+      addServicio: jest.fn().mockReturnValue(of({}))
     };
 
     await TestBed.configureTestingModule({
@@ -56,7 +58,7 @@ describe('NuevoServicio Component', () => {
 
     // 3. Inyectamos el router real y espiamos su método de navegación
     router = TestBed.inject(Router);
-    spyOn(router, 'navigate');
+    jest.spyOn(router, 'navigate');
   });
 
   it('debería crearse correctamente', () => {
@@ -73,7 +75,7 @@ describe('NuevoServicio Component', () => {
   });
 
   it('debería mostrar un alert si los datos del formulario son inválidos al guardar', () => {
-    spyOn(window, 'alert');
+    jest.spyOn(window, 'alert');
     fixture.detectChanges();
 
     // Caso: Sin servicio seleccionado
@@ -89,7 +91,7 @@ describe('NuevoServicio Component', () => {
   });
 
   it('debería llamar al servicio y navegar cuando el guardado es exitoso', () => {
-    spyOn(window, 'alert');
+    jest.spyOn(window, 'alert');
     fixture.detectChanges();
 
     // Rellenamos datos correctos
@@ -113,11 +115,11 @@ describe('NuevoServicio Component', () => {
   });
 
   it('debería manejar errores del servidor al guardar', () => {
-    spyOn(window, 'alert');
+    jest.spyOn(window, 'alert');
     fixture.detectChanges();
 
     // Simulamos fallo
-    mockServicioPeluService.addServicio.and.returnValue(throwError(() => new Error('API Error')));
+    mockServicioPeluService.addServicio.mockReturnValue(throwError(() => new Error('API Error')));
 
     component.nuevoServicio.servicioId = 1 as any;
     component.nuevoServicio.precio = 20;

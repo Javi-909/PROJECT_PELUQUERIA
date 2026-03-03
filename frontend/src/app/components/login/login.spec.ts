@@ -15,12 +15,13 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     mockAuthService = {
-      login: jasmine.createSpy('login').and.returnValue(of({ 
-        id: 1, 
-        email: 'test@test.com', 
-        role: 'CLIENTE', 
-        token: 'fake-jwt' 
-      }))
+  
+        login: jest.fn().mockReturnValue(of({
+          id: 1,
+          email: 'test@test.com',
+          role: 'CLIENTE',
+          token: 'fake-jwt'
+        }))
     };
 
     await TestBed.configureTestingModule({
@@ -38,7 +39,7 @@ describe('LoginComponent', () => {
     
     // 3. Inyectamos el Router real del entorno de pruebas y espiamos su método 'navigate'
     router = TestBed.inject(Router);
-    spyOn(router, 'navigate');
+    jest.spyOn(router, 'navigate');
 
     fixture.detectChanges();
   });
@@ -73,7 +74,7 @@ describe('LoginComponent', () => {
 
   it('debería mostrar un mensaje de error si las credenciales son incorrectas', () => {
     // Simulamos un error del servidor (401)
-    mockAuthService.login.and.returnValue(throwError(() => ({ status: 401 })));
+    mockAuthService.login.mockReturnValue(throwError(() => ({ status: 401 })));
 
     component.onLogin();
 

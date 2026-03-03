@@ -27,12 +27,14 @@ describe('MiPerfil Component', () => {
     // 1. Mantenemos los mocks para la lógica de negocio
     mockAuth = {
       userId: 123,
-      logout: jasmine.createSpy('logout')
+      logout: jest.fn()
     };
 
     mockClienteService = {
-      getClienteById: jasmine.createSpy('getClienteById').and.returnValue(of(clienteFalso)),
-      updateCliente: jasmine.createSpy('updateCliente').and.returnValue(of({}))
+      //getClienteById: jasmine.createSpy('getClienteById').and.returnValue(of(clienteFalso)),
+      //updateCliente: jasmine.createSpy('updateCliente').and.returnValue(of({}))
+      getClienteById: jest.fn().mockReturnValue(of(clienteFalso)),
+      updateCliente: jest.fn().mockReturnValue(of({}))
     };
 
     await TestBed.configureTestingModule({
@@ -50,7 +52,7 @@ describe('MiPerfil Component', () => {
 
     // 3. Inyectamos el router real del entorno de pruebas y espiamos su método navigate
     router = TestBed.inject(Router);
-    spyOn(router, 'navigate');
+    jest.spyOn(router, 'navigate');
   });
 
   it('debería crearse correctamente', () => {
@@ -80,8 +82,8 @@ describe('MiPerfil Component', () => {
   }));
 
   it('debería mostrar un alert si falla la actualización', () => {
-    spyOn(window, 'alert');
-    mockClienteService.updateCliente.and.returnValue(throwError(() => new Error('Error de red')));
+    jest.spyOn(window, 'alert');
+    mockClienteService.updateCliente.mockReturnValue(throwError(() => new Error('Error de red')));
     
     fixture.detectChanges();
     component.guardarCambios();

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PeluqueriaForm } from './peluqueria-form';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('PeluqueriaForm', () => {
   let component: PeluqueriaForm;
@@ -8,7 +10,12 @@ describe('PeluqueriaForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PeluqueriaForm]
+      imports: [PeluqueriaForm],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
     .compileComponents();
 

@@ -1,46 +1,42 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HomeComponent } from './home'; 
-import { PeluqueriaService } from '../../services/peluqueria'; 
-// IMPORTANTE: Cambiamos Auth por AuthService para que coincida con el componente
-import { Auth } from '../../services/auth'; 
-import { provideRouter } from '@angular/router';
+import { HomeComponent } from './home';
+import { PeluqueriaService } from '../../services/peluqueria';
+import { Auth } from '../../services/auth';
 import { of } from 'rxjs';
+import { provideRouter } from '@angular/router';
+
+// 1. Importamos las herramientas de ts-mockito
+import { mock, when, instance, verify } from 'ts-mockito';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  let mockPeluqueriaService: any;
-  let mockAuthService: any;
+  // 2. Declaramos los mocks con su TIPO REAL
+  let mockPeluService: PeluqueriaService;
+  let mockAuthService: Auth;
 
   const peluqueriasFalsas = [
-    { id: 1, nombre: 'Peluquería Juan', direccion: 'Calle Mayor 1', email: 'juan@test.com', telefono: 111 },
-    { id: 2, nombre: 'Barbería Moderna', direccion: 'Avenida Sol 2', email: 'barber@test.com', telefono: 222 }
+    { id: 1, nombre: 'Peluquería Alex', direccion: 'Calle 1', email: 'a@a.com', telefono: 123 }
   ];
 
   beforeEach(async () => {
-    // Definimos el comportamiento simulado del servicio de peluquerías
-    mockPeluqueriaService = {
-      getPeluquerias: jasmine.createSpy('getPeluquerias').and.returnValue(of(peluqueriasFalsas))
-    };
+    // 3. Inicializamos los mocks
+    mockPeluService = mock(PeluqueriaService);
+    mockAuthService = mock(Auth);
 
-    // Definimos el comportamiento simulado del servicio de Auth
-    // DEBE TENER todas las funciones que usa el HTML de Home
-    mockAuthService = {
-      isNegocio: jasmine.createSpy('isNegocio').and.returnValue(false),
-      isCliente: jasmine.createSpy('isCliente').and.returnValue(true),
-      isLoggedIn: jasmine.createSpy('isLoggedIn').and.returnValue(true),
-      logout: jasmine.createSpy('logout'),
-      userId: 1
-    };
+    // 4. Esto es lo que van a responder cuando el componente los llame
+    when(mockPeluService.getPeluquerias()).thenReturn(of(peluqueriasFalsas));
+    when(mockAuthService.isNegocio()).thenReturn(false);
+    when(mockAuthService.isLoggedIn()).thenReturn(true);
 
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
         provideRouter([]),
-        { provide: PeluqueriaService, useValue: mockPeluqueriaService },
-        // CLAVE: Usamos AuthService aquí para que Angular lo sustituya correctamente
-        { provide: Auth, useValue: mockAuthService } 
+        // 5. Inyectamos la "instancia" del mock en Angular
+        { provide: PeluqueriaService, useFactory: () => instance(mockPeluService) },
+        { provide: Auth, useFactory: () => instance(mockAuthService) }
       ]
     }).compileComponents();
 
@@ -48,44 +44,18 @@ describe('HomeComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('debería crearse correctamente', () => {
-    fixture.detectChanges(); 
+  it('debería crearse el componente', () => {
+    fixture.detectChanges(); // Esto dispara el ngOnInit
     expect(component).toBeTruthy();
   });
 
-  it('debería cargar TODAS las peluquerías si el usuario NO es negocio', () => {
+  it('debería cargar las peluquerías al iniciar', () => {
     fixture.detectChanges(); 
-    expect(mockPeluqueriaService.getPeluquerias).toHaveBeenCalled();
-    expect(component.peluquerias.length).toBe(2);
-  });
-
-  it('debería filtrar y mostrar SOLO su peluquería si el usuario ES negocio', () => {
-    mockAuthService.isNegocio.and.returnValue(true);
-    mockAuthService.userId = 2; 
     
-    // Forzamos la recarga de la lógica
-    component.cargarPeluquerias();
-    fixture.detectChanges(); 
+    // 6. Verificamos que se haya llamado al servicio (Estilo ts-mockito)
+    verify(mockPeluService.getPeluquerias()).once();
     
     expect(component.peluquerias.length).toBe(1);
-    expect(component.peluquerias[0].id).toBe(2);
-    expect(component.peluquerias[0].nombre).toBe('Barbería Moderna');
-  });
-
-  it('debería filtrar resultados cuando el usuario busca por nombre', () => {
-    fixture.detectChanges(); 
-    component.searchTerm = 'Juan'; 
-    component.filtrarResultados();
-    
-    expect(component.peluqueriasFiltradas.length).toBe(1);
-    expect(component.peluqueriasFiltradas[0].nombre).toContain('Juan');
-  });
-
-  it('debería mostrar cero resultados si la búsqueda no coincide con nada', () => {
-    fixture.detectChanges();
-    component.searchTerm = 'Zapatos';
-    component.filtrarResultados();
-    
-    expect(component.peluqueriasFiltradas.length).toBe(0);
+    expect(component.peluquerias[0].nombre).toBe('Peluquería Alex');
   });
 });

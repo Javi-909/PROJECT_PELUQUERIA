@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PeluqueriaDetalleComponent } from './peluqueria-detalle';
+import { ActivatedRoute } from '@angular/router';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('PeluqueriaDetalleComponent', () => {
   let component: PeluqueriaDetalleComponent;
@@ -8,8 +12,10 @@ describe('PeluqueriaDetalleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PeluqueriaDetalleComponent]
-    })
+      imports: [PeluqueriaDetalleComponent],
+      providers: [ provideRouter([]), provideHttpClient(), provideHttpClientTesting()
+    ]
+   })
     .compileComponents();
 
     fixture = TestBed.createComponent(PeluqueriaDetalleComponent);
